@@ -3,89 +3,123 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Zagadnienie 1 — Mózg i zachowanie</title>
+  <title>Neuropsychologia 2025/2026 — Zagadnienia do egzaminu</title>
   <style>
-    body{font-family:Arial,sans-serif;line-height:1.5;max-width:900px;margin:0 auto;padding:20px;background:#f7f7f7;color:#222}
-    .box{background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px}
-    h1,h2{margin-top:0}
-    .q{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #eee}
-    .q:last-child{border-bottom:none}
-    label{display:block;padding:8px 10px;margin:6px 0;border:1px solid #ddd;border-radius:8px;background:#fafafa;cursor:pointer}
-    button{padding:12px 18px;border:none;border-radius:999px;background:#0b6b6f;color:#fff;font-size:16px;cursor:pointer}
-    .result{display:none;margin-top:20px;padding:16px;border-radius:10px;background:#eef7f7;border:1px solid #cce2e2}
-    .small{color:#666;font-size:14px}
+    :root{--bg:#f6f7f8;--card:#ffffff;--text:#1f2937;--muted:#6b7280;--line:#e5e7eb;--accent:#0f766e;--accent2:#ecfeff}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .hero,.week{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    h1{margin:0 0 8px;font-size:32px}
+    h2{margin:0 0 14px;font-size:22px;color:var(--accent)}
+    p.lead{margin:0;color:var(--muted)}
+    ol{margin:0;padding-left:24px}
+    li{margin:10px 0 14px}
+    .item{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+    .topic{max-width:760px}
+    .links{display:flex;gap:8px;flex-wrap:wrap}
+    a.btn, span.soon{display:inline-block;padding:8px 12px;border-radius:999px;text-decoration:none;font-size:14px}
+    a.btn{background:var(--accent);color:#fff}
+    a.btn.secondary{background:var(--accent2);color:var(--accent);border:1px solid #bae6fd}
+    span.soon{background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}
+    .small{font-size:13px;color:var(--muted);margin-top:14px}
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Zagadnienie 1 — Mózg i zachowanie z perspektywy historycznej</h1>
-    <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
-    <p class="small">Wersja prosta do GitHub Pages.</p>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Neuropsychologia 2025/2026</h1>
+      <p class="lead">Zagadnienia do egzaminu. Pod każdym zagadnieniem możesz dodać link do testu online.</p>
+      <p class="small">Gotowe linki działają już dla tych testów, które mają własny plik <code>index.html</code> w odpowiednim folderze. Pozostałe miejsca są przygotowane do uzupełnienia.</p>
+    </section>
+
+    <section class="week">
+      <h2>Wykład 1. Historia i rozwój neuropsychologii</h2>
+      <ol>
+        <li><div class="item"><div class="topic">Mózg i zachowanie z perspektywy historycznej</div><div class="links"><a class="btn" href="./" target="_blank" rel="noopener noreferrer">Otwórz test</a></div></div></li>
+        <li><div class="item"><div class="topic">Frenologia i lokalizacja funkcji w mózgu</div><div class="links"><a class="btn secondary" href="./frenologia/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Język i mózg</div><div class="links"><a class="btn secondary" href="./jezyk-i-mozg/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+      </ol>
+    </section>
+
+    <section class="week">
+      <h2>Wykład 2. Neurofizjologia</h2>
+      <ol start="4">
+        <li><div class="item"><div class="topic">Komórki w układzie nerwowym</div><div class="links"><a class="btn secondary" href="./komorki-w-ukladzie-nerwowym/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Budowa neuronów</div><div class="links"><a class="btn secondary" href="./budowa-neuronow/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Potencjał spoczynkowy, potencjał czynnościowy i potencjały postsynaptyczne</div><div class="links"><a class="btn secondary" href="./potencjal-spoczynkowy-i-czynnosciowy/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Synapsy</div><div class="links"><a class="btn secondary" href="./synapsy/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Transmisja synaptyczna</div><div class="links"><a class="btn secondary" href="./transmisja-synaptyczna/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+      </ol>
+    </section>
+
+    <section class="week">
+      <h2>Wykład 3. Neuropsychofarmakologia</h2>
+      <ol start="9">
+        <li><div class="item"><div class="topic">Systemy neuroprzekaźników: aminokwasy, acetylocholina, monoaminy, neuropeptydy</div><div class="links"><a class="btn secondary" href="./systemy-neuroprzekaznikow/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Leki przeciwpsychotyczne, przeciwdepresyjne i przeciwlękowe</div><div class="links"><a class="btn secondary" href="./leki-przeciwpsychotyczne-i-przeciwdepresyjne/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Opioidy i kryzys opioidowy</div><div class="links"><a class="btn secondary" href="./opioidy-i-kryzys-opioidowy/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Kannabinoidy</div><div class="links"><a class="btn secondary" href="./kannabinoidy/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Stymulanty</div><div class="links"><a class="btn secondary" href="./stymulanty/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Substancje halucynogenne i dysocjacyjne</div><div class="links"><a class="btn secondary" href="./halucynogeny-i-dysocjacyjne/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Szlaki neuronowe w uzależnieniu</div><div class="links"><a class="btn secondary" href="./szlaki-neuronowe-w-uzaleznieniu/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+      </ol>
+    </section>
+
+    <section class="week">
+      <h2>Wykład 4. Neurogenetyka</h2>
+      <ol start="16">
+        <li><div class="item"><div class="topic">Chromosomy i struktura DNA</div><div class="links"><a class="btn secondary" href="./chromosomy-i-dna/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Transkrypcja, translacja i kod genetyczny</div><div class="links"><a class="btn secondary" href="./transkrypcja-translacja-kod-genetyczny/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Polimorfizm pojedynczego nukleotydu</div><div class="links"><a class="btn secondary" href="./polimorfizm-pojedynczego-nukleotydu/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Badania asocjacyjne w skali całego genomu</div><div class="links"><a class="btn secondary" href="./gwas/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Epigenetyka</div><div class="links"><a class="btn secondary" href="./epigenetyka/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+      </ol>
+    </section>
+
+    <section class="week">
+      <h2>Wykład 5. Anatomia układu nerwowego</h2>
+      <ol start="21">
+        <li><div class="item"><div class="topic">Współczynnik encefalizacji</div><div class="links"><a class="btn secondary" href="./wspolczynnik-encefalizacji/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Mózgowie i ontogenetyczny podział mózgowia</div><div class="links"><a class="btn secondary" href="./mozgowie-i-podzial-ontogenetyczny/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Pień mózgu, móżdżek, wzgórze i podwzgórze</div><div class="links"><a class="btn secondary" href="./pien-mozgu-mozdzek-wzgorze-podwzgorze/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Struktury podkorowe (jądra podstawy i układ limbiczny)</div><div class="links"><a class="btn secondary" href="./struktury-podkorowe/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Kora mózgowa (płaty mózgowe i kora przedczołowa)</div><div class="links"><a class="btn secondary" href="./kora-mozgowa/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+      </ol>
+    </section>
+
+    <section class="week">
+      <h2>Wykład 6. Metody badania mózgu</h2>
+      <ol start="26">
+        <li><div class="item"><div class="topic">Rozdzielczość czasowa, rozdzielczość przestrzenna i inwazyjność</div><div class="links"><a class="btn secondary" href="./rozdzielczosc-czasowa-i-przestrzenna/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Elektroencefalografia (EEG): rytmy (fale) EEG i potencjały wywołane</div><div class="links"><a class="btn secondary" href="./eeg/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Interfejsy mózg-komputer</div><div class="links"><a class="btn secondary" href="./interfejsy-mozg-komputer/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Magnetoencefalografia (MEG) i przezczaszkowa stymulacja magnetyczna (TMS)</div><div class="links"><a class="btn secondary" href="./meg-i-tms/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Metody tomograficzne (PET, fMRI, fNIRS)</div><div class="links"><a class="btn secondary" href="./pet-fmri-fnirs/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+      </ol>
+    </section>
+
+    <section class="week">
+      <h2>Wykład 7. Psychopatologia</h2>
+      <ol start="31">
+        <li><div class="item"><div class="topic">Dziedziczny komponent schizofrenii</div><div class="links"><a class="btn secondary" href="./dziedziczny-komponent-schizofrenii/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Strukturalne i funkcjonalne zmiany w mózgu w schizofrenii</div><div class="links"><a class="btn secondary" href="./zmiany-w-mozgu-w-schizofrenii/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Zmiany w mózgu i depresja</div><div class="links"><a class="btn secondary" href="./zmiany-w-mozgu-i-depresja/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Zaburzenia dwubiegunowe</div><div class="links"><a class="btn secondary" href="./zaburzenia-dwubiegunowe/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Zaburzenia lękowe</div><div class="links"><a class="btn secondary" href="./zaburzenia-lekowe/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+      </ol>
+    </section>
+
+    <section class="week">
+      <h2>Wykład 8. Wyższe funkcje poznawcze: uczenie się i pamięć</h2>
+      <ol start="36">
+        <li><div class="item"><div class="topic">Przyśrodkowe płaty skroniowe, międzymózgowie i kora mózgowa</div><div class="links"><a class="btn secondary" href="./przysrodkowe-platy-skroniowe-i-kora/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Taksonomia pamięci długotrwałej</div><div class="links"><a class="btn secondary" href="./taksonomia-pamieci-dlugotrwalej/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Pamięć przestrzenna</div><div class="links"><a class="btn secondary" href="./pamiec-przestrzenna/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Obumieranie neuronów i rearanżacja synaps</div><div class="links"><a class="btn secondary" href="./obumieranie-neuronow-i-rearanzacja-synaps/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+        <li><div class="item"><div class="topic">Choroba Alzheimera</div><div class="links"><a class="btn secondary" href="./choroba-alzheimera/" target="_blank" rel="noopener noreferrer">Link do testu</a></div></div></li>
+      </ol>
+    </section>
   </div>
-
-  <form id="quiz" class="box"></form>
-
-  <div class="box">
-    <button type="button" onclick="finishQuiz()">Zakończ test</button>
-    <div id="result" class="result"></div>
-  </div>
-
-<script>
-const questions = [
-{q:'Jak starożytni Egipcjanie postępowali z mózgiem podczas mumifikowania zwłok?',a:['Zachowywali go w specjalnych naczyniach (kanopach) jako organ niezbędny w życiu pozagrobowym','Usuwali go z ciała przez nos specjalnymi narzędziami, nie uznając za ważny organ','Balsamowali go razem z sercem i wątrobą','Pozostawiali go na miejscu, nie ingerując w struktury głowy'],c:1},
-{q:'Który organ był przez starożytnych (w tym Arystotelesa) uznawany za główne źródło życia psychicznego i zachowania?',a:['Mózg','Wątroba','Serce','Płuca'],c:2},
-{q:'Jaką funkcję przypisywał mózgowi Arystoteles?',a:['Centrum myślenia i emocji','Jednostkę chłodzącą ciepło wytwarzane przez serce','Siedlisko duszy nieśmiertelnej','Organ kontrolujący ruchy ciała'],c:1},
-{q:'Teoria neuronalna głosi, że:',a:['Mózg jako całość jest źródłem zachowania','Neurony tworzą jedną ciągłą sieć (retikulum) bez wyraźnych granic','Podstawową jednostką strukturalną i funkcjonalną mózgu jest pojedynczy neuron','Zachowanie jest wyłącznie efektem działania kory mózgowej'],c:2},
-{q:'Teoria mózgu, jako jedna z dwóch fundamentalnych teorii neuropsychologii, głosi, że:',a:['Umysł jest niezależny od mózgu i nie daje się do niego zredukować','To mózg (a nie np. serce czy dusza) jest źródłem zachowania','Wszystkie funkcje umysłowe zlokalizowane są w korze mózgowej','Mózg składa się wyłącznie z neuronów'],c:1},
-{q:'Co to jest mentalizm jako koncepcja filozoficzna w kontekście historii neuropsychologii?',a:['Pogląd, że mózg jest jedynym źródłem psychiki','Pogląd, że niematerialny umysł (psychika) jest źródłem ludzkich myśli i stanów psychicznych','Przekonanie, że zachowanie człowieka da się w pełni wyjaśnić przez biologię','Teoria zakładająca, że kształt czaszki ujawnia zdolności umysłowe'],c:1},
-{q:'Kartezjusz zaproponował filozoficzne stanowisko zwane dualizmem. Które zdanie najtrafniej je opisuje?',a:['Ciało i umysł to jedna i ta sama substancja materialna','Zachowanie człowieka jest wyłącznie odruchem na bodźce zewnętrzne','Człowiek składa się z dwóch substancji: materialnego ciała i niematerialnego umysłu','Umysł istnieje niezależnie od ciała i nie może na nie wpływać'],c:2},
-{q:'Dlaczego Kartezjusz uważał szyszynkę za miejsce interakcji między ciałem a umysłem?',a:['Bo była największą strukturą mózgu','Bo była jedyną niesparowaną (nieparzystą) strukturą mózgu, niemającą odpowiednika w drugiej półkuli','Bo wytwarzała hormon odpowiedzialny za świadomość','Bo znajdowała się bezpośrednio nad korą mózgową'],c:1},
-{q:'Jak nazywamy problem filozoficzny dotyczący relacji między niematerialnym umysłem a materialnym ciałem (mózgiem)?',a:['Problem lokalizacji funkcji','Problem psychofizyczny (the mind-body problem)','Problem dualizmu funkcjonalnego','Problem redukcjonizmu biologicznego'],c:1},
-{q:'Który grecki lekarz jest uznawany za prekursora anatomii i jednego z pierwszych przeprowadzających systematyczne sekcje ludzkiego ciała?',a:['Galen','Arystoteles','Herofilus','Hipokrates'],c:2},
-{q:'Co wykazał greko-rzymski lekarz Galen na podstawie swoich obserwacji anatomicznych?',a:['Że mózg jest organem chłodzącym serce','Że zdolność mówienia jest kontrolowana przez mózg, a nie przez serce','Że serce jest siedliskiem duszy','Że neurony tworzą sieć retikularną'],c:1},
-{q:'Jaką metodą starożytnego Egiptu usuwano mózg z ciała podczas mumifikacji?',a:['Przez nacięcie w czaszce z tyłu głowy','Przez usta za pomocą łyżki','Przez nos za pomocą specjalnych narzędzi','Przez wywiercenie otworu w skroni'],c:2},
-{q:'Renesansowi anatomowie, w tym Leonardo da Vinci i Vesalius, w swoich rysunkach mózgu kładli szczególny nacisk na:',a:['Korę mózgową i jej zakręty','Komory mózgu wypełnione płynem mózgowo-rdzeniowym','Aksony i synapsy między neuronami','Płat czołowy jako centrum umysłu'],c:1},
-{q:'Franz Joseph Gall i Johann Spurzheim byli głównymi przedstawicielami:',a:['Teorii neuronalnej','Frenologii','Dualizmu kartezjańskiego','Materializmu neurologicznego'],c:1},
-{q:'Pierwsza koncepcja frenologów — koncepcja lokalizacyjna — głosi, że:',a:['Kształt czaszki determinuje zdolności umysłowe','Wszystkie funkcje umysłowe zlokalizowane są w jednym obszarze mózgu','Różne obszary mózgu pełnią różne funkcje','Mózg działa jako jednolita całość, bez podziału na obszary funkcjonalne'],c:2},
-{q:'Dlaczego frenologia jest dziś klasyfikowana jako pseudonauka?',a:['Bo twierdziła, że mózg pełni różne funkcje w różnych obszarach','Bo opierała się na przekonaniu, że kształt kości czaszki ujawnia rozwinięcie poszczególnych obszarów mózgu i cechy umysłowe','Bo nie uznawała mózgu za organ odpowiedzialny za zachowanie','Bo negowała istnienie synaps'],c:1},
-{q:'Paul Broca dokonał swojego przełomowego odkrycia, analizując pacjenta zwanego „Tan”. Jaką niezdolność wykazywał ten pacjent?',a:['Całkowitą utratę słuchu','Niemożność rozumienia mowy przy zachowanej zdolności mówienia','Całkowitą utratę zdolności do formułowania wypowiedzi słownych — mógł wypowiadać tylko jedną sylabę „tan”','Niemożność rozpoznawania twarzy'],c:2},
-{q:'W której półkuli i w którym płacie mózgu zlokalizowany jest ośrodek Broki?',a:['Prawa półkula, płat skroniowy','Lewa półkula, płat skroniowy','Prawa półkula, płat czołowy','Lewa półkula, płat czołowy'],c:3},
-{q:'Jak nazywa się zaburzenie mowy polegające na utracie zdolności do formułowania wypowiedzi językowych przy uszkodzeniu ośrodka Broki?',a:['Afazja Wernickego (afazja płynna)','Afazja Broki (afazja niefleksyjna / ekspresyjna)','Agnozja wzrokowa','Apraksja mowy'],c:1},
-{q:'Który wcześniejszy badacz (przed Brocą) zaobserwował, że zaburzenia mowy wiążą się z uszkodzeniem lewej półkuli mózgu, lecz pozostał stosunkowo nieznany?',a:['Karl Wernicke','Marc Dax','Jean-Baptiste Bouillaud','Camillo Golgi'],c:1},
-{q:'Jakie zaburzenie charakteryzowało pacjentów z uszkodzeniem obszaru Wernickego?',a:['Niemożność wypowiadania jakichkolwiek słów','Płynne wypowiadanie słów i zdań, lecz bez rozumienia mowy i bez możliwości jej powtórzenia','Utrata słuchu przy zachowanej zdolności mówienia','Niemożność czytania przy zachowanej zdolności mówienia i rozumienia'],c:1},
-{q:'W którym płacie mózgu zlokalizowany jest ośrodek Wernickego?',a:['Płat czołowy','Płat ciemieniowy','Płat skroniowy','Płat potyliczny'],c:2},
-{q:'Neuropsychologia jako nauka bada przede wszystkim:',a:['Wyłącznie zaburzenia neurologiczne i ich leczenie','Związki między mózgiem a zachowaniem','Wyłącznie strukturę anatomiczną układu nerwowego','Działanie leków psychotropowych na mózg'],c:1},
-{q:'Które organy były zachowywane przez starożytnych Egipcjan w procesie mumifikacji (wkładane do kanop)?',a:['Mózg i serce','Mózg, wątroba i płuca','Serce, wątroba, żołądek','Tylko serce'],c:2},
-{q:'W jakim mieście Jan Evangelista Purkyně po raz pierwszy opisał komórkę nerwową (komórkę Purkyňego)?',a:['Pradze','Wiedniu','Wrocławiu (Breslau)','Berlinie'],c:2},
-{q:'Dlaczego Wrocław jest ważnym miejscem w historii neuropsychologii?',a:['Tu opracowano metodę barwienia preparatów Golgiego','Tu Paul Broca odkrył ośrodek mowy','Tu Jan Evangelista Purkyně po raz pierwszy opisał komórkę nerwową z móżdżku','Tu Kartezjusz sformułował teorię dualizmu'],c:2},
-{q:'Które dwie postaci otrzymały w 1906 roku Nagrodę Nobla za odkrycia dotyczące budowy układu nerwowego?',a:['Paul Broca i Karl Wernicke','Santiago Ramón y Cajal i Camillo Golgi','Franz Gall i Johann Spurzheim','Leonardo da Vinci i Andreas Vesalius'],c:1},
-{q:'Neuropsychologia kliniczna skupia się przede wszystkim na:',a:['Analizie aktywności elektrycznej mózgu u zdrowych ochotników','Analizie przypadków pacjentów z uszkodzeniami mózgu i konsekwencjach tych uszkodzeń dla zachowania','Badaniu genetycznych podstaw funkcjonowania mózgu','Opracowywaniu leków neuroprotekcyjnych'],c:1},
-{q:'Termin „the mind-body problem” w języku polskim odpowiada:',a:['Problemowi lokalizacji funkcji mózgowych','Problemowi psychofizycznemu (relacji między umysłem a ciałem/mózgiem)','Problemowi ewolucji mózgu','Problemowi neuroplastyczności'],c:1},
-{q:'Andreas Vesalius jest uznawany za:',a:['Odkrywcę ośrodka mowy w mózgu','Twórcę frenologii','Twórcę nowoczesnej anatomii człowieka, autora dzieła o budowie ciała ludzkiego','Odkrywcę neuronu jako podstawowej jednostki układu nerwowego'],c:2}
-];
-const quiz = document.getElementById('quiz');
-questions.forEach((item, i) => {
-  const div = document.createElement('div');
-  div.className = 'q';
-  div.innerHTML = '<h3>'+(i+1)+'. '+item.q+'</h3>' + item.a.map((opt, j) =>
-    '<label><input type="radio" name="q'+i+'" value="'+j+'"> '+opt+'</label>'
-  ).join('');
-  quiz.appendChild(div);
-});
-function finishQuiz(){
-  let correct = 0;
-  questions.forEach((item, i) => {
-    const picked = document.querySelector('input[name="q'+i+'"]:checked');
-    if (picked && Number(picked.value) === item.c) correct++;
-  });
-  const percent = Math.round((correct / questions.length) * 100);
-  const result = document.getElementById('result');
-  result.style.display = 'block';
-  result.innerHTML = '<h2>Podsumowanie wyników</h2>'+
-    '<p>Poprawne odpowiedzi: <strong>'+correct+' z '+questions.length+'</strong></p>'+
-    '<p>Wynik procentowy: <strong>'+percent+'%</strong></p>';
-  window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'});
-}
-</script>
 </body>
 </html>
