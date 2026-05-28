@@ -1,384 +1,505 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
   <title>Zagadnienie 3 — Język i mózg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body{font-family:Arial,sans-serif;line-height:1.5;max-width:900px;margin:0 auto;padding:20px;background:#f7f7f7;color:#222}
-    .box{background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px}
-    h1,h2{margin-top:0}
-    .q{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #eee}
-    .q:last-child{border-bottom:none}
-    label{display:block;padding:8px 10px;margin:6px 0;border:1px solid #ddd;border-radius:8px;background:#fafafa;cursor:pointer}
-    label input{margin-right:6px}
-    button{padding:12px 18px;border:none;border-radius:999px;background:#0b6b6f;color:#fff;font-size:16px;cursor:pointer}
-    button:hover{background:#0f766e}
-    .result{display:none;margin-top:20px;padding:16px;border-radius:10px;background:#eef7f7;border:1px solid #cce2e2}
-    .small{color:#666;font-size:14px}
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .option-letter {
+      font-weight: 600;
+      color: #064e3b;
+      width: 20px;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Zagadnienie 3 — Język i mózg</h1>
-    <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
-    <p class="small">Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 3 — Język i mózg</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
   </div>
 
-  <form id="quiz" class="box"></form>
+  <script>
+    const questions = [
+      {
+        question: "Co oznacza stwierdzenie, że język jest zarówno zlokalizowany, jak i zlateralizowany w mózgu?",
+        answers: [
+          "Język zależy wyłącznie od kory przedczołowej w obu półkulach",
+          "Funkcje językowe są rozproszone losowo w całym mózgu bez specjalizacji",
+          "Określone obszary mózgu odpowiadają za język i zazwyczaj znajdują się głównie w jednej (lewej) półkuli",
+          "Język jest zależny tylko od móżdżku i pnia mózgu"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Który francuski lekarz jako jeden z pierwszych argumentował (1825), że mowa jest zlokalizowana w płatach czołowych?",
+        answers: [
+          "Marc Dax",
+          "Jean-Baptiste Bouillaud",
+          "Paul Broca",
+          "Karl Wernicke"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jakiego dodatkowego wniosku dotyczącego lateralizacji funkcji sformułował Bouillaud, obserwując, że pisanie i rysowanie wykonywane są prawą ręką?",
+        answers: [
+          "Funkcje językowe są zlokalizowane w prawej półkuli",
+          "Funkcje językowe są zlokalizowane w lewej półkuli mózgu",
+          "Funkcje językowe są zlokalizowane w móżdżku",
+          "Funkcje językowe nie mają lokalizacji anatomicznej"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jakie było główne odkrycie Marca Daxa (1836) dotyczące języka i mózgu?",
+        answers: [
+          "Związek zaburzeń mowy z uszkodzeniem prawej półkuli",
+          "Związek zaburzeń mowy z uszkodzeniem lewej półkuli mózgu",
+          "Związek zaburzeń mowy z uszkodzeniem móżdżku",
+          "Brak związku między uszkodzeniami mózgu a zaburzeniami mowy"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jak nazywał się najsłynniejszy pacjent Broki, który mógł wypowiadać prawie wyłącznie sylabę „tan”?",
+        answers: [
+          "Pacjent H.M.",
+          "Pacjent N.A.",
+          "Louis Victor Leborgne",
+          "Kent Cochran"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Co wykazała autopsja mózgu pacjenta „Tan”?",
+        answers: [
+          "Rozlane uszkodzenia całej kory mózgowej",
+          "Uszkodzenie lewego płata czołowego",
+          "Uszkodzenie prawego płata skroniowego",
+          "Uszkodzenie móżdżku przy zachowanej korze"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jak nazywa się zespół objawów polegający na trudności w formułowaniu wypowiedzi przy względnie zachowanym rozumieniu mowy, związany z uszkodzeniem lewego płata czołowego?",
+        answers: [
+          "Afazja Wernickego",
+          "Afazja Broki",
+          "Agnozja wzrokowa",
+          "Apraksja ruchowa"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jakie objawy są typowe dla afazji Broki?",
+        answers: [
+          "Płynna, ale niezrozumiała mowa i brak rozumienia",
+          "Spowolniona, niepłynna mowa z licznymi przerwami, przy stosunkowo dobrym rozumieniu mowy",
+          "Całkowita utrata słuchu przy zachowanej mowie",
+          "Prawidłowa mowa, ale brak rozumienia pojedynczych słów"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jak nazywa się obszar w płacie skroniowym odpowiedzialny za rozumienie mowy, którego uszkodzenie opisano w 1874 roku?",
+        answers: [
+          "Ośrodek Broki",
+          "Ośrodek Wernickego",
+          "Pole Brodmanna 17",
+          "Zakręt zaśrodkowy"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jaki jest typowy obraz kliniczny afazji Wernickego?",
+        answers: [
+          "Ubogie słownictwo, niepłynna mowa, dobre rozumienie",
+          "Płynna, często logoreiczna mowa, ale zaburzone rozumienie i niemożność powtarzania",
+          "Niemożność nazywania przedmiotów przy zachowanej płynności i rozumieniu",
+          "Zanik artykulacji głosek przy zachowanej strukturze gramatycznej"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jak Karl Wernicke zinterpretował różnice między afazją Broki a afazją Wernickego w swoim modelu języka?",
+        answers: [
+          "Uznał, że istnieje jeden uniwersalny ośrodek językowy",
+          "Wyróżnił co najmniej dwa ośrodki – dla produkcji i rozumienia mowy – połączone szlakiem nerwowym",
+          "Stwierdził, że język jest funkcją prawej półkuli",
+          "Utrzymywał, że język nie ma podłoża anatomicznego"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jaki szlak włókien istoty białej łączy klasycznie opisywane ośrodki Broki i Wernickego?",
+        answers: [
+          "Pęczek podłużny górny",
+          "Spoidło wielkie",
+          "Pęczek łukowaty (arcuate fasciculus)",
+          "Promienistość wzrokowa"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Jak nazywa się zjawisko, w którym uszkodzenie lewego płata czołowego powoduje afazję ekspresyjną, a uszkodzenie lewego płata skroniowego – afazję recepcyjną, co wzajemnie się uzupełnia jako dowód na lokalizację funkcji?",
+        answers: [
+          "Konwergencja",
+          "Podwójna dysocjacja",
+          "Lateralizacja odwrotna",
+          "Reorganizacja funkcjonalna"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które stwierdzenie najlepiej opisuje lateralizację języka u osób praworęcznych?",
+        answers: [
+          "Język jest w pełni symetrycznie reprezentowany w obu półkulach",
+          "Język jest zazwyczaj reprezentowany głównie w lewej półkuli",
+          "Język jest zazwyczaj reprezentowany głównie w prawej półkuli",
+          "Lateralizacja języka nie występuje u osób praworęcznych"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jakie znaczenie ma obserwacja, że uszkodzenie jednej półkuli mózgu upośledza ruchy przeciwnej strony ciała (kontralateralność) w kontekście języka?",
+        answers: [
+          "Pozwala wiązać zaburzenia mowy z uszkodzeniami lewej półkuli u pacjentów z paraliżem prawej strony",
+          "Dowodzi, że mowa zależy wyłącznie od prawej półkuli",
+          "Sugeruje, że mowa zależy od móżdżku",
+          "Nie ma znaczenia dla lokalizacji języka"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Które z poniższych badań neuroobrazowych dostarcza informacji o bardzo precyzyjnym czasie aktywacji obszarów językowych (rozdzielczość czasowa w milisekundach)?",
+        answers: [
+          "fMRI",
+          "PET",
+          "MEG (magnetoencefalografia)",
+          "CT"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "W badaniu Pulvermüllera i wsp. (MEG) aktywacja którego obszaru pojawiała się około 136 ms po informacji wystarczającej do rozpoznania słowa?",
+        answers: [
+          "Lewy dolny płat czołowy (inferior frontal)",
+          "Lewy górny płat skroniowy (superior temporal)",
+          "Prawy płat ciemieniowy",
+          "Kora wzrokowa w płacie potylicznym"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "O ile milisekund później niż obszar skroniowy aktywował się w tym badaniu lewy dolny płat czołowy (inferior frontal)?",
+        answers: [
+          "O około 5 ms",
+          "O około 10 ms",
+          "O około 20 ms",
+          "O około 50 ms"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jakie zaburzenie mowy polegające na utracie zdolności do formułowania wypowiedzi językowych wiąże się z uszkodzeniem ośrodka Broki?",
+        answers: [
+          "Afazja Wernickego (afazja płynna)",
+          "Afazja Broki (afazja niepłynna, ekspresyjna)",
+          "Agnozja wzrokowa",
+          "Apraksja mowy"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który wcześniejszy badacz przed Broką zaobserwował, że zaburzenia mowy wiążą się z uszkodzeniem lewej półkuli mózgu, lecz pozostał stosunkowo nieznany?",
+        answers: [
+          "Karl Wernicke",
+          "Marc Dax",
+          "Jean-Baptiste Bouillaud",
+          "Camillo Golgi"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jakie zaburzenie charakteryzowało pacjentów z uszkodzeniem obszaru Wernickego?",
+        answers: [
+          "Niemożność wypowiadania jakichkolwiek słów",
+          "Płynne wypowiadanie słów i zdań, lecz bez rozumienia mowy i bez możliwości jej powtarzania",
+          "Utrata słuchu przy zachowanej zdolności mówienia",
+          "Niemożność czytania przy zachowanej zdolności mówienia i rozumienia"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "W którym płacie mózgu zlokalizowany jest ośrodek Wernickego?",
+        answers: [
+          "Płat czołowy",
+          "Płat ciemieniowy",
+          "Płat skroniowy",
+          "Płat potyliczny"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Neuropsychologia jako nauka bada przede wszystkim:",
+        answers: [
+          "Wyłącznie zaburzenia neurologiczne i ich leczenie",
+          "Związki między mózgiem a zachowaniem",
+          "Wyłącznie strukturę anatomiczną układu nerwowego",
+          "Działanie leków psychotropowych na mózg"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które organy były zachowywane przez starożytnych Egipcjan w procesie mumifikacji (wkładane do kanop)?",
+        answers: [
+          "Mózg i serce",
+          "Mózg, wątroba i płuca",
+          "Serce, wątroba, żołądek i jelita",
+          "Tylko serce"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "W jakim mieście Jan Evangelista Purkyně po raz pierwszy opisał komórki nerwowe móżdżku (komórki Purkyniego)?",
+        answers: [
+          "Pradze",
+          "Wiedniu",
+          "Wrocławiu (Breslau)",
+          "Berlinie"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Dlaczego Wrocław jest ważnym miejscem w historii neuropsychologii?",
+        answers: [
+          "Tu opracowano metodę barwienia preparatów Golgiego",
+          "Tu Paul Broca odkrył ośrodek mowy",
+          "Tu Jan Evangelista Purkyně po raz pierwszy opisał komórki nerwowe z móżdżku",
+          "Tu Kartezjusz sformułował teorię dualizmu"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Które dwie postaci otrzymały w 1906 roku Nagrodę Nobla za odkrycia dotyczące budowy układu nerwowego?",
+        answers: [
+          "Paul Broca i Karl Wernicke",
+          "Santiago Ramón y Cajal i Camillo Golgi",
+          "Franz Gall i Johann Spurzheim",
+          "Leonardo da Vinci i Andreas Vesalius"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Neuropsychologia kliniczna skupia się przede wszystkim na:",
+        answers: [
+          "Analizie aktywności elektrycznej mózgu u zdrowych ochotników",
+          "Analizie przypadków pacjentów z uszkodzeniami mózgu i konsekwencjach tych uszkodzeń dla zachowania",
+          "Badaniu genetycznych podstaw funkcjonowania mózgu",
+          "Opracowywaniu leków neuroprotekcyjnych"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Termin „the mind-body problem” w języku polskim odpowiada:",
+        answers: [
+          "Problemowi lokalizacji funkcji mózgowych",
+          "Problemowi psychofizycznemu – relacji między umysłem a ciałem/mózgiem",
+          "Problemowi ewolucji mózgu",
+          "Problemowi neuroplastyczności"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Andreas Vesalius jest uznawany za:",
+        answers: [
+          "Odkrywcę ośrodka mowy w mózgu",
+          "Twórcę frenologii",
+          "Twórcę nowoczesnej anatomii człowieka, autora dzieła o budowie ciała ludzkiego",
+          "Odkrywcę neuronu jako podstawowej jednostki układu nerwowego"
+        ],
+        correct: 2 // C
+      }
+    ];
 
-  <div class="box">
-    <button type="button" onclick="finishQuiz()">Zakończ test</button>
-    <div id="result" class="result"></div>
-  </div>
+    // tasowanie odpowiedzi w każdym pytaniu
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
 
-<script>
-const questions = [
-  {
-    q: "Co oznacza stwierdzenie, że język jest zarówno zlokalizowany, jak i zlateralizowany w mózgu?",
-    a: [
-      "Określone obszary mózgu odpowiadają za język i zazwyczaj znajdują się głównie w jednej (lewej) półkuli",
-      "Język zależy wyłącznie od kory przedczołowej w obu półkulach",
-      "Funkcje językowe są rozproszone losowo w całym mózgu bez specjalizacji",
-      "Język jest zależny tylko od móżdżku i pnia mózgu"
-    ],
-    c: 0
-  },
-  {
-    q: "Który francuski lekarz jako jeden z pierwszych argumentował, że mowa jest zlokalizowana w płatach czołowych (1825)?",
-    a: [
-      "Jean-Baptiste Bouillaud",
-      "Marc Dax",
-      "Paul Broca",
-      "Karl Wernicke"
-    ],
-    c: 0
-  },
-  {
-    q: "Jakiego dodatkowego wniosku dotyczącego lateralizacji funkcji sformułował Bouillaud, obserwując, że pisanie i rysowanie wykonywane są prawą ręką?",
-    a: [
-      "Funkcje językowe są zlokalizowane w lewej półkuli mózgu",
-      "Funkcje językowe są zlokalizowane w prawej półkuli",
-      "Funkcje językowe są zlokalizowane w móżdżku",
-      "Funkcje językowe nie mają lokalizacji anatomicznej"
-    ],
-    c: 0
-  },
-  {
-    q: "Jakie było główne odkrycie Marca Daxa (1836) dotyczące języka i mózgu?",
-    a: [
-      "Związek zaburzeń mowy z uszkodzeniem lewej półkuli mózgu",
-      "Związek zaburzeń mowy z uszkodzeniem prawej półkuli",
-      "Związek zaburzeń mowy z uszkodzeniem móżdżku",
-      "Brak związku między uszkodzeniami mózgu a zaburzeniami mowy"
-    ],
-    c: 0
-  },
-  {
-    q: "Jak nazywał się najsłynniejszy pacjent Broki, który mógł wypowiadać prawie wyłącznie sylabę „tan”?",
-    a: [
-      "Louis Victor Leborgne",
-      "Pacjent H.M.",
-      "Pacjent N.A.",
-      "Kent Cochran"
-    ],
-    c: 0
-  },
-  {
-    q: "Co wykazała autopsja mózgu pacjenta „Tan”?",
-    a: [
-      "Uszkodzenie lewego płata czołowego",
-      "Rozlane uszkodzenia całej kory mózgowej",
-      "Uszkodzenie prawego płata skroniowego",
-      "Uszkodzenie móżdżku przy zachowanej korze"
-    ],
-    c: 0
-  },
-  {
-    q: "Jak nazywa się zespół objawów polegający na trudnościach w formułowaniu wypowiedzi przy względnie zachowanym rozumieniu mowy, związany z uszkodzeniem lewego płata czołowego?",
-    a: [
-      "Afazja Broki",
-      "Afazja Wernickego",
-      "Agnozja wzrokowa",
-      "Apraksja ruchowa"
-    ],
-    c: 0
-  },
-  {
-    q: "Jakie objawy są typowe dla afazji Broki?",
-    a: [
-      "Spowolniona, niepłynna mowa z licznymi przerwami, przy stosunkowo dobrym rozumieniu mowy",
-      "Płynna, ale niezrozumiała mowa i brak rozumienia",
-      "Całkowita utrata słuchu przy zachowanej mowie",
-      "Prawidłowa mowa, ale brak rozumienia pojedynczych słów"
-    ],
-    c: 0
-  },
-  {
-    q: "Jak nazywa się obszar w płacie skroniowym odpowiedzialny za rozumienie mowy, którego uszkodzenie opisano w 1874 roku?",
-    a: [
-      "Ośrodek Wernickego",
-      "Ośrodek Broki",
-      "Pole Brodmanna 17",
-      "Zakręt zaśrodkowy"
-    ],
-    c: 0
-  },
-  {
-    q: "Jaki jest typowy obraz kliniczny afazji Wernickego?",
-    a: [
-      "Płynna, często logoreiczna mowa, ale zaburzone rozumienie i niemożność powtarzania",
-      "Ubogie słownictwo, niepłynna mowa, dobre rozumienie",
-      "Niemożność nazywania przedmiotów przy zachowanej płynności i rozumieniu",
-      "Zanik artykulacji głosek przy zachowanej strukturze gramatycznej"
-    ],
-    c: 0
-  },
-  {
-    q: "Jak Karl Wernicke zinterpretował różnice między afazją Broki a afazją Wernickego w swoim modelu języka?",
-    a: [
-      "Wyróżnił co najmniej dwa ośrodki — dla produkcji i rozumienia mowy — połączone szlakiem nerwowym",
-      "Uznał, że istnieje jeden uniwersalny ośrodek językowy",
-      "Stwierdził, że język jest funkcją prawej półkuli",
-      "Utrzymywał, że język nie ma podłoża anatomicznego"
-    ],
-    c: 0
-  },
-  {
-    q: "Jaki szlak włókien istoty białej łączy klasycznie opisywane ośrodki Broki i Wernickego?",
-    a: [
-      "Pęczek łukowaty (arcuate fasciculus)",
-      "Spoidło wielkie",
-      "Pęczek podłużny górny",
-      "Promienistość wzrokowa"
-    ],
-    c: 0
-  },
-  {
-    q: "Jak nazywa się zjawisko, w którym uszkodzenie lewego płata czołowego powoduje afazję ekspresyjną, a uszkodzenie lewego płata skroniowego — afazję recepcyjną, co wzajemnie się uzupełnia jako dowód na lokalizację funkcji?",
-    a: [
-      "Podwójna dysocjacja",
-      "Konwergencja",
-      "Lateralizacja odwrotna",
-      "Reorganizacja funkcjonalna"
-    ],
-    c: 0
-  },
-  {
-    q: "Które stwierdzenie najlepiej opisuje lateralizację języka u osób praworęcznych?",
-    a: [
-      "Język jest zazwyczaj reprezentowany głównie w lewej półkuli",
-      "Język jest w pełni symetrycznie reprezentowany w obu półkulach",
-      "Język jest zazwyczaj reprezentowany głównie w prawej półkuli",
-      "Lateralizacja języka nie występuje u osób praworęcznych"
-    ],
-    c: 0
-  },
-  {
-    q: "Jakie znaczenie ma obserwacja, że uszkodzenie jednej półkuli mózgu upośledza ruchy przeciwnej strony ciała (kontralateralność) w kontekście języka?",
-    a: [
-      "Pozwala wiązać zaburzenia mowy z uszkodzeniami lewej półkuli u pacjentów z porażeniem prawej strony",
-      "Dowodzi, że mowa zależy wyłącznie od prawej półkuli",
-      "Sugeruje, że mowa zależy od móżdżku",
-      "Nie ma znaczenia dla lokalizacji języka"
-    ],
-    c: 0
-  },
-  {
-    q: "Które z badań neuroobrazowych dostarcza informacji o bardzo precyzyjnym czasie aktywacji obszarów językowych (rozdzielczość czasowa w milisekundach)?",
-    a: [
-      "MEG (magnetoencefalografia)",
-      "fMRI",
-      "PET",
-      "CT"
-    ],
-    c: 0
-  },
-  {
-    q: "W badaniu Pulvermüllera i wsp. MEG aktywacja którego obszaru pojawiała się około 136 ms po informacji wystarczającej do rozpoznania słowa?",
-    a: [
-      "Lewy górny płat skroniowy (superior temporal)",
-      "Lewy dolny płat czołowy (inferior frontal)",
-      "Prawy płat ciemieniowy",
-      "Kora wzrokowa w płacie potylicznym"
-    ],
-    c: 0
-  },
-  {
-    q: "O ile milisekund później niż obszar skroniowy aktywował się w tym badaniu lewy dolny płat czołowy (inferior frontal)?",
-    a: [
-      "O około 22 ms",
-      "O około 5 ms",
-      "O około 10 ms",
-      "O około 100 ms"
-    ],
-    c: 0
-  },
-  {
-    q: "Co sugeruje sekwencja: najpierw aktywacja obszarów skroniowych, a następnie czołowych podczas przetwarzania słowa mówionego?",
-    a: [
-      "Najpierw zachodzi analiza akustyczno-percepcyjna, potem integracja i kontrola językowa w obszarach czołowych",
-      "Najpierw analiza semantyczna, a dopiero potem analiza akustyczna",
-      "Obszary czołowe nie biorą udziału w przetwarzaniu języka",
-      "Proces jest odwrotny: najpierw czołowe, potem skroniowe"
-    ],
-    c: 0
-  },
-  {
-    q: "Czym jest komponent ERP N400 w kontekście przetwarzania języka?",
-    a: [
-      "Negatywną falą około 400 ms, wrażliwą na naruszenia oczekiwań semantycznych",
-      "Wczesną falą związaną z percepcją twarzy",
-      "Dodatnią falą około 100 ms związaną z detekcją bodźca",
-      "Zapisem potencjału spoczynkowego neuronu"
-    ],
-    c: 0
-  },
-  {
-    q: "W jakich warunkach amplituda N400 jest największa?",
-    a: [
-      "Gdy końcowe słowo zdania jest semantycznie niezgodne lub zaskakujące",
-      "Gdy końcowe słowo zdania jest semantycznie oczekiwane",
-      "Gdy wszystkie słowa zdania są identyczne",
-      "Gdy prezentuje się same ciągi losowych liter"
-    ],
-    c: 0
-  },
-  {
-    q: "Czym jest komponent P600 obserwowany w badaniach EEG nad językiem?",
-    a: [
-      "Zwykle wiąże się z przetwarzaniem naruszeń składniowych",
-      "Zwykle wiąże się z przetwarzaniem semantycznym",
-      "Jest potencjałem mięśniowym z mięśni karku",
-      "Odpowiada wyłącznie za przetwarzanie dźwięków niejęzykowych"
-    ],
-    c: 0
-  },
-  {
-    q: "Jaką topografię elektrod wykazuje zwykle największa amplituda N400 w badaniach językowych?",
-    a: [
-      "Ciemieniową i centralną, często z przewagą prawej półkuli",
-      "Czołową, nad płatem czołowym",
-      "Potyliczną, nad korą wzrokową",
-      "Skroniową, tylko po stronie prawej"
-    ],
-    c: 0
-  },
-  {
-    q: "Co pokazują badania potencjałów wywołanych (ERP) związanych z językiem, takich jak N400, w kontekście lokalizacji funkcji językowych?",
-    a: [
-      "Że przetwarzanie języka angażuje rozległe sieci, ale można wyróżnić czasowo i przestrzennie różne etapy przetwarzania",
-      "Że język jest zlokalizowany wyłącznie w jednym punkcie mózgu",
-      "Że język nie angażuje kory mózgowej",
-      "Że tylko pień mózgu generuje odpowiedzi językowe"
-    ],
-    c: 0
-  },
-  {
-    q: "Dlaczego dyskusja o „nowej frenologii” jest istotna w kontekście współczesnych map języka w mózgu?",
-    a: [
-      "Bo istnieje ryzyko zbyt prostego utożsamiania pojedynczych obszarów z całymi złożonymi funkcjami językowymi",
-      "Bo współczesne metody dowodzą, że frenologia była w pełni poprawna",
-      "Bo EEG nie nadaje się do badania języka",
-      "Bo lateralizacja języka została całkowicie obalona"
-    ],
-    c: 0
-  },
-  {
-    q: "Jak najlepiej opisać współczesne ujęcie języka w mózgu?",
-    a: [
-      "Język to wynik działania sieci wielu obszarów skroniowych, czołowych i ciemieniowych połączonych szlakami istoty białej",
-      "Język to pojedynczy ośrodek w lewym płacie czołowym",
-      "Język zależy wyłącznie od hipokampa",
-      "Język nie ma reprezentacji neuronalnej"
-    ],
-    c: 0
-  },
-  {
-    q: "Jakie znaczenie ma fakt, że pacjenci z afazją Broki często mają prawostronny niedowład kończyn?",
-    a: [
-      "Potwierdza, że uszkodzenie lewego płata czołowego wpływa zarówno na kontrolę ruchów prawej strony ciała, jak i na produkcję mowy",
-      "Wskazuje to na uszkodzenie prawej półkuli mózgu",
-      "Świadczy o niezależności funkcji ruchowych i językowych",
-      "Sugeruje, że za mowę odpowiada móżdżek"
-    ],
-    c: 0
-  },
-  {
-    q: "Co odróżnia metodologicznie podejście Broki i Wernickego do języka od podejścia frenologów?",
-    a: [
-      "Oparcie na systematycznych korelacjach między miejscem uszkodzenia mózgu a objawami językowymi, zamiast spekulacji na podstawie kształtu czaszki",
-      "Brak zainteresowania anatomią",
-      "Stosowanie wyłącznie metod obrazowania fMRI",
-      "Analizę wyłącznie zdrowych ochotników"
-    ],
-    c: 0
-  },
-  {
-    q: "Jak można podsumować wkład przypadków klinicznych, takich jak „Tan”, do zrozumienia języka i mózgu?",
-    a: [
-      "Pokazały, że uszkodzenia określonych obszarów mózgu wiążą się z bardzo specyficznymi deficytami językowymi",
-      "Wykazały, że język jest całkowicie niezależny od struktury mózgu",
-      "Udowodniły, że mózg działa jako niepodzielna masa",
-      "Obaliły koncepcję lateralizacji języka"
-    ],
-    c: 0
-  },
-  {
-    q: "Dlaczego z perspektywy egzaminu z neuropsychologii ważne jest łączenie wiedzy o afazjach, lateralizacji i danych z EEG/MEG w jednym zagadnieniu „Język i mózg”?",
-    a: [
-      "Bo pełne zrozumienie języka wymaga połączenia dowodów anatomicznych, klinicznych i czasowo-przestrzennych danych o aktywności mózgu",
-      "Bo jedynie historia kliniczna ma znaczenie, a metody neurofizjologiczne są drugorzędne",
-      "Bo język to wyłącznie kwestia potencjałów wywołanych, a nie anatomii",
-      "Bo metody obrazowania całkowicie zastąpiły badania kliniczne"
-    ],
-    c: 0
-  }
-];
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
 
-const quiz = document.getElementById('quiz');
+    const letters = ["A", "B", "C", "D"];
+    const container = document.getElementById("questionsContainer");
 
-questions.forEach((item, i) => {
-  const div = document.createElement('div');
-  div.className = 'q';
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
 
-  // losowa kolejność odpowiedzi dla każdego pytania
-  const indices = item.a.map((_, idx) => idx);
-  for (let j = indices.length - 1; j > 0; j--) {
-    const k = Math.floor(Math.random() * (j + 1));
-    [indices[j], indices[k]] = [indices[k], indices[j]];
-  }
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
 
-  let answersHtml = "";
-  indices.forEach((idx) => {
-    answersHtml += `
-      <label>
-        <input type="radio" name="q${i}" value="${idx}">
-        ${item.a[idx]}
-      </label>
-    `;
-  });
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
 
-  div.innerHTML = `<h3>${i+1}. ${item.q}</h3>` + answersHtml;
-  quiz.appendChild(div);
-});
+      q.answers.forEach((answerText, aIdx) => {
+        const id = `q${idx}_a${aIdx}`;
 
-function finishQuiz() {
-  let correct = 0;
-  questions.forEach((item, i) => {
-    const picked = document.querySelector(\`input[name="q\${i}"]:checked\`);
-    if (picked && Number(picked.value) === item.c) correct++;
-  });
-  const percent = Math.round((correct / questions.length) * 100);
-  const result = document.getElementById('result');
-  result.style.display = 'block';
-  result.innerHTML = `
-    <h2>Podsumowanie wyników</h2>
-    <p>Poprawne odpowiedzi: <strong>${correct} z ${questions.length}</strong></p>
-    <p>Wynik procentowy: <strong>${percent}%</strong></p>
-  `;
-  window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'});
-}
-</script>
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+        radio.id = id;
+
+        const letterSpan = document.createElement("span");
+        letterSpan.className = "option-letter";
+        letterSpan.textContent = letters[aIdx] + ")";
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(letterSpan);
+        label.appendChild(textSpan);
+
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
 </body>
 </html>
