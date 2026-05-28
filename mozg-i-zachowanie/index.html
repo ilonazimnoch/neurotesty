@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zagadnienie 1 — Mózg i zachowanie</title>
+  <style>
+    body{font-family:Arial,sans-serif;line-height:1.5;max-width:900px;margin:0 auto;padding:20px;background:#f7f7f7;color:#222}
+    .box{background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px}
+    h1,h2{margin-top:0}
+    .q{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #eee}
+    .q:last-child{border-bottom:none}
+    label{display:block;padding:8px 10px;margin:6px 0;border:1px solid #ddd;border-radius:8px;background:#fafafa;cursor:pointer}
+    button{padding:12px 18px;border:none;border-radius:999px;background:#0b6b6f;color:#fff;font-size:16px;cursor:pointer}
+    .result{display:none;margin-top:20px;padding:16px;border-radius:10px;background:#eef7f7;border:1px solid #cce2e2}
+    .small{color:#666;font-size:14px}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Zagadnienie 1 — Mózg i zachowanie z perspektywy historycznej</h1>
+    <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+    <p class="small">Wersja prosta do GitHub Pages.</p>
+  </div>
+
+  <form id="quiz" class="box"></form>
+
+  <div class="box">
+    <button type="button" onclick="finishQuiz()">Zakończ test</button>
+    <div id="result" class="result"></div>
+  </div>
+
+<script>
+const questions = [
+{q:'Jak starożytni Egipcjanie postępowali z mózgiem podczas mumifikowania zwłok?',a:['Zachowywali go w specjalnych naczyniach (kanopach) jako organ niezbędny w życiu pozagrobowym','Usuwali go z ciała przez nos specjalnymi narzędziami, nie uznając za ważny organ','Balsamowali go razem z sercem i wątrobą','Pozostawiali go na miejscu, nie ingerując w struktury głowy'],c:1},
+{q:'Który organ był przez starożytnych (w tym Arystotelesa) uznawany za główne źródło życia psychicznego i zachowania?',a:['Mózg','Wątroba','Serce','Płuca'],c:2},
+{q:'Jaką funkcję przypisywał mózgowi Arystoteles?',a:['Centrum myślenia i emocji','Jednostkę chłodzącą ciepło wytwarzane przez serce','Siedlisko duszy nieśmiertelnej','Organ kontrolujący ruchy ciała'],c:1},
+{q:'Teoria neuronalna głosi, że:',a:['Mózg jako całość jest źródłem zachowania','Neurony tworzą jedną ciągłą sieć (retikulum) bez wyraźnych granic','Podstawową jednostką strukturalną i funkcjonalną mózgu jest pojedynczy neuron','Zachowanie jest wyłącznie efektem działania kory mózgowej'],c:2},
+{q:'Teoria mózgu, jako jedna z dwóch fundamentalnych teorii neuropsychologii, głosi, że:',a:['Umysł jest niezależny od mózgu i nie daje się do niego zredukować','To mózg (a nie np. serce czy dusza) jest źródłem zachowania','Wszystkie funkcje umysłowe zlokalizowane są w korze mózgowej','Mózg składa się wyłącznie z neuronów'],c:1},
+{q:'Co to jest mentalizm jako koncepcja filozoficzna w kontekście historii neuropsychologii?',a:['Pogląd, że mózg jest jedynym źródłem psychiki','Pogląd, że niematerialny umysł (psychika) jest źródłem ludzkich myśli i stanów psychicznych','Przekonanie, że zachowanie człowieka da się w pełni wyjaśnić przez biologię','Teoria zakładająca, że kształt czaszki ujawnia zdolności umysłowe'],c:1},
+{q:'Kartezjusz zaproponował filozoficzne stanowisko zwane dualizmem. Które zdanie najtrafniej je opisuje?',a:['Ciało i umysł to jedna i ta sama substancja materialna','Zachowanie człowieka jest wyłącznie odruchem na bodźce zewnętrzne','Człowiek składa się z dwóch substancji: materialnego ciała i niematerialnego umysłu','Umysł istnieje niezależnie od ciała i nie może na nie wpływać'],c:2},
+{q:'Dlaczego Kartezjusz uważał szyszynkę za miejsce interakcji między ciałem a umysłem?',a:['Bo była największą strukturą mózgu','Bo była jedyną niesparowaną (nieparzystą) strukturą mózgu, niemającą odpowiednika w drugiej półkuli','Bo wytwarzała hormon odpowiedzialny za świadomość','Bo znajdowała się bezpośrednio nad korą mózgową'],c:1},
+{q:'Jak nazywamy problem filozoficzny dotyczący relacji między niematerialnym umysłem a materialnym ciałem (mózgiem)?',a:['Problem lokalizacji funkcji','Problem psychofizyczny (the mind-body problem)','Problem dualizmu funkcjonalnego','Problem redukcjonizmu biologicznego'],c:1},
+{q:'Który grecki lekarz jest uznawany za prekursora anatomii i jednego z pierwszych przeprowadzających systematyczne sekcje ludzkiego ciała?',a:['Galen','Arystoteles','Herofilus','Hipokrates'],c:2},
+{q:'Co wykazał greko-rzymski lekarz Galen na podstawie swoich obserwacji anatomicznych?',a:['Że mózg jest organem chłodzącym serce','Że zdolność mówienia jest kontrolowana przez mózg, a nie przez serce','Że serce jest siedliskiem duszy','Że neurony tworzą sieć retikularną'],c:1},
+{q:'Jaką metodą starożytnego Egiptu usuwano mózg z ciała podczas mumifikacji?',a:['Przez nacięcie w czaszce z tyłu głowy','Przez usta za pomocą łyżki','Przez nos za pomocą specjalnych narzędzi','Przez wywiercenie otworu w skroni'],c:2},
+{q:'Renesansowi anatomowie, w tym Leonardo da Vinci i Vesalius, w swoich rysunkach mózgu kładli szczególny nacisk na:',a:['Korę mózgową i jej zakręty','Komory mózgu wypełnione płynem mózgowo-rdzeniowym','Aksony i synapsy między neuronami','Płat czołowy jako centrum umysłu'],c:1},
+{q:'Franz Joseph Gall i Johann Spurzheim byli głównymi przedstawicielami:',a:['Teorii neuronalnej','Frenologii','Dualizmu kartezjańskiego','Materializmu neurologicznego'],c:1},
+{q:'Pierwsza koncepcja frenologów — koncepcja lokalizacyjna — głosi, że:',a:['Kształt czaszki determinuje zdolności umysłowe','Wszystkie funkcje umysłowe zlokalizowane są w jednym obszarze mózgu','Różne obszary mózgu pełnią różne funkcje','Mózg działa jako jednolita całość, bez podziału na obszary funkcjonalne'],c:2},
+{q:'Dlaczego frenologia jest dziś klasyfikowana jako pseudonauka?',a:['Bo twierdziła, że mózg pełni różne funkcje w różnych obszarach','Bo opierała się na przekonaniu, że kształt kości czaszki ujawnia rozwinięcie poszczególnych obszarów mózgu i cechy umysłowe','Bo nie uznawała mózgu za organ odpowiedzialny za zachowanie','Bo negowała istnienie synaps'],c:1},
+{q:'Paul Broca dokonał swojego przełomowego odkrycia, analizując pacjenta zwanego „Tan”. Jaką niezdolność wykazywał ten pacjent?',a:['Całkowitą utratę słuchu','Niemożność rozumienia mowy przy zachowanej zdolności mówienia','Całkowitą utratę zdolności do formułowania wypowiedzi słownych — mógł wypowiadać tylko jedną sylabę „tan”','Niemożność rozpoznawania twarzy'],c:2},
+{q:'W której półkuli i w którym płacie mózgu zlokalizowany jest ośrodek Broki?',a:['Prawa półkula, płat skroniowy','Lewa półkula, płat skroniowy','Prawa półkula, płat czołowy','Lewa półkula, płat czołowy'],c:3},
+{q:'Jak nazywa się zaburzenie mowy polegające na utracie zdolności do formułowania wypowiedzi językowych przy uszkodzeniu ośrodka Broki?',a:['Afazja Wernickego (afazja płynna)','Afazja Broki (afazja niefleksyjna / ekspresyjna)','Agnozja wzrokowa','Apraksja mowy'],c:1},
+{q:'Który wcześniejszy badacz (przed Brocą) zaobserwował, że zaburzenia mowy wiążą się z uszkodzeniem lewej półkuli mózgu, lecz pozostał stosunkowo nieznany?',a:['Karl Wernicke','Marc Dax','Jean-Baptiste Bouillaud','Camillo Golgi'],c:1},
+{q:'Jakie zaburzenie charakteryzowało pacjentów z uszkodzeniem obszaru Wernickego?',a:['Niemożność wypowiadania jakichkolwiek słów','Płynne wypowiadanie słów i zdań, lecz bez rozumienia mowy i bez możliwości jej powtórzenia','Utrata słuchu przy zachowanej zdolności mówienia','Niemożność czytania przy zachowanej zdolności mówienia i rozumienia'],c:1},
+{q:'W którym płacie mózgu zlokalizowany jest ośrodek Wernickego?',a:['Płat czołowy','Płat ciemieniowy','Płat skroniowy','Płat potyliczny'],c:2},
+{q:'Neuropsychologia jako nauka bada przede wszystkim:',a:['Wyłącznie zaburzenia neurologiczne i ich leczenie','Związki między mózgiem a zachowaniem','Wyłącznie strukturę anatomiczną układu nerwowego','Działanie leków psychotropowych na mózg'],c:1},
+{q:'Które organy były zachowywane przez starożytnych Egipcjan w procesie mumifikacji (wkładane do kanop)?',a:['Mózg i serce','Mózg, wątroba i płuca','Serce, wątroba, żołądek','Tylko serce'],c:2},
+{q:'W jakim mieście Jan Evangelista Purkyně po raz pierwszy opisał komórkę nerwową (komórkę Purkyňego)?',a:['Pradze','Wiedniu','Wrocławiu (Breslau)','Berlinie'],c:2},
+{q:'Dlaczego Wrocław jest ważnym miejscem w historii neuropsychologii?',a:['Tu opracowano metodę barwienia preparatów Golgiego','Tu Paul Broca odkrył ośrodek mowy','Tu Jan Evangelista Purkyně po raz pierwszy opisał komórkę nerwową z móżdżku','Tu Kartezjusz sformułował teorię dualizmu'],c:2},
+{q:'Które dwie postaci otrzymały w 1906 roku Nagrodę Nobla za odkrycia dotyczące budowy układu nerwowego?',a:['Paul Broca i Karl Wernicke','Santiago Ramón y Cajal i Camillo Golgi','Franz Gall i Johann Spurzheim','Leonardo da Vinci i Andreas Vesalius'],c:1},
+{q:'Neuropsychologia kliniczna skupia się przede wszystkim na:',a:['Analizie aktywności elektrycznej mózgu u zdrowych ochotników','Analizie przypadków pacjentów z uszkodzeniami mózgu i konsekwencjach tych uszkodzeń dla zachowania','Badaniu genetycznych podstaw funkcjonowania mózgu','Opracowywaniu leków neuroprotekcyjnych'],c:1},
+{q:'Termin „the mind-body problem” w języku polskim odpowiada:',a:['Problemowi lokalizacji funkcji mózgowych','Problemowi psychofizycznemu (relacji między umysłem a ciałem/mózgiem)','Problemowi ewolucji mózgu','Problemowi neuroplastyczności'],c:1},
+{q:'Andreas Vesalius jest uznawany za:',a:['Odkrywcę ośrodka mowy w mózgu','Twórcę frenologii','Twórcę nowoczesnej anatomii człowieka, autora dzieła o budowie ciała ludzkiego','Odkrywcę neuronu jako podstawowej jednostki układu nerwowego'],c:2}
+];
+const quiz = document.getElementById('quiz');
+questions.forEach((item, i) => {
+  const div = document.createElement('div');
+  div.className = 'q';
+  div.innerHTML = '<h3>'+(i+1)+'. '+item.q+'</h3>' + item.a.map((opt, j) =>
+    '<label><input type="radio" name="q'+i+'" value="'+j+'"> '+opt+'</label>'
+  ).join('');
+  quiz.appendChild(div);
+});
+function finishQuiz(){
+  let correct = 0;
+  questions.forEach((item, i) => {
+    const picked = document.querySelector('input[name="q'+i+'"]:checked');
+    if (picked && Number(picked.value) === item.c) correct++;
+  });
+  const percent = Math.round((correct / questions.length) * 100);
+  const result = document.getElementById('result');
+  result.style.display = 'block';
+  result.innerHTML = '<h2>Podsumowanie wyników</h2>'+
+    '<p>Poprawne odpowiedzi: <strong>'+correct+' z '+questions.length+'</strong></p>'+
+    '<p>Wynik procentowy: <strong>'+percent+'%</strong></p>';
+  window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
