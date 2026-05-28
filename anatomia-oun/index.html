@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 4 — Anatomia OUN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 4 — Anatomia OUN</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Która z poniższych osi anatomicznych wyznacza kierunek od czubka (rostrum) do ogona?",
+        answers: [
+          "Oś grzbietowo-brzuszna (dorsoventral)",
+          "Oś rostralno-kaudalna (rostral–caudal)",
+          "Oś przyrodkowo-boczna (medial–lateral)",
+          "Oś pozioma (horizontal)"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Przekrój czołowy (wieńcowy, coronalny) mózgu dzieli go na:",
+        answers: [
+          "Plastry równoległe do podłoża",
+          "Plastry wzdłuż szczeliny podłużnej (sagittalnie)",
+          "Plastry z góry na dół, prostopadle do szczeliny podłużnej",
+          "Plastry pod kątem 45° do osi rostralno-kaudalnej"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Struktury określane jako „ventral” (brzuszne) leżą:",
+        answers: [
+          "W górnej (superior) części mózgu",
+          "Bliżej linii środkowej",
+          "W dolnej (inferior) części mózgu",
+          "Bliżej boków czaszki"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Ośrodkowy układ nerwowy (OUN) składa się z:",
+        answers: [
+          "Mózgowia oraz nerwów obwodowych",
+          "Mózgowia oraz rdzenia kręgowego",
+          "Kory mózgowej, móżdżku i rdzenia kręgowego",
+          "Pnia mózgu, układu limbicznego i rdzenia kręgowego"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które z poniższych stwierdzeń dotyczących mózgowia jest prawidłowe?",
+        answers: [
+          "Mózgowie składa się z kory mózgowej, móżdżku i pnia mózgu",
+          "Mózgowie składa się z rdzenia przedłużonego, mostu i kory mózgowej",
+          "Mózgowie nie obejmuje móżdżku",
+          "Mózgowie i rdzeń kręgowy tworzą obwodowy układ nerwowy"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Co wchodzi w skład pnia mózgu (brain stem)?",
+        answers: [
+          "Kresomózgowie, śródmózgowie i rdzeń przedłużony",
+          "Rdzeń przedłużony, most i śródmózgowie",
+          "Móżdżek, most i rdzeń przedłużony",
+          "Wzgórze, podwzgórze i rdzeń przedłużony"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jaka część mózgowia NIE wchodzi w skład pnia mózgu?",
+        answers: [
+          "Rdzeń przedłużony (medulla)",
+          "Most (pons)",
+          "Móżdżek (cerebellum)",
+          "Śródmózgowie (midbrain)"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "W ontogenetycznym podziale mózgowia kręgowców wyróżniamy:",
+        answers: [
+          "Kresomózgowie, śródmózgowie i tyłomózgowie",
+          "Przodomózgowie, śródmózgowie i tyłomózgowie",
+          "Przodomózgowie, móżdżek i rdzeń kręgowy",
+          "Pień mózgu, układ limbiczny i korę mózgową"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które struktury należą do przodomózgowia (forebrain) u człowieka?",
+        answers: [
+          "Rdzeń przedłużony i most",
+          "Kresomózgowie i międzymózgowie",
+          "Śródmózgowie i móżdżek",
+          "Wzgórze i rdzeń kręgowy"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Tyłomózgowie (hindbrain) obejmuje:",
+        answers: [
+          "Korę mózgową, wzgórze i podwzgórze",
+          "Jądra podstawy, układ limbiczny i hipokamp",
+          "Rdzeń przedłużony, most i móżdżek",
+          "Śródmózgowie, most i rdzeń kręgowy"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Skąd pochodzi sygnał motoryczny w rdzeniu kręgowym?",
+        answers: [
+          "Z korzeni grzbietowych (dorsal roots)",
+          "Z korzeni brzusznych (ventral / anterior roots)",
+          "Z istoty białej rdzenia",
+          "Ze zwojów grzbietowych (dorsal root ganglia)"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Ile par nerwów rdzeniowych tworzy człowiek łącznie?",
+        answers: [
+          "12 par",
+          "24 pary",
+          "31 par",
+          "42 pary"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Istota szara rdzenia kręgowego ma kształt litery:",
+        answers: [
+          "O",
+          "H",
+          "T",
+          "X"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Ile par nerwów czaszkowych (cranial nerves) posiada człowiek?",
+        answers: [
+          "8",
+          "10",
+          "12",
+          "14"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Rdzeń przedłużony (medulla oblongata) jest bezpośrednim przedłużeniem:",
+        answers: [
+          "Móżdżku",
+          "Mostu (pons)",
+          "Rdzenia kręgowego",
+          "Śródmózgowia"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "W rdzeniu przedłużonym znajdują się grupy komórek biorące udział w regulacji:",
+        answers: [
+          "Ruchów precyzyjnych palców",
+          "Ciśnienia krwi i oddechu",
+          "Rytmów dobowych",
+          "Konsolidacji pamięci"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Wzgórki czworacze górne i dolne biorą udział w:",
+        answers: [
+          "Regulacji ciśnienia krwi i oddychania",
+          "Koordynacji ruchowej i równowadze",
+          "Percepcji wzrokowej i słuchowej",
+          "Kontroli rytmów dobowych"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "W śródmózgowiu (midbrain) syntetyzowana jest głównie:",
+        answers: [
+          "Serotonina (w jądrach szwu)",
+          "Acetylocholina (w jądrze podstawnym)",
+          "Dopamina (w istocie czarnej / substantia nigra)",
+          "Noradrenalina (w miejscu sinawym)"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Móżdżek (cerebellum) jest zaangażowany przede wszystkim w:",
+        answers: [
+          "Przetwarzanie emocji i pamięć długotrwałą",
+          "Regulację głodu, pragnienia i zachowań seksualnych",
+          "Utrzymanie postawy ciała, koordynację ruchów i uczenie się zdolności ruchowych",
+          "Przełączanie informacji sensorycznej do kory"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Jako część której pochodnej ontogenetycznej jest móżdżek?",
+        answers: [
+          "Przodomózgowia (forebrain)",
+          "Śródmózgowia (midbrain)",
+          "Tyłomózgowia (hindbrain)",
+          "Rdzenia kręgowego"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Wzgórze (thalamus) pełni rolę tzw. „switch box”, czyli:",
+        answers: [
+          "Reguluje zachowania homeostatyczne i popędowe",
+          "Analizuje i przekazuje większość informacji sensorycznych do kory mózgowej",
+          "Integruje informacje dotyczące emocji i pamięci",
+          "Steruje ruchami precyzyjnymi kończyn"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które informacje sensoryczne omijają wzgórze i trafiają bezpośrednio do kory?",
+        answers: [
+          "Wzrokowe",
+          "Słuchowe",
+          "Węchowe",
+          "Dotykowe"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Podwzgórze (hypothalamus) kontroluje bezpośrednio wydzielanie hormonów przez:",
+        answers: [
+          "Szyszynkę (epiphysis)",
+          "Nadnercza",
+          "Przysadkę mózgową (pituitary gland)",
+          "Tarczycę"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Jądro nadskrzyżowaniowe (suprachiasmatic nucleus) podwzgórza reguluje:",
+        answers: [
+          "Głód i pragnienie",
+          "Wydzielanie hormonów wzrostu",
+          "Zsynchronizowane ze światłem rytmy dobowe (cykl sen–czuwanie)",
+          "Przetwarzanie emocji strachu"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Jądra podstawy (basal ganglia) NIE obejmują:",
+        answers: [
+          "Jądra ogoniastego (caudate nucleus)",
+          "Skorupy (putamen)",
+          "Hipokampa",
+          "Gałki bladej (globus pallidus)"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Jądro ogoniaste i skorupa razem tworzą strukturę zwaną:",
+        answers: [
+          "Układem limbicznym",
+          "Prążkowiem (striatum)",
+          "Ciałem migdałowatym",
+          "Jądrem półleżącym (nucleus accumbens)"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Dysfunkcje jąder podstawy są charakterystyczne dla:",
+        answers: [
+          "Tylko choroby Alzheimera",
+          "Choroby Parkinsona, pląsawicy Huntingtona i OCD",
+          "Wyłącznie schizofrenii",
+          "Tylko schorzeń metabolicznych"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Która ze struktur NIE należy do układu limbicznego?",
+        answers: [
+          "Hipokamp",
+          "Ciało migdałowate (amygdala)",
+          "Zakręt obręczy (cingulate gyrus)",
+          "Wzgórki czworacze (colliculi)"
+        ],
+        correct: 3 // D
+      },
+      {
+        question: "Hipokamp jest kluczową strukturą przede wszystkim dla:",
+        answers: [
+          "Kontroli motorycznej i utrzymania równowagi",
+          "Regulacji rytmów dobowych",
+          "Przenoszenia informacji z pamięci krótkotrwałej do długotrwałej",
+          "Przetwarzania bodźców bólowych"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Ciało migdałowate (amygdala) pełni szczególną rolę w przetwarzaniu:",
+        answers: [
+          "Informacji wzrokowej w korze pierwotnej",
+          "Emocji – zwłaszcza strachu, a także w procesach pamięciowych",
+          "Ruchów precyzyjnych kończyn górnych",
+          "Synchronizacji rytmów alfa w korze"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Płyn mózgowo-rdzeniowy (CSF) chroni mózgowie przed:",
+        answers: [
+          "Nadmiernym wydzielaniem neuroprzekaźników",
+          "Urazami mechanicznymi podczas ruchów głowy",
+          "Wnikaniem patogenów do synapsy",
+          "Niedoborem tlenu w neuronach"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "U pacjentów ze schizofrenią obserwuje się często:",
+        answers: [
+          "Zmniejszone komory boczne",
+          "Powiększone komory boczne",
+          "Zanik kory potylicznej",
+          "Przerost ciała migdałowatego"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Kora mózgowa (cerebral cortex) zbudowana jest z:",
+        answers: [
+          "Istoty białej",
+          "Aksonów mielinowych",
+          "Istoty szarej",
+          "Płynu mózgowo-rdzeniowego"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Neurony kory mózgowej tworzą kolumny ustawione:",
+        answers: [
+          "Równolegle do warstw kory",
+          "Prostopadle do warstw kory",
+          "Radiacyjnie od centrum mózgu",
+          "Spiralnie w kierunku ciała modzelowatego"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Pierwotna kora wzrokowa (primary visual cortex / striate cortex) leży w:",
+        answers: [
+          "Płacie czołowym",
+          "Płacie skroniowym",
+          "Płacie potylicznym",
+          "Płacie ciemieniowym"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Pierwotna kora somatosensoryczna (primary somatosensory cortex) leży:",
+        answers: [
+          "Przed bruzdą środkową, w płacie czołowym",
+          "Za bruzdą środkową, w płacie ciemieniowym",
+          "W płacie skroniowym, za bruzdą boczną (Sylvii)",
+          "W płacie potylicznym"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Pierwotna kora ruchowa (primary motor cortex) leży:",
+        answers: [
+          "Za bruzdą środkową, w płacie ciemieniowym",
+          "W płacie potylicznym",
+          "Przed bruzdą środkową, w tylnej części płata czołowego",
+          "W zakręcie obręczy"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Kora przedczołowa (prefrontal cortex) odpowiada za:",
+        answers: [
+          "Percepcję wzrokową i słuchową",
+          "Procesy umysłowe wyższego rzędu i integrację informacji z innych obszarów kory",
+          "Pierwotne przetwarzanie bodźców dotykowych",
+          "Koordynację ruchów precyzyjnych"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Ciało modzelowate (corpus callosum) to:",
+        answers: [
+          "Struktura regulująca wydzielanie hormonów",
+          "Największe skupisko dróg spoidowych łączące symetrycznie obie półkule mózgu",
+          "Część układu limbicznego odpowiadająca za pamięć",
+          "Warstwa komórek piramidalnych w korze ruchowej"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Układ współczulny (sympathetic) przygotowuje organizm do reakcji:",
+        answers: [
+          "Rest-and-digest (odpoczynek i trawienie)",
+          "Fight-or-flight (walka lub ucieczka)",
+          "Regulacji rytmów dobowych",
+          "Konsolidacji wspomnień podczas snu"
+        ],
+        correct: 1 // B
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const id = `q${idx}_a${aIdx}`;
+
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+        radio.id = id;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
