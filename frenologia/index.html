@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zagadnienie 2 — Frenologia i lokalizacja funkcji w mózgu</title>
+  <style>
+    body{font-family:Arial,sans-serif;line-height:1.5;max-width:900px;margin:0 auto;padding:20px;background:#f7f7f7;color:#222}
+    .box{background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px}
+    h1,h2{margin-top:0}
+    .q{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #eee}
+    .q:last-child{border-bottom:none}
+    label{display:block;padding:8px 10px;margin:6px 0;border:1px solid #ddd;border-radius:8px;background:#fafafa;cursor:pointer}
+    label input{margin-right:6px}
+    button{padding:12px 18px;border:none;border-radius:999px;background:#0b6b6f;color:#fff;font-size:16px;cursor:pointer}
+    button:hover{background:#0f766e}
+    .result{display:none;margin-top:20px;padding:16px;border-radius:10px;background:#eef7f7;border:1px solid #cce2e2}
+    .small{color:#666;font-size:14px}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Zagadnienie 2 — Frenologia i lokalizacja funkcji w mózgu</h1>
+    <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+    <p class="small">Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+  </div>
+
+  <form id="quiz" class="box"></form>
+
+  <div class="box">
+    <button type="button" onclick="finishQuiz()">Zakończ test</button>
+    <div id="result" class="result"></div>
+  </div>
+
+<script>
+const questions = [
+  {
+    q: "Co było głównym celem frenologii jako pierwszej teorii lokalizacji funkcji?",
+    a: [
+      "Powiązanie określonych obszarów mózgu z konkretnymi cechami psychicznymi i zachowaniami",
+      "Opis przebiegu szlaków nerwowych w rdzeniu kręgowym",
+      "Udowodnienie, że serce jest siedliskiem duszy",
+      "Wykazanie, że mózg działa jako jednolita całość bez podziału na obszary"
+    ],
+    c: 0
+  },
+  {
+    q: "Kto jest uznawany za głównych przedstawicieli frenologii?",
+    a: [
+      "Franz Joseph Gall i Johann Spurzheim",
+      "Santiago Ramón y Cajal i Camillo Golgi",
+      "Paul Broca i Karl Wernicke",
+      "Jan Evangelista Purkyně i Andreas Vesalius"
+    ],
+    c: 0
+  },
+  {
+    q: "Które z poniższych założeń frenologii okazało się trafne i zostało przejęte przez współczesną neuropsychologię?",
+    a: [
+      "Różne obszary mózgu pełnią różne funkcje",
+      "Liczba zwojów kory mózgowej decyduje o poziomie inteligencji",
+      "Kształt nosa pozwala wnioskować o cechach charakteru",
+      "Wypukłości czaszki odzwierciedlają rozwinięcie poszczególnych obszarów mózgu"
+    ],
+    c: 0
+  },
+  {
+    q: "Który element teorii frenologicznej sprawia, że dziś uznaje się ją za pseudonaukę?",
+    a: [
+      "Wnioskowanie o cechach psychicznych na podstawie kształtu i wypukłości czaszki",
+      "Koncepcja lokalizacji funkcji",
+      "Analiza przypadków klinicznych pacjentów z uszkodzeniami mózgu",
+      "Zainteresowanie strukturą kory mózgowej"
+    ],
+    c: 0
+  },
+  {
+    q: "Jak frenolodzy próbowali diagnozować cechy osobowości i zdolności umysłowe jednostki?",
+    a: [
+      "Badając kształt czaszki, wypukłości i wklęsłości jej powierzchni",
+      "Na podstawie testów psychologicznych",
+      "Analizując wzorce aktywności mózgu w EEG",
+      "Mierząc masę mózgu po śmierci"
+    ],
+    c: 0
+  },
+  {
+    q: "Jak przedstawiano teorię frenologiczną w atlasach z XIX wieku?",
+    a: [
+      "Jako podział powierzchni czaszki na liczne pola odpowiadające za różne cechy psychiczne",
+      "Jako mapy pól receptorowych w korze czuciowej",
+      "Jako schematy krążenia płynu mózgowo-rdzeniowego",
+      "Jako rysunki komórek nerwowych w korze mózgu"
+    ],
+    c: 0
+  },
+  {
+    q: "Co oznacza pojęcie „lokalizacja funkcji” w kontekście mózgu?",
+    a: [
+      "Różne obszary mózgu są wyspecjalizowane w realizacji określonych zadań",
+      "Wszelkie funkcje psychiczne są równomiernie rozproszone w całym mózgu",
+      "Poszczególne funkcje psychiczne da się jednoznacznie przypisać wyłącznie do kory mózgowej",
+      "Tylko lewa półkula pełni funkcje poznawcze"
+    ],
+    c: 0
+  },
+  {
+    q: "Jakie podejście do lokalizacji funkcji reprezentował Paul Broca w swoich badaniach klinicznych?",
+    a: [
+      "Łączył konkretne deficyty językowe z uszkodzeniem określonych obszarów mózgu",
+      "Uważał, że mózg działa jako jednolita masa bez wyspecjalizowanych ośrodków",
+      "Twierdził, że kształt czaszki pozwala diagnozować zaburzenia mowy",
+      "Uważał, że za mowę odpowiada wyłącznie pień mózgu"
+    ],
+    c: 0
+  },
+  {
+    q: "Który objaw był kluczowy w słynnym przypadku pacjenta „Tan” opisywanym przez Brocę?",
+    a: [
+      "Utrata zdolności formułowania wypowiedzi; pacjent powtarzał jedynie sylabę „tan”",
+      "Utrata rozumienia mowy przy zachowanej płynności wypowiedzi",
+      "Niemożność poruszania prawą ręką bez zaburzeń mowy",
+      "Całkowita ślepota i głuchota"
+    ],
+    c: 0
+  },
+  {
+    q: "U pacjenta „Tan” po śmierci stwierdzono:",
+    a: [
+      "Znaczne uszkodzenie lewego płata czołowego",
+      "Uszkodzenie prawego płata skroniowego",
+      "Rozlane uszkodzenia całej kory mózgowej",
+      "Uszkodzenie móżdżku i pnia mózgu przy nienaruszonej korze"
+    ],
+    c: 0
+  },
+  {
+    q: "Jak nazywamy obszar mózgu w lewym płacie czołowym, którego uszkodzenie powoduje trudności w tworzeniu wypowiedzi językowych?",
+    a: [
+      "Ośrodek Broki",
+      "Ośrodek Wernickego",
+      "Kora wzrokowa",
+      "Kora somatosensoryczna"
+    ],
+    c: 0
+  },
+  {
+    q: "Który z poniższych objawów najlepiej opisuje afazję Broki?",
+    a: [
+      "Spowolniona, wysiłkowa mowa z zachowanym rozumieniem tego, co się do pacjenta mówi",
+      "Płynna, ale niezrozumiała mowa i trudności ze zrozumieniem wypowiedzi",
+      "Całkowita utrata pamięci epizodycznej",
+      "Agnozja wzrokowa bez zaburzeń mowy"
+    ],
+    c: 0
+  },
+  {
+    q: "Który z lekarzy, jeszcze przed Brocą, sugerował związek zaburzeń mowy z uszkodzeniem lewej półkuli mózgu?",
+    a: [
+      "Marc Dax",
+      "Karl Wernicke",
+      "Andreas Vesalius",
+      "Johann Spurzheim"
+    ],
+    c: 0
+  },
+  {
+    q: "Jakie odkrycie Michaela (Jeana-Baptiste'a) Bouillauda było ważne dla koncepcji lokalizacji funkcji?",
+    a: [
+      "Związek zaburzeń mowy z płatem czołowym",
+      "Opis pól Brodmanna",
+      "Opracowanie metod barwienia preparatów nerwowych",
+      "Wykazanie, że móżdżek odpowiada za równowagę"
+    ],
+    c: 0
+  },
+  {
+    q: "Karl Wernicke na podstawie obserwacji klinicznych zaproponował model języka, w którym:",
+    a: [
+      "Wyróżnia się co najmniej dwa ośrodki odpowiedzialne za rozumienie i produkcję mowy, połączone szlakami nerwowymi",
+      "Istnieje tylko jeden ośrodek językowy w mózgu",
+      "Język jest funkcją wyłącznie prawej półkuli mózgu",
+      "Neurony językowe są rozmieszczone losowo w całym mózgu"
+    ],
+    c: 0
+  },
+  {
+    q: "Gdzie zlokalizowany jest obszar Wernickego?",
+    a: [
+      "W lewym płacie skroniowym",
+      "W lewym płacie czołowym",
+      "W prawym płacie ciemieniowym",
+      "W móżdżku"
+    ],
+    c: 0
+  },
+  {
+    q: "Jaki jest typowy obraz kliniczny afazji Wernickego?",
+    a: [
+      "Płynna, często nadmiernie gadatliwa mowa, ale upośledzone rozumienie i brak możliwości powtarzania",
+      "Trudność w wypowiadaniu słów przy dobrym rozumieniu mowy",
+      "Zaburzenia artykulacji przy zachowanej strukturze językowej",
+      "Niemożność powtarzania pojedynczych słów przy zachowanej rozmowie swobodnej"
+    ],
+    c: 0
+  },
+  {
+    q: "Co łączy odkrycia Broki i Wernickego z punktu widzenia lokalizacji funkcji?",
+    a: [
+      "Obaj wskazali konkretne obszary lewej półkuli mózgu odpowiedzialne za różne aspekty języka",
+      "Obaj wykazali, że język zależy wyłącznie od pnia mózgu",
+      "Obaj dowiedli, że język nie ma żadnej lokalizacji anatomicznej",
+      "Obaj zajmowali się wyłącznie anatomią zwierząt"
+    ],
+    c: 0
+  },
+  {
+    q: "Co oznacza zjawisko kontralateralności w kontekście lokalizacji funkcji ruchowych?",
+    a: [
+      "Lewa półkula kontroluje prawą stronę ciała, a prawa – lewą",
+      "Lewa półkula kontroluje lewą stronę ciała, a prawa – prawą",
+      "Każda półkula działa niezależnie od ciała",
+      "Móżdżek kontroluje wyłącznie mimikę twarzy"
+    ],
+    c: 0
+  },
+  {
+    q: "Dlaczego obserwacja paraliżu prawej strony ciała u pacjenta „Tan” była istotna dla lokalizacji funkcji językowych?",
+    a: [
+      "Potwierdzała, że uszkodzona jest lewa półkula, kontralateralna względem prawej strony ciała",
+      "Wskazywała na uszkodzenie prawej półkuli mózgu",
+      "Dowodziła, że za mowę odpowiada móżdżek",
+      "Nie miała znaczenia diagnostycznego"
+    ],
+    c: 0
+  },
+  {
+    q: "W jaki sposób podejście frenologów różniło się od podejścia Broki i Wernickego?",
+    a: [
+      "Frenolodzy spekulowali na podstawie kształtu czaszki, natomiast Broca i Wernicke opierali się na systematycznej analizie uszkodzeń mózgu i objawów klinicznych",
+      "Frenolodzy opierali się na sekcjach mózgu, a Broca i Wernicke na kształcie czaszki",
+      "Frenolodzy stosowali eksperymenty laboratoryjne na zwierzętach, a Broca i Wernicke wyłącznie na ludziach",
+      "Podejścia te nie różniły się znacząco"
+    ],
+    c: 0
+  },
+  {
+    q: "Jakie znaczenie miały przypadki pacjentów z afazją dla rozwoju koncepcji lokalizacji funkcji?",
+    a: [
+      "Dostarczyły dowodów na istnienie wyspecjalizowanych ośrodków językowych w określonych obszarach mózgu",
+      "Pokazały, że wszystkie funkcje językowe zależą od móżdżku",
+      "Obaliły teorię neuronalną",
+      "Udowodniły, że frenologia jest poprawna"
+    ],
+    c: 0
+  },
+  {
+    q: "Współczesna neuropsychologia postrzega frenologię przede wszystkim jako:",
+    a: [
+      "Historycznie ważny, ale w dużej mierze błędny etap w rozwoju myślenia o lokalizacji funkcji",
+      "Teorię w pełni zgodną z aktualnymi danymi",
+      "Naukę, której wszystkie założenia zostały potwierdzone",
+      "Współczesną metodę diagnostyki neuropsychologicznej"
+    ],
+    c: 0
+  },
+  {
+    q: "Jaką rolę odegrały mapy frenologiczne w popularyzacji idei lokalizacji funkcji?",
+    a: [
+      "Spopularyzowały samą ideę, że różne części mózgu mogą odpowiadać za różne cechy, nawet jeśli konkretne przypisania były błędne",
+      "Pokazały, że wszystkie funkcje są równomiernie rozproszone w mózgu",
+      "Dostarczyły dokładnych i aktualnych danych anatomicznych",
+      "Zastąpiły wszystkie późniejsze koncepcje lokalizacji funkcji"
+    ],
+    c: 0
+  },
+  {
+    q: "Które stwierdzenie najlepiej oddaje różnicę między frenologicznym a współczesnym rozumieniem lokalizacji funkcji?",
+    a: [
+      "Frenologia traktowała lokalizację funkcji jako sztywną i jednowymiarową, współczesna neuropsychologia uwzględnia złożone sieci połączeń i współdziałanie obszarów",
+      "Frenologia i współczesna neuropsychologia całkowicie odrzucają możliwość lokalizacji",
+      "Współczesna neuropsychologia uznaje tylko jeden ośrodek językowy",
+      "Współczesna neuropsychologia odrzuca znaczenie badań klinicznych"
+    ],
+    c: 0
+  },
+  {
+    q: "Dlaczego przypadki afazji uznaje się za kamienie milowe w historii lokalizacji funkcji?",
+    a: [
+      "Jako pierwsze pokazały, że uszkodzenie konkretnych, anatomicznie określonych obszarów wiąże się z bardzo specyficznym deficytem funkcji",
+      "Bo były pierwszymi opisanymi zaburzeniami psychicznymi",
+      "Bo dowiodły, że każda funkcja umysłowa jest rozmieszczona losowo w mózgu",
+      "Bo potwierdziły, że czaszka wiernie odzwierciedla strukturę mózgu"
+    ],
+    c: 0
+  },
+  {
+    q: "Jak termin „teoria mózgu” (brain theory) wiąże się z lokalizacją funkcji?",
+    a: [
+      "Uznaje mózg za organ odpowiedzialny za zachowanie, co otwiera drogę do dalszej lokalizacji funkcji w jego strukturach",
+      "Zakłada, że zachowanie nie ma związku z mózgiem",
+      "Twierdzi, że serce jest głównym organem psychicznym",
+      "Zaprzecza istnieniu neuronów"
+    ],
+    c: 0
+  },
+  {
+    q: "Dlaczego nowsze odkrycia, np. Cajala, były ważne dla odejścia od frenologii na rzecz teorii neuronalnej?",
+    a: [
+      "Udowodniły, że mózg składa się z osobnych neuronów komunikujących się przez synapsy, co pozwoliło myśleć o funkcjach w kategoriach sieci neuronalnych, a nie wypukłości czaszki",
+      "Pokazały, że mózg nie zawiera neuronów",
+      "Wykazały, że neurony tworzą jedną, niepodzielną masę",
+      "Potwierdziły, że frenologiczne pola na czaszce są poprawne"
+    ],
+    c: 0
+  },
+  {
+    q: "Co było wspólne dla podejścia Galena, Broki i Wernickego, a odróżniało ich od frenologów?",
+    a: [
+      "Oparcie się na obserwacjach anatomicznych i klinicznych zamiast na samym kształcie czaszki",
+      "Przekonanie, że mózg nie ma wpływu na zachowanie",
+      "Twierdzenie, że serce jest centrum psychiki",
+      "Rezygnacja z badań nad pacjentami"
+    ],
+    c: 0
+  },
+  {
+    q: "Dlaczego znajomość historii frenologii jest ważna dla współczesnego studenta neuropsychologii?",
+    a: [
+      "Pokazuje, jak błędne, ale wpływowe koncepcje mogły ukształtować późniejsze, bardziej trafne teorie lokalizacji funkcji",
+      "Ponieważ frenologia jest nadal podstawową metodą diagnozy",
+      "Ponieważ dostarcza aktualnych danych neuroanatomicznych",
+      "Ponieważ zastępuje potrzebę korzystania z nowoczesnych metod obrazowania mózgu"
+    ],
+    c: 0
+  }
+];
+
+const quiz = document.getElementById('quiz');
+
+questions.forEach((item, i) => {
+  const div = document.createElement('div');
+  div.className = 'q';
+
+  // losowa kolejność odpowiedzi dla każdego odświeżenia
+  const indices = item.a.map((_, idx) => idx);
+  for (let j = indices.length - 1; j > 0; j--) {
+    const k = Math.floor(Math.random() * (j + 1));
+    [indices[j], indices[k]] = [indices[k], indices[j]];
+  }
+
+  let answersHtml = "";
+  indices.forEach((idx) => {
+    answersHtml += `
+      <label>
+        <input type="radio" name="q${i}" value="${idx}">
+        ${item.a[idx]}
+      </label>
+    `;
+  });
+
+  div.innerHTML = `<h3>${i+1}. ${item.q}</h3>` + answersHtml;
+  quiz.appendChild(div);
+});
+
+function finishQuiz() {
+  let correct = 0;
+  questions.forEach((item, i) => {
+    const picked = document.querySelector(`input[name="q${i}"]:checked`);
+    if (picked && Number(picked.value) === item.c) correct++;
+  });
+  const percent = Math.round((correct / questions.length) * 100);
+  const result = document.getElementById('result');
+  result.style.display = 'block';
+  result.innerHTML = `
+    <h2>Podsumowanie wyników</h2>
+    <p>Poprawne odpowiedzi: <strong>${correct} z ${questions.length}</strong></p>
+    <p>Wynik procentowy: <strong>${percent}%</strong></p>
+  `;
+  window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>
