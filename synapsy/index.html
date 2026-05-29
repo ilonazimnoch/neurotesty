@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 7 — Synapsy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 7 — Synapsy</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Synapsa to miejsce, w którym:",
+        answers: [
+          "Akson łączy się z naczyniem krwionośnym",
+          "Następuje przekazywanie sygnału z jednego neuronu na drugi lub na komórkę efektorową",
+          "Dendryty łączą się mechanicznie z oponami mózgowymi",
+          "Powstaje potencjał spoczynkowy"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "W synapsie chemicznej kierunek przekazywania sygnału jest zazwyczaj:",
+        answers: [
+          "Dwukierunkowy — w obie strony",
+          "Od komórki postsynaptycznej do presynaptycznej",
+          "Od komórki presynaptycznej do postsynaptycznej",
+          "Losowy — zależy od stężenia jonów"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Zakończenie presynaptyczne zawiera duże ilości:",
+        answers: [
+          "Kanałów sodowych",
+          "Pęcherzyków synaptycznych z neuroprzekaźnikiem",
+          "Ciał komórkowych neuronów",
+          "Receptorów postsynaptycznych"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który jon jest kluczowy dla uwolnienia neuroprzekaźnika w synapsie chemicznej?",
+        answers: [
+          "Sód (Na+)",
+          "Potas (K+)",
+          "Wapń (Ca2+)",
+          "Chlor (Cl−)"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "W synapsie chemicznej wejście potencjału czynnościowego do zakończenia presynaptycznego powoduje:",
+        answers: [
+          "Otwarcie kanałów wapniowych i napływ Ca2+",
+          "Otwarcie kanałów sodowych i napływ Na+",
+          "Wyłącznie otwarcie pompy Na+/K+",
+          "Bezpośrednią depolaryzację neuronu postsynaptycznego bez udziału neuroprzekaźnika"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Receptory postsynaptyczne to białka:",
+        answers: [
+          "Obecne tylko w jądrze neuronu",
+          "Zlokalizowane w błonie postsynaptycznej, wiążące neuroprzekaźnik",
+          "Tworzące osłonkę mielinową",
+          "Występujące wyłącznie w aksonie"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które stwierdzenie najlepiej opisuje synapsę elektryczną?",
+        answers: [
+          "Między komórkami brak jest jakiegokolwiek kontaktu",
+          "Komórki połączone są szczelinowo (gap junctions), a prąd jonowy przepływa bezpośrednio",
+          "Sygnał przekazywany jest wyłącznie przez neuroprzekaźniki",
+          "Występuje tylko w obwodowym układzie nerwowym"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Synapsy elektryczne w porównaniu z chemicznymi charakteryzują się:",
+        answers: [
+          "Wolniejszym przekazywaniem sygnału",
+          "Brakiem możliwości przekazywania sygnału",
+          "Bardzo szybkim, często dwukierunkowym przekazywaniem sygnału",
+          "Zawsze jednostronnym przekazywaniem sygnału"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Które z poniższych NIE jest klasycznym elementem synapsy chemicznej?",
+        answers: [
+          "Błona presynaptyczna",
+          "Szczelina synaptyczna",
+          "Błona postsynaptyczna",
+          "Komora boczna mózgu"
+        ],
+        correct: 3 // D
+      },
+      {
+        question: "Główna różnica między synapsą chemiczną a elektryczną polega na tym, że:",
+        answers: [
+          "Synapsa chemiczna wykorzystuje neuroprzekaźniki, a elektryczna bezpośredni przepływ prądu przez połączenia szczelinowe",
+          "Synapsa chemiczna jest zawsze dwukierunkowa, a elektryczna jednokierunkowa",
+          "Synapsa elektryczna działa tylko w mózgu człowieka",
+          "Synapsa chemiczna nie wymaga receptorów"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Neuroprzekaźniki (neurotransmitery) to substancje:",
+        answers: [
+          "Mechanicznie wzmacniające strukturę neuronu",
+          "Przekazujące sygnał między komórką presynaptyczną a postsynaptyczną",
+          "Tworzące osłonkę mielinową",
+          "Odpowiedzialne wyłącznie za metabolizm energetyczny"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które z poniższych jest przykładem klasycznego neuroprzekaźnika małocząsteczkowego?",
+        answers: [
+          "Acetylocholina",
+          "Dynorfina",
+          "Substancja P",
+          "Neuropeptyd Y"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Synapsa pobudzająca zwykle powoduje:",
+        answers: [
+          "Hiperpolaryzację błony postsynaptycznej",
+          "Depolaryzację błony postsynaptycznej (EPSP)",
+          "Brak zmian w potencjale postsynaptycznym",
+          "Powstanie wyłącznie IPSP"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Synapsa hamująca jest związana najczęściej z:",
+        answers: [
+          "Napływem jonów Na+ do komórki postsynaptycznej",
+          "Napływem jonów Cl− lub wypływem K+ i powstaniem IPSP",
+          "Aktywacją wyłącznie receptorów nikotynowych",
+          "Depolaryzacją błony postsynaptycznej"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które stwierdzenie najlepiej opisuje plastyczność synaptyczną?",
+        answers: [
+          "Stałą, niezmienną siłę wszystkich synaps przez całe życie",
+          "Zdolność synaps do długotrwałej zmiany skuteczności przekazywania sygnału",
+          "Zmianę liczby neuronów bez zmian w synapsach",
+          "Wyłącznie krótkotrwałe zmiany potencjału spoczynkowego"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Długotrwałe wzmocnienie synaptyczne (LTP) oznacza:",
+        answers: [
+          "Przejściowe obniżenie skuteczności synapsy po intensywnym pobudzeniu",
+          "Długotrwały wzrost skuteczności synapsy po silnej, powtarzalnej aktywacji",
+          "Brak zmian w przewodnictwie synaptycznym",
+          "Całkowitą utratę odpowiedzi synaptycznej"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "W szczelinie synaptycznej neuroprzekaźnik jest usuwany głównie przez:",
+        answers: [
+          "Dyfuzję bierną, wychwyt zwrotny oraz rozkład enzymatyczny",
+          "Wyłącznie dyfuzję bierną do krwi",
+          "Wyłącznie pompy sodowo-potasowe",
+          "Mechaniczne ruchy płynu mózgowo-rdzeniowego"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Autoreceptory na zakończeniu presynaptycznym:",
+        answers: [
+          "Reagują na neuroprzekaźnik i regulują jego dalsze uwalnianie",
+          "Znajdują się tylko w błonie postsynaptycznej",
+          "Odpowiadają wyłącznie za wychwyt zwrotny",
+          "Nie mają znaczenia funkcjonalnego"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Synapsy akso-dendrytyczne łączą:",
+        answers: [
+          "Akson z somą neuronu",
+          "Akson jednego neuronu z dendrytem drugiego",
+          "Dendryt z dendrytem",
+          "Akson z mięśniem"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Synapsa nerwowo-mięśniowa (płytka motoryczna) to:",
+        answers: [
+          "Połączenie między dwoma neuronami w rdzeniu kręgowym",
+          "Synapsa między neuronem ruchowym a włóknem mięśniowym",
+          "Synapsa między dwoma włóknami mięśniowymi",
+          "Synapsa elektryczna w móżdżku"
+        ],
+        correct: 1 // B
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const id = `q${idx}_a${aIdx}`;
+
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+        radio.id = id;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
