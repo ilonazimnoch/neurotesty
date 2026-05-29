@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 6 — Potencjały i przewodzenie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 6 — Potencjał spoczynkowy, potencjał czynnościowy i potencjały postsynaptyczne</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Potencjał spoczynkowy neuronu to:",
+        answers: [
+          "Różnica potencjału między wnętrzem a zewnętrzem komórki w stanie braku pobudzenia",
+          "Suma wszystkich potencjałów postsynaptycznych w dendrytach",
+          "Maksymalny dodatni potencjał podczas potencjału czynnościowego",
+          "Różnica potencjału tylko w zakończeniu presynaptycznym"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Wartość potencjału spoczynkowego neuronu wynosi zazwyczaj około:",
+        answers: [
+          "+70 mV (wewnątrz względem zewnątrz)",
+          "-70 mV (wewnątrz względem zewnątrz)",
+          "0 mV",
+          "-30 mV"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który jon ma największy wpływ na utrzymanie potencjału spoczynkowego neuronu?",
+        answers: [
+          "Sód (Na+)",
+          "Potas (K+)",
+          "Wapń (Ca2+)",
+          "Chlor (Cl−)"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Pompa sodowo-potasowa (Na+/K+ ATP-aza) transportuje:",
+        answers: [
+          "3 jony Na+ do komórki i 2 jony K+ na zewnątrz",
+          "3 jony Na+ na zewnątrz i 2 jony K+ do komórki",
+          "2 jony Na+ do komórki i 3 jony K+ na zewnątrz",
+          "Równą liczbę Na+ i K+ w obu kierunkach"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który opis najlepiej pasuje do depolaryzacji błony neuronu?",
+        answers: [
+          "Wnętrze neuronu staje się bardziej ujemne względem zewnątrz",
+          "Wnętrze neuronu staje się mniej ujemne, a nawet dodatnie względem zewnątrz",
+          "Potencjał błonowy pozostaje bez zmian",
+          "Następuje powrót potencjału do poziomu spoczynkowego"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Głównym prądem jonowym odpowiedzialnym za fazę narastającą potencjału czynnościowego jest:",
+        answers: [
+          "Napływ jonów K+ do wnętrza komórki",
+          "Odpływ jonów Na+ na zewnątrz komórki",
+          "Napływ jonów Na+ do wnętrza komórki",
+          "Napływ jonów Cl− do wnętrza komórki"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Głównym prądem jonowym odpowiedzialnym za repolaryzację błony po szczycie potencjału czynnościowego jest:",
+        answers: [
+          "Napływ Na+ do komórki",
+          "Odpływ K+ z komórki",
+          "Napływ Ca2+ do komórki",
+          "Odpływ Cl− z komórki"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Okres, w którym neuron NIE może wygenerować kolejnego potencjału czynnościowego, niezależnie od siły bodźca, to:",
+        answers: [
+          "Okres refrakcji względnej",
+          "Okres repolaryzacji",
+          "Okres refrakcji bezwzględnej",
+          "Okres spoczynkowy"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Zjawisko „wszystko albo nic” (all-or-none) oznacza, że:",
+        answers: [
+          "Amplituda potencjału czynnościowego zależy liniowo od siły bodźca",
+          "Potencjał czynnościowy ma zawsze tę samą amplitudę, jeśli próg został przekroczony",
+          "Depolaryzacja podprogowa generuje małe potencjały czynnościowe",
+          "Neuron może dowolnie modulować wysokość pojedynczego potencjału czynnościowego"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Przewodzenie skokowe (saltatoryczne) występuje:",
+        answers: [
+          "W aksonach niemielinowych",
+          "Tylko w dendrytach",
+          "W aksonach mielinowych, między węzłami Ranviera",
+          "Wyłącznie w rdzeniu kręgowym"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Jak osłonka mielinowa wpływa na przewodzenie impulsu nerwowego?",
+        answers: [
+          "Spowalnia przewodzenie, zwiększając pojemność błony",
+          "Przyspiesza przewodzenie dzięki izolacji i przewodzeniu skokowemu",
+          "Nie ma wpływu na prędkość przewodzenia",
+          "Uniemożliwia powstawanie potencjałów czynnościowych"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Potencjały postsynaptyczne (PSP) w dendrytach i somie neuronu są:",
+        answers: [
+          "Potencjałami czynnościowymi o stałej amplitudzie",
+          "Zmiennymi, stopniowanymi zmianami napięcia zależnymi od siły i liczby synaps",
+          "Zawsze dodatnie i takie same w każdej synapsie",
+          "Zjawiskiem wyłącznie elektrycznym bez udziału neuroprzekaźników"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Pobudzające potencjały postsynaptyczne (EPSP) powodują:",
+        answers: [
+          "Depolaryzację błony postsynaptycznej (zwiększenie prawdopodobieństwa wyładowania)",
+          "Hiperpolaryzację błony postsynaptycznej",
+          "Zawsze generowanie potencjału czynnościowego",
+          "Tylko hamowanie aktywności neuronu"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Hamujące potencjały postsynaptyczne (IPSP) najczęściej wynikają z:",
+        answers: [
+          "Napływu Na+ do komórki",
+          "Napływu Cl− do komórki lub odpływu K+",
+          "Napływu Ca2+ do komórki",
+          "Działania pompy sodowo-potasowej"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które stwierdzenie najlepiej opisuje sumowanie przestrzenne potencjałów postsynaptycznych?",
+        answers: [
+          "Nakładanie się w czasie wielu potencjałów z tej samej synapsy",
+          "Nakładanie się w czasie potencjału czynnościowego i PSP",
+          "Suma potencjałów pochodzących z wielu synaps aktywnych w tym samym czasie",
+          "Zjawisko występujące tylko w mięśniu sercowym"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Sumowanie czasowe potencjałów postsynaptycznych polega na:",
+        answers: [
+          "Dodawaniu się EPSP i IPSP z różnych synaps w tym samym momencie",
+          "Nakładaniu się kolejnych EPSP z tej samej synapsy, gdy bodźce przychodzą szybko po sobie",
+          "Generowaniu potencjału czynnościowego w aksonie",
+          "Dodawaniu się potencjałów w różnych neuronach"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które stwierdzenie najtrafniej opisuje rolę wzgórka aksonu (axon hillock)?",
+        answers: [
+          "Miejsce synaps chemicznych z mięśniami",
+          "Główne miejsce synaps hamujących",
+          "Obszar integracji EPSP i IPSP, w którym zapada decyzja o wyzwoleniu potencjału czynnościowego",
+          "Fragment aksonu pokryty osłonką mielinową"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Który z poniższych stanów jest przykładem hiperpolaryzacji błony neuronu?",
+        answers: [
+          "Zmiana potencjału z -70 mV na -55 mV",
+          "Zmiana potencjału z -70 mV na +30 mV",
+          "Zmiana potencjału z -70 mV na -90 mV",
+          "Zmiana potencjału z -70 mV na 0 mV"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Dlaczego potencjał czynnościowy przewodzi się tylko w jednym kierunku wzdłuż aksonu?",
+        answers: [
+          "Ponieważ akson ma strukturę anatomiczną tylko w jedną stronę",
+          "Z powodu okresu refrakcji bezwzględnej świeżo pobudzonych odcinków błony",
+          "Z powodu braku kanałów jonowych w dalszych częściach aksonu",
+          "Ponieważ pompa sodowo-potasowa działa tylko w kierunku ciała komórki"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Co stanie się, jeśli depolaryzacja błony neuronu nie osiągnie progu pobudliwości?",
+        answers: [
+          "Powstanie potencjał czynnościowy o mniejszej amplitudzie",
+          "Nie powstanie potencjał czynnościowy; pojawi się jedynie lokalna, stopniowana depolaryzacja",
+          "Neuron wygeneruje serię potencjałów czynnościowych",
+          "Nastąpi hiperpolaryzacja"
+        ],
+        correct: 1 // B
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const id = `q${idx}_a${aIdx}`;
+
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+        radio.id = id;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
