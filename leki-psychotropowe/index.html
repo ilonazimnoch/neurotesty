@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 10 — Leki psychotropowe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 10 — Leki psychotropowe</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Głównym celem klinicznym stosowania leków przeciwpsychotycznych jest:",
+        answers: [
+          "Leczenie bezsenności",
+          "Łagodzenie objawów psychotycznych (np. urojeń, halucynacji)",
+          "Zwiększanie masy mięśniowej",
+          "Leczenie bólu przewlekłego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Leki przeciwpsychotyczne I generacji (klasyczne) działają głównie poprzez:",
+        answers: [
+          "Blokowanie receptorów dopaminowych D2",
+          "Blokowanie receptorów GABA-A",
+          "Aktywację receptorów serotoninowych 5-HT2A",
+          "Hamowanie wychwytu zwrotnego serotoniny"
+        ],
+        correct: 0
+      },
+      {
+        question: "Klasycznym przykładem leku przeciwpsychotycznego I generacji jest:",
+        answers: [
+          "Haloperidol",
+          "Fluoksetyna",
+          "Diazepam",
+          "Lit"
+        ],
+        correct: 0
+      },
+      {
+        question: "Leki przeciwpsychotyczne I generacji są szczególnie skuteczne w redukcji:",
+        answers: [
+          "Objawów negatywnych schizofrenii",
+          "Objawów pozytywnych (wytwórczych), takich jak urojenia i halucynacje",
+          "Zaburzeń pamięci roboczej",
+          "Zaburzeń lękowych uogólnionych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Leki przeciwpsychotyczne II generacji (atypowe) w porównaniu z klasycznymi:",
+        answers: [
+          "Zawsze silniej blokują receptory D2",
+          "Często łączą blokadę receptorów dopaminowych z blokadą receptorów serotoninowych 5-HT2",
+          "Nigdy nie wpływają na układ serotoninergiczny",
+          "Nie mają działań niepożądanych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Leki przeciwpsychotyczne II generacji są zwykle skuteczniejsze niż I generacji w zakresie:",
+        answers: [
+          "Objawów pozytywnych wyłącznie",
+          "Objawów negatywnych i zaburzeń poznawczych",
+          "Wyłącznie objawów somatycznych",
+          "Napadów padaczkowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Działania niepożądane leków przeciwpsychotycznych I generacji często obejmują:",
+        answers: [
+          "Objawy pozapiramidowe (parkinsonizm polekowy, dystonie, akatyzja)",
+          "Utrwalone zaburzenia pamięci epizodycznej",
+          "Natychmiastowe uszkodzenie neuronów dopaminergicznych",
+          "Brak jakichkolwiek działań ubocznych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Podstawowym celem stosowania leków przeciwdepresyjnych jest:",
+        answers: [
+          "Zwiększenie przewodnictwa GABAergicznego",
+          "Modulacja monoamin (serotoniny, noradrenaliny, dopaminy) w mózgu",
+          "Hamowanie przewodnictwa nerwowo-mięśniowego",
+          "Wyłącznie poprawa jakości snu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pierwszą szeroko stosowaną klasą leków przeciwdepresyjnych były:",
+        answers: [
+          "Trójpierścieniowe leki przeciwdepresyjne (TLPD)",
+          "Inhibitory MAO",
+          "SSRI",
+          "Benzodiazepiny"
+        ],
+        correct: 0
+      },
+      {
+        question: "Inhibitory monoaminooksydazy (MAO) działają poprzez:",
+        answers: [
+          "Zwiększenie rozkładu monoamin",
+          "Hamowanie enzymatycznego rozkładu monoamin, zwiększając ich dostępność",
+          "Blokowanie receptorów GABA-A",
+          "Zmniejszanie syntezy serotoniny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Trójpierścieniowe leki przeciwdepresyjne (TLPD):",
+        answers: [
+          "Selektywnie blokują wychwyt zwrotny serotoniny",
+          "Blokują wychwyt zwrotny wielu monoamin (np. NA, 5-HT), często z licznymi działaniami ubocznymi",
+          "Działają głównie na układ GABAergiczny",
+          "Są identyczne z benzodiazepinami"
+        ],
+        correct: 1
+      },
+      {
+        question: "SSRI (selektywne inhibitory wychwytu zwrotnego serotoniny) działają głównie poprzez:",
+        answers: [
+          "Zwiększenie wychwytu zwrotnego serotoniny",
+          "Hamowanie wychwytu zwrotnego serotoniny z synaps",
+          "Zwiększenie rozkładu serotoniny",
+          "Blokowanie receptorów dopaminowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Do leków z grupy SSRI zalicza się m.in.:",
+        answers: [
+          "Haloperidol",
+          "Fluoksetynę",
+          "Diazepam",
+          "Lit"
+        ],
+        correct: 1
+      },
+      {
+        question: "Leki przeciwdepresyjne mogą wywierać pełny efekt terapeutyczny dopiero po:",
+        answers: [
+          "Kilku dniach",
+          "1–2 tygodniach",
+          "Kilku tygodniach (np. 4–6 tygodni)",
+          "1 godzinie"
+        ],
+        correct: 2
+      },
+      {
+        question: "Klasyczną grupą leków przeciwlękowych są:",
+        answers: [
+          "Barbiturany",
+          "Benzodiazepiny",
+          "SSRI",
+          "Neuroleptyki II generacji"
+        ],
+        correct: 1
+      },
+      {
+        question: "Benzodiazepiny działają głównie poprzez:",
+        answers: [
+          "Bezpośrednią aktywację receptorów dopaminowych",
+          "Modulację receptorów GABA-A, zwiększając efektywność działania GABA",
+          "Blokadę receptorów NMDA",
+          "Zwiększenie wychwytu zwrotnego serotoniny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Benzodiazepiny wykorzystuje się klinicznie m.in. w:",
+        answers: [
+          "Leczeniu zaburzeń lękowych i bezsenności",
+          "Zwiększaniu ciśnienia krwi",
+          "Leczeniu choroby Alzheimera",
+          "Zmniejszaniu objawów pozytywnych schizofrenii"
+        ],
+        correct: 0
+      },
+      {
+        question: "Klasycznym przykładem benzodiazepiny jest:",
+        answers: [
+          "Prozac",
+          "Xanax (alprazolam)",
+          "Haloperidol",
+          "Lit"
+        ],
+        correct: 1
+      },
+      {
+        question: "Głównym ryzykiem przewlekłego stosowania benzodiazepin jest:",
+        answers: [
+          "Całkowity brak działań niepożądanych",
+          "Uzależnienie i tolerancja",
+          "Trwałe uszkodzenie jąder podstawy",
+          "Zespół parkinsonowski"
+        ],
+        correct: 1
+      },
+      {
+        question: "Barbiturany:",
+        answers: [
+          "Są bezpieczniejsze od benzodiazepin i nie uzależniają",
+          "Mają wysoki potencjał uzależniający i ryzyko przedawkowania",
+          "Działają wyłącznie jako leki przeciwpsychotyczne",
+          "Działają wyłącznie na receptory dopaminy"
+        ],
+        correct: 1
+      },
+      {
+        question: "W porównaniu z barbituranami, benzodiazepiny:",
+        answers: [
+          "Mają większe ryzyko zatrzymania oddechu przy przedawkowaniu",
+          "Są generalnie bezpieczniejsze przy przedawkowaniu (przy braku łączenia z innymi depresantami OUN)",
+          "Nie wpływają na układ GABAergiczny",
+          "Są stosowane wyłącznie w anestezji"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest PRAWIDŁOWE?",
+        answers: [
+          "Leki przeciwpsychotyczne I generacji działają głównie na układ dopaminergiczny",
+          "Leki przeciwdepresyjne nie wpływają na monoaminy",
+          "Benzodiazepiny blokują receptory dopaminowe",
+          "TLPD działają wyłącznie na receptory glutaminianu"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest FAŁSZYWE?",
+        answers: [
+          "SSRI zwiększają dostępność serotoniny w szczelinie synaptycznej",
+          "Inhibitory MAO zwiększają poziom monoamin",
+          "Benzodiazepiny działają na receptory GABA-A",
+          "Haloperidol jest lekiem przeciwdepresyjnym"
+        ],
+        correct: 3
+      },
+      {
+        question: "Która para lek – główny układ docelowy jest dobrana prawidłowo?",
+        answers: [
+          "Haloperidol – układ dopaminergiczny (receptory D2)",
+          "Fluoksetyna – receptory GABA-A",
+          "Xanax (alprazolam) – blokada receptorów dopaminowych",
+          "Barbiturany – selektywne hamowanie wychwytu serotoniny"
+        ],
+        correct: 0
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const id = `q${idx}_a${aIdx}`;
+
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+        radio.id = id;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
