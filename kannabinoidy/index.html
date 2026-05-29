@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 12 — Kannabinoidy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 12 — Kannabinoidy</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Kannabinoidy to:",
+        answers: [
+          "Substancje działające wyłącznie na receptory opioidowe",
+          "Związki chemiczne działające na receptory kannabinoidowe (CB1, CB2)",
+          "Wyłącznie endogenne peptydy",
+          "Leki przeciwpsychotyczne I generacji"
+        ],
+        correct: 1
+      },
+      {
+        question: "Główną psychoaktywną substancją w konopiach (Cannabis sativa) jest:",
+        answers: [
+          "CBD (kannabidiol)",
+          "THC (tetrahydrokannabinol)",
+          "LSD",
+          "GABA"
+        ],
+        correct: 1
+      },
+      {
+        question: "CBD (kannabidiol) w porównaniu z THC:",
+        answers: [
+          "Jest główną substancją wywołującą efekty psychoaktywne",
+          "Nie ma żadnego działania w ośrodkowym układzie nerwowym",
+          "Ma słabsze działanie psychoaktywne i może mieć znaczenie terapeutyczne (np. przeciwdrgawkowe)",
+          "Jest silnym agonistą receptorów dopaminowych"
+        ],
+        correct: 2
+      },
+      {
+        question: "Endokannabinoidy to:",
+        answers: [
+          "Syntetyczne leki naśladujące działanie THC",
+          "Endogenne związki wytwarzane przez organizm, działające na receptory CB1 i CB2",
+          "Neuroleptyki",
+          "Substancje obecne tylko w konopiach"
+        ],
+        correct: 1
+      },
+      {
+        question: "Przykładem endokannabinoidu jest:",
+        answers: [
+          "Anandamid",
+          "Dopamina",
+          "Noradrenalina",
+          "Glutaminian"
+        ],
+        correct: 0
+      },
+      {
+        question: "Endokannabinoidy różnią się od klasycznych neuroprzekaźników tym, że:",
+        answers: [
+          "Są magazynowane w pęcherzykach synaptycznych w zakończeniach presynaptycznych",
+          "Zwykle syntetyzowane są na żądanie w błonie postsynaptycznej i działają często wstecznie (retrogradalnie)",
+          "Nie wiążą żadnych receptorów",
+          "Zawsze są peptydami"
+        ],
+        correct: 1
+      },
+      {
+        question: "Receptory CB1 występują w największym zagęszczeniu w:",
+        answers: [
+          "Rdzeniu kręgowym",
+          "Korpusie migdałowatym wyłącznie",
+          "Mózgu (zwłaszcza w układzie limbicznym, korze i jądrze półleżącym)",
+          "Mięśniach szkieletowych"
+        ],
+        correct: 2
+      },
+      {
+        question: "Receptory CB2 lokalizują się głównie w:",
+        answers: [
+          "Ośrodkowym układzie nerwowym",
+          "Układzie odpornościowym i obwodowych tkankach",
+          "Mięśniach szkieletowych",
+          "Siatkówce oka"
+        ],
+        correct: 1
+      },
+      {
+        question: "Aktywacja receptorów CB1 prowadzi do:",
+        answers: [
+          "Wzrostu uwalniania klasycznych neuroprzekaźników",
+          "Zmniejszenia uwalniania niektórych neuroprzekaźników (np. glutaminianu, GABA)",
+          "Natychmiastowego wzrostu potencjału czynnościowego we wszystkich neuronach",
+          "Zablokowania wszystkich receptorów dopaminy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Typowe subiektywne efekty działania THC obejmują:",
+        answers: [
+          "Euforię, zmienione poczucie czasu, nasilenie percepcji bodźców",
+          "Natychmiastową utratę przytomności",
+          "Wyłącznie działanie przeciwbólowe bez zmian nastroju",
+          "Tylko działanie przeciwpadaczkowe"
+        ],
+        correct: 0
+      },
+      {
+        question: "Do częstych ostrych efektów działania THC należy:",
+        answers: [
+          "Poprawa pamięci krótkotrwałej",
+          "Zaburzenie pamięci krótkotrwałej i uwagi",
+          "Natychmiastowe zwiększenie IQ",
+          "Stałe polepszenie funkcji wykonawczych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Ostre działanie THC może obejmować również:",
+        answers: [
+          "Zwiększoną lękliwość lub paranoję u części osób",
+          "Tylko działanie relaksujące bez żadnych efektów ubocznych",
+          "Wyłącznie poprawę koncentracji",
+          "Wyłącznie senność bez zmian emocjonalnych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Długotrwałe, intensywne używanie THC zaczęte w wieku nastoletnim wiązano w badaniach z:",
+        answers: [
+          "Brakiem jakichkolwiek zmian",
+          "Nieco większym ryzykiem zaburzeń psychotycznych u osób podatnych",
+          "Trwałym wyleczeniem z zaburzeń psychotycznych",
+          "Wyłącznie poprawą funkcji poznawczych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zespół amotywacyjny (opisany w kontekście przewlekłego używania konopi) obejmuje m.in.:",
+        answers: [
+          "Nadmierną motywację i hiperaktywność",
+          "Spadek motywacji, wycofanie społeczne, obniżoną aktywność",
+          "Wybitne podwyższenie zdolności planowania",
+          "Wyłącznie objawy somatyczne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Użytkowanie THC może szczególnie niekorzystnie wpływać na mózg w okresie:",
+        answers: [
+          "Wczesnego dzieciństwa (0–3 lata)",
+          "Okresu dojrzewania (adolescencji)",
+          "Późnej dorosłości wyłącznie",
+          "Nie ma różnic między okresami życia"
+        ],
+        correct: 1
+      },
+      {
+        question: "Potencjalne zastosowania medyczne kannabinoidów obejmują m.in.:",
+        answers: [
+          "Leczenie bólu przewlekłego i spastyczności (np. w stwardnieniu rozsianym)",
+          "Leczenie ostrej infekcji bakteryjnej",
+          "Leczenie wszystkich nowotworów jako terapia pierwszego rzutu",
+          "Wyłącznie leczenie zaburzeń osobowości"
+        ],
+        correct: 0
+      },
+      {
+        question: "Kannabinoidy bywają stosowane (np. w niektórych krajach) jako wsparcie w:",
+        answers: [
+          "Zwiększaniu apetytu u pacjentów onkologicznych lub z AIDS",
+          "Leczeniu ostrej niewydolności oddechowej",
+          "Leczeniu ostrych urazów mechanicznych",
+          "Leczeniu ostrej sepsy"
+        ],
+        correct: 0
+      },
+      {
+        question: "CBD (kannabidiol) ma udokumentowane zastosowanie m.in. w leczeniu:",
+        answers: [
+          "Niektórych postaci padaczki lekoopornej",
+          "Schizofrenii jako lek przeciwpsychotyczny I generacji",
+          "Wszystkich typów bólu ostrego",
+          "Chorób bakteryjnych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Długotrwałe używanie THC może prowadzić do:",
+        answers: [
+          "Braku jakichkolwiek zmian w receptorach",
+          "Zmian w receptorach CB1 i rozwoju tolerancji",
+          "Tylko krótkotrwałej euforii bez adaptacji mózgu",
+          "Zaniknięcia wszystkich endokannabinoidów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zespół odstawienny po regularnym używaniu THC może obejmować:",
+        answers: [
+          "Brak jakichkolwiek objawów",
+          "Drażliwość, zaburzenia snu, spadek apetytu",
+          "Wyłącznie bóle mięśni bez zmian nastroju",
+          "Stałą euforię"
+        ],
+        correct: 1
+      },
+      {
+        question: "W wielu krajach status prawny konopi:",
+        answers: [
+          "Jest identyczny — wszędzie pełna legalizacja",
+          "Różni się — od pełnej prohibicji po legalizację rekreacyjną i medyczną",
+          "Jest identyczny — wszędzie pełny zakaz",
+          "Dotyczy tylko CBD"
+        ],
+        correct: 1
+      },
+      {
+        question: "Dyskusja nad legalizacją konopi często dotyczy równowagi między:",
+        answers: [
+          "Wolnością jednostki, potencjalnymi korzyściami medycznymi a ryzykiem zdrowotnym i społecznym",
+          "Tylko kwestiami ekonomicznymi",
+          "Wyłącznie wpływem na sport zawodowy",
+          "Wyłącznie wpływem na pamięć"
+        ],
+        correct: 0
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
