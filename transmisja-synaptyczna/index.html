@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 8 — Transmisja synaptyczna</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 8 — Transmisja synaptyczna</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Transmisja synaptyczna to proces:",
+        answers: [
+          "Przekazywania sygnału elektrycznego wzdłuż aksonu",
+          "Przekazywania informacji z neuronu presynaptycznego na neuron postsynaptyczny lub komórkę efektorową",
+          "Powstawania potencjału spoczynkowego",
+          "Tworzenia osłonki mielinowej"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który etap jest pierwszym krokiem transmisji chemicznej po dotarciu potencjału czynnościowego do zakończenia presynaptycznego?",
+        answers: [
+          "Uwolnienie neuroprzekaźnika do szczeliny",
+          "Otwarcie napięciozależnych kanałów wapniowych (Ca2+)",
+          "Wiązanie neuroprzekaźnika z receptorami postsynaptycznymi",
+          "Wychwyt zwrotny neuroprzekaźnika"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Napływ jonów Ca2+ do zakończenia presynaptycznego powoduje:",
+        answers: [
+          "Zamknięcie wszystkich kanałów jonowych",
+          "Egzocytozę pęcherzyków synaptycznych i uwolnienie neuroprzekaźnika",
+          "Natychmiastową depolaryzację neuronu postsynaptycznego",
+          "Powstanie potencjału spoczynkowego"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Receptory jonotropowe to:",
+        answers: [
+          "Receptory związane z białkiem G, działające pośrednio",
+          "Kanały jonowe otwierane bezpośrednio przez przyłączenie neuroprzekaźnika",
+          "Kanały wapniowe zależne od napięcia",
+          "Struktury cytoszkieletu neuronu"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Receptory metabotropowe charakteryzują się tym, że:",
+        answers: [
+          "Tworzą bezpośrednio kanał jonowy",
+          "Są aktywowane tylko przez jony Ca2+",
+          "Działają przez białka G i wtórne przekaźniki, wywołując wolniejsze, ale dłuższe efekty",
+          "Powodują zawsze IPSP"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Które stwierdzenie najlepiej opisuje agonistę receptora?",
+        answers: [
+          "Substancja wiążąca receptor i wywołująca efekt podobny do naturalnego neuroprzekaźnika",
+          "Substancja blokująca receptor bez wywołania efektu",
+          "Substancja rozkładająca neuroprzekaźnik w szczelinie",
+          "Substancja zwiększająca tylko wychwyt zwrotny"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Antagonista receptora to substancja, która:",
+        answers: [
+          "Zwiększa uwalnianie neuroprzekaźnika",
+          "Blokuje receptor i utrudnia działanie naturalnego neuroprzekaźnika",
+          "Zawsze powoduje depolaryzację",
+          "Pełni funkcję neuroprzekaźnika w każdej synapsie"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który mechanizm NIE jest typowym sposobem zakończenia działania neuroprzekaźnika?",
+        answers: [
+          "Rozkład enzymatyczny w szczelinie synaptycznej",
+          "Wychwyt zwrotny do zakończenia presynaptycznego",
+          "Dyfuzja poza synapsę",
+          "Stałe utrzymywanie wysokiego stężenia neuroprzekaźnika w szczelinie"
+        ],
+        correct: 3 // D
+      },
+      {
+        question: "Wychwyt zwrotny (reuptake) oznacza:",
+        answers: [
+          "Przeniesienie neuroprzekaźnika z powrotem do komórki presynaptycznej przez transportery błonowe",
+          "Związanie neuroprzekaźnika z autoreceptorem",
+          "Rozpad neuroprzekaźnika przez enzymy",
+          "Wpływ neuroprzekaźnika na komórki glejowe"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Autoreceptory w błonie presynaptycznej:",
+        answers: [
+          "Są zlokalizowane wyłącznie w błonie postsynaptycznej",
+          "Służą do przekazywania sygnału do mięśni",
+          "Monitorują ilość uwolnionego neuroprzekaźnika i regulują jego dalsze uwalnianie",
+          "Nie mają związku z transmisją synaptyczną"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Które stwierdzenie o synapsie chemicznej jest prawdziwe?",
+        answers: [
+          "Sygnał jest przekazywany bezpośrednio elektrycznie przez połączenia szczelinowe",
+          "Przekazanie sygnału wymaga uwolnienia substancji chemicznej do szczeliny synaptycznej",
+          "Synapsa chemiczna działa wyłącznie dwukierunkowo",
+          "Synapsy chemiczne nie występują w OUN"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Plastyczność synaptyczna w kontekście transmisji synaptycznej oznacza:",
+        answers: [
+          "Trwałą niezmienność siły synaptycznej",
+          "Zdolność synaps do długotrwałych zmian skuteczności przekazywania sygnału",
+          "Zmianę liczby neuronów przy stałej liczbie synaps",
+          "Wyłącznie krótkotrwałe wahania potencjału spoczynkowego"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Długotrwałe wzmocnienie synaptyczne (LTP) wiąże się z:",
+        answers: [
+          "Zmniejszeniem liczby receptorów postsynaptycznych",
+          "Długotrwałym zwiększeniem odpowiedzi postsynaptycznej na daną stymulację",
+          "Całkowitym zanikiem odpowiedzi synaptycznej",
+          "Krótkotrwałym spadkiem skuteczności synapsy po intensywnej stymulacji"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który z poniższych procesów może leżeć u podstaw długotrwałego wzmocnienia synaptycznego (LTP)?",
+        answers: [
+          "Zmniejszenie liczby kolców dendrytycznych",
+          "Zwiększenie liczby receptorów postsynaptycznych i zmianę w uwalnianiu neuroprzekaźnika",
+          "Zmniejszenie liczby pęcherzyków synaptycznych",
+          "Całkowite wyłączenie aktywności synapsy"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Długotrwałe osłabienie synaptyczne (LTD) oznacza:",
+        answers: [
+          "Trwały wzrost siły synaptycznej",
+          "Brak zmian w przewodnictwie synaptycznym",
+          "Długotrwałe zmniejszenie skuteczności przekazywania sygnału w synapsie",
+          "Okres refrakcji synapsy"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Co oznacza, że dana synapsa jest modulowana?",
+        answers: [
+          "Że nie może zmieniać swojej siły",
+          "Że inne układy (np. neuromodulatory) mogą zwiększać lub zmniejszać jej skuteczność",
+          "Że przewodzi tylko impulsy o maksymalnej amplitudzie",
+          "Że zawsze wywołuje potencjał czynnościowy"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który opis najlepiej pasuje do neuromodulatora?",
+        answers: [
+          "Substancja, która zawsze działa jak klasyczny neuroprzekaźnik w synapsie jonotropowej",
+          "Substancja wpływająca pośrednio na skuteczność transmisji synaptycznej, często przez receptory metabotropowe",
+          "Substancja odpowiedzialna wyłącznie za przewodzenie skokowe",
+          "Substancja działająca tylko w synapsach elektrycznych"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które stwierdzenie dotyczące opóźnienia synaptycznego jest prawdziwe?",
+        answers: [
+          "Synapsy elektryczne mają większe opóźnienie niż chemiczne",
+          "Synapsy chemiczne mają niewielkie, ale mierzalne opóźnienie związane z procesami uwalniania i wiązania neuroprzekaźnika",
+          "Opóźnienie synaptyczne nie występuje w żadnej synapsie",
+          "Opóźnienie występuje tylko w synapsach nerwowo-mięśniowych"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które z poniższych leków działa głównie poprzez blokowanie wychwytu zwrotnego neuroprzekaźnika?",
+        answers: [
+          "Inhibitory acetylocholinoesterazy",
+          "Selektywne inhibitory wychwytu zwrotnego serotoniny (SSRI)",
+          "Antagoniści receptorów dopaminowych",
+          "Leki blokujące kanały wapniowe"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Toksyczna blokada presynaptycznego uwalniania acetylocholiny (np. przez toksynę jadu kiełbasianego) spowoduje przede wszystkim:",
+        answers: [
+          "Wzrost pobudliwości mięśni",
+          "Zahamowanie przewodnictwa w synapsach nerwowo-mięśniowych i porażenie mięśni",
+          "Zwiększone wydzielanie acetylocholiny",
+          "Nasilenie plastyczności synaptycznej"
+        ],
+        correct: 1 // B
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const id = `q${idx}_a${aIdx}`;
+
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+        radio.id = id;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
