@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 5 — Budowa neuronów</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 5 — Budowa neuronów</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Która z poniższych struktur NIE jest typową częścią neuronu?",
+        answers: [
+          "Dendryty",
+          "Akson",
+          "Soma (ciało komórki)",
+          "Sarkomer"
+        ],
+        correct: 3 // D – z punktu widzenia budowy neuronu
+      },
+      {
+        question: "Jak nazywa się część neuronu zawierająca jądro komórkowe i większość organelli?",
+        answers: [
+          "Akson",
+          "Dendryt",
+          "Soma (perikarion, ciało komórki)",
+          "Kolec dendrytyczny"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Dendryty neuronu służą przede wszystkim do:",
+        answers: [
+          "Przekazywania sygnału na duże odległości od somy do innych komórek",
+          "Odbierania informacji synaptycznych z innych neuronów",
+          "Wytwarzania potencjałów czynnościowych",
+          "Produkcji neuroprzekaźników"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Akson (axon) odpowiada głównie za:",
+        answers: [
+          "Odbieranie wejść synaptycznych",
+          "Przewodzenie potencjału czynnościowego od somy do zakończeń synaptycznych",
+          "Integrację sygnałów pobudzających i hamujących",
+          "Utrzymanie strukturalne neuronu"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jak nazywa się miejsce, w którym akson odchodzi od somy i gdzie zwykle inicjowany jest potencjał czynnościowy?",
+        answers: [
+          "Kolec dendrytyczny",
+          "Wzgórek aksonu (axon hillock)",
+          "Węzeł Ranviera",
+          "Zakończenie presynaptyczne"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Osłonka mielinowa (myelin sheath) pełni funkcję:",
+        answers: [
+          "Zwiększania pojemności błony i zwalniania przewodzenia impulsu",
+          "Ochrony mechanicznej aksonu wyłącznie w OUN",
+          "Przyspieszania przewodzenia impulsu wzdłuż aksonu poprzez izolację elektryczną",
+          "Magazynowania neuroprzekaźników"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Węzły Ranviera (Nodes of Ranvier) to:",
+        answers: [
+          "Miejsca synaps chemicznych między aksonem a dendrytem",
+          "Przerwy w osłonce mielinowej umożliwiające skokowe przewodzenie impulsu",
+          "Zgrubienia dendrytów zawierające receptory",
+          "Miejsca przyczepu neuronów do naczyń krwionośnych"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które komórki w OUN wytwarzają osłonkę mielinową?",
+        answers: [
+          "Astrocyty",
+          "Oligodendrocyty",
+          "Komórki Schwanna",
+          "Mikroglej"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Jak nazywają się komórki glejowe mielinizujące aksony w obwodowym układzie nerwowym (PNS)?",
+        answers: [
+          "Oligodendrocyty",
+          "Astrocyty",
+          "Komórki Schwanna",
+          "Ependymocyty"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Astrocyty pełnią w OUN następujące funkcje, Z WYJĄTKIEM:",
+        answers: [
+          "Uczestniczą w tworzeniu bariery krew–mózg",
+          "Biorą udział w utrzymaniu równowagi jonowej i usuwaniu neuroprzekaźników z przestrzeni synaptycznej",
+          "Tworzą osłonki mielinowe na aksonach w PNS",
+          "Wspierają metabolizm neuronów"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Mikroglej (microglia) jest przede wszystkim odpowiedzialny za:",
+        answers: [
+          "Przewodzenie impulsów w rdzeniu kręgowym",
+          "Funkcje odpornościowe – usuwanie uszkodzonych komórek i patogenów",
+          "Produkcję płynu mózgowo-rdzeniowego",
+          "Mielinizację aksonów"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które z poniższych stwierdzeń dotyczących neuronów jest prawdziwe?",
+        answers: [
+          "Neurony dzielą się intensywnie przez całe życie",
+          "Neurony przewodzą sygnał zawsze w obu kierunkach z jednakową skutecznością",
+          "Neurony są wyspecjalizowane do szybkiego przekazywania informacji elektrycznych i chemicznych",
+          "Neurony nie posiadają żadnych organelli komórkowych"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Jak nazywają się krótkie, zwykle liczne wypustki neuronu, które zwiększają powierzchnię odbioru sygnałów?",
+        answers: [
+          "Aksony",
+          "Dendryty",
+          "Kolec dendrytyczny",
+          "Telodendria"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który z elementów neuronu zawiera największą liczbę synaps pobudzających i hamujących?",
+        answers: [
+          "Wzgórek aksonu",
+          "Kolec dendrytyczny",
+          "Dendryty i ich kolce",
+          "Zakończenia aksonalne"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Za szybki transport pęcherzyków synaptycznych i organelli wzdłuż aksonu odpowiadają:",
+        answers: [
+          "Mikrotubule i białka motoryczne (kinezyna, dyneina)",
+          "Filamenty aktynowe w błonie presynaptycznej",
+          "Astrocyty otaczające akson",
+          "Kanały sodowe zależne od napięcia"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Potencjał błonowy neuronu w spoczynku wynosi zazwyczaj około:",
+        answers: [
+          "+70 mV (wewnątrz względem zewnątrz)",
+          "0 mV",
+          "-70 mV (wewnątrz względem zewnątrz)",
+          "-140 mV"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Który jon odgrywa kluczową rolę w depolaryzacji podczas potencjału czynnościowego?",
+        answers: [
+          "Potas (K+)",
+          "Sód (Na+)",
+          "Chlor (Cl−)",
+          "Wapń (Ca2+)"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Gdzie zazwyczaj inicjowany jest potencjał czynnościowy w neuronie?",
+        answers: [
+          "Na zakończeniach aksonalnych",
+          "W dendrytach odległych od somy",
+          "We wzgórku aksonu i początkowym odcinku aksonu",
+          "W jądrze komórkowym"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Synapsa chemiczna to miejsce:",
+        answers: [
+          "Bezpośredniego, elektrycznego połączenia cytoplazmy dwóch neuronów",
+          "Gdzie sygnał przenoszony jest przez neuroprzekaźniki z zakończenia presynaptycznego na błonę postsynaptyczną",
+          "W którym powstaje potencjał czynnościowy",
+          "Gdzie akson łączy się z naczyniem krwionośnym"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "W szczelinie synaptycznej neuroprzekaźniki są najczęściej usuwane przez:",
+        answers: [
+          "Tylko dyfuzję bierną do krwi",
+          "Mechaniczne wypłukiwanie przez płyn mózgowo-rdzeniowy",
+          "Rozkład enzymatyczny i wychwyt zwrotny do zakończeń presynaptycznych oraz komórek glejowych",
+          "Aktywne pompy sodowo-potasowe"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Który opis najlepiej pasuje do neuronu jednobiegunowego (unipolarnego / pseudounipolarnego)?",
+        answers: [
+          "Ma wiele dendrytów i jeden akson odchodzący od somy",
+          "Ma jedno wypustkę, która rozdziela się na gałąź obwodową i centralną",
+          "Nie posiada somy",
+          "Ma dwa aksony wychodzące z somy"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Neurony dwubiegunowe (bipolarne) występują m.in. w:",
+        answers: [
+          "Korze ruchowej",
+          "Zwojach korzeni grzbietowych",
+          "Siatkówce oka i narządzie węchu",
+          "Móżdżku"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "Neurony piramidowe są typowym przykładem neuronów:",
+        answers: [
+          "W jądrach podstawy",
+          "W korze mózgowej (szczególnie ruchowej)",
+          "W zwojach korzeni grzbietowych",
+          "W jądrze zębatym móżdżku"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które stwierdzenie dotyczącę neuronów Golgiego typu I jest prawdziwe?",
+        answers: [
+          "Mają bardzo krótkie aksony lokalne",
+          "Ich aksony mogą być bardzo długie i wychodzić poza obszar, w którym leży soma",
+          "Występują wyłącznie w móżdżku",
+          "Nie mają dendrytów"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który z poniższych elementów zapewnia neuronom „wytrzymałość na rozciąganie” i utrzymanie kształtu?",
+        answers: [
+          "Mikrotubule i neurofilamenty tworzące cytoszkielet",
+          "Osłonka mielinowa",
+          "Kanały jonowe w błonie komórkowej",
+          "Mitochondria"
+        ],
+        correct: 0 // A
+      },
+      {
+        question: "Która z poniższych odpowiedzi NAJLEPIEJ opisuje barierę krew–mózg?",
+        answers: [
+          "Warstwa tkanki łącznej wokół mózgu",
+          "Układ naczyń włosowatych o zwiększonej przepuszczalności",
+          "Ścisłe połączenia między komórkami śródbłonka naczyń mózgowych wspierane przez astrocyty",
+          "System kanałów jonowych w aksonach"
+        ],
+        correct: 2 // C
+      },
+      {
+        question: "W jakiej strukturze neuronu znajduje się największa koncentracja mitochondriów związana z dużym zapotrzebowaniem na energię do uwalniania neuroprzekaźników?",
+        answers: [
+          "We wzgórku aksonu",
+          "W zakończeniach presynaptycznych",
+          "W jądrze komórkowym",
+          "W osłonce mielinowej"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Które z poniższych zjawisk NAJLEPIEJ opisuje neuroplastyczność na poziomie synaptycznym?",
+        answers: [
+          "Stała liczba synaps przez całe życie",
+          "Zmienność liczby i skuteczności synaps w odpowiedzi na doświadczenie",
+          "Rozpad wszystkich synaps w wieku dorosłym",
+          "Brak wpływu uczenia się na budowę neuronu"
+        ],
+        correct: 1 // B
+      },
+      {
+        question: "Który opis dotyczy komórek ependymalnych (ependymocytów)?",
+        answers: [
+          "Tworzą barierę krew–mózg",
+          "Wytwarzają osłonki mielinowe w OUN",
+          "Wyściełają komory mózgu i kanał centralny rdzenia, biorą udział w produkcji i cyrkulacji płynu mózgowo-rdzeniowego",
+          "Pełnią wyłącznie funkcję strukturalną w zwojach obwodowych"
+        ],
+        correct: 2 // C
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const id = `q${idx}_a${aIdx}`;
+
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+        radio.id = id;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
