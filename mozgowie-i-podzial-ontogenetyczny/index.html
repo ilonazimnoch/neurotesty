@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 22 — Mózgowie i ontogenetyczny podział mózgowia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 22 — Mózgowie i ontogenetyczny podział mózgowia</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Mózgowie to:",
+        answers: [
+          "Cały układ nerwowy łącznie z nerwami obwodowymi",
+          "Część ośrodkowego układu nerwowego położona w jamie czaszki",
+          "Wyłącznie kora mózgowa",
+          "Tylko pień mózgu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Do mózgowia w sensie anatomicznym zaliczamy:",
+        answers: [
+          "Mózg, móżdżek i pień mózgu",
+          "Tylko mózg (półkule mózgowe)",
+          "Tylko rdzeń kręgowy",
+          "Wyłącznie nerwy czaszkowe"
+        ],
+        correct: 0
+      },
+      {
+        question: "Ontogenetyczny podział mózgowia odnosi się do:",
+        answers: [
+          "Podziału według pełnionej funkcji",
+          "Podziału według pochodzenia rozwojowego z pęcherzyków mózgowych",
+          "Podziału wyłącznie ze względu na lateralizację",
+          "Podziału na istotę białą i szarą"
+        ],
+        correct: 1
+      },
+      {
+        question: "W rozwoju zarodkowym z cewy nerwowej początkowo wyodrębniają się tzw. pęcherzyki mózgowe:",
+        answers: [
+          "Trzy pierwotne",
+          "Dwa pierwotne",
+          "Cztery pierwotne",
+          "Pięć pierwotnych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Trzy pierwotne pęcherzyki mózgowe to:",
+        answers: [
+          "Przodomózgowie, śródmózgowie, tyłomózgowie",
+          "Kresomózgowie, móżdżek, rdzeń przedłużony",
+          "Wzgórze, podwzgórze, most",
+          "Pień mózgu, móżdżek, kora"
+        ],
+        correct: 0
+      },
+      {
+        question: "Z przodomózgowia (prosencephalon) powstają wtórnie:",
+        answers: [
+          "Śródmózgowie i rdzeniomózgowie",
+          "Kresomózgowie (telencephalon) i międzymózgowie (diencephalon)",
+          "Most i móżdżek",
+          "Wyłącznie rdzeń kręgowy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Z tyłomózgowia (rhombencephalon) powstają wtórnie:",
+        answers: [
+          "Kresomózgowie i międzymózgowie",
+          "Śródmózgowie i móżdżek",
+          "Tyłomózgowie wtórne (metencephalon) i rdzeniomózgowie (myelencephalon)",
+          "Wzgórze i podwzgórze"
+        ],
+        correct: 2
+      },
+      {
+        question: "Do kresomózgowia (telencephalon) zaliczamy m.in.:",
+        answers: [
+          "Półkule mózgu, korę mózgową i jądra podstawy",
+          "Móżdżek i most",
+          "Wzgórze i podwzgórze",
+          "Rdzeń przedłużony"
+        ],
+        correct: 0
+      },
+      {
+        question: "Do międzymózgowia (diencephalon) zaliczamy głównie:",
+        answers: [
+          "Kulkę węchową i jądra podstawy",
+          "Wzgórze, podwzgórze oraz struktury sąsiednie (np. nadwzgórze)",
+          "Móżdżek i most",
+          "Rdzeń kręgowy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Śródmózgowie (mesencephalon) obejmuje m.in.:",
+        answers: [
+          "Wzgórze i podwzgórze",
+          "Konary mózgu i pokrywę śródmózgowia",
+          "Jądra półleżące",
+          "Hipokamp"
+        ],
+        correct: 1
+      },
+      {
+        question: "Tyłomózgowie wtórne (metencephalon) obejmuje:",
+        answers: [
+          "Most i móżdżek",
+          "Rdzeń przedłużony",
+          "Wzgórze i podwzgórze",
+          "Kresomózgowie"
+        ],
+        correct: 0
+      },
+      {
+        question: "Rdzeniomózgowie (myelencephalon) obejmuje przede wszystkim:",
+        answers: [
+          "Rdzeń kręgowy",
+          "Rdzeń przedłużony",
+          "Móżdżek",
+          "Płat czołowy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pień mózgu w klasycznym ujęciu anatomicznym składa się z:",
+        answers: [
+          "Śródmózgowia, mostu i rdzenia przedłużonego",
+          "Kory mózgowej i jąder podstawy",
+          "Móżdżku i wzgórza",
+          "Tylko rdzenia kręgowego"
+        ],
+        correct: 0
+      },
+      {
+        question: "Ontogenetycznie struktury pnia mózgu pochodzą z:",
+        answers: [
+          "Kresomózgowia",
+          "Międzymózgowia i kresomózgowia",
+          "Śródmózgowia, metencephalon i myelencephalon",
+          "Wyłącznie międzymózgowia"
+        ],
+        correct: 2
+      },
+      {
+        question: "Podział mózgowia na przód-, śród- i tyłomózgowie to podział:",
+        answers: [
+          "Wyłącznie funkcjonalny",
+          "Ontogenetyczny (rozwojowy)",
+          "Topograficzny względem kości czaszki",
+          "Wyłącznie kliniczny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Podział na półkule mózgu, pień mózgu i móżdżek to podział:",
+        answers: [
+          "Ontogenetyczny",
+          "Anatomiczno-topograficzny",
+          "Wyłącznie histologiczny",
+          "Genetyczny"
+        ],
+        correct: 1
+      },
+      {
+        question: "W ontogenetycznym podziale mózgowia przodomózgowie odpowiada za powstanie:",
+        answers: [
+          "Kresomózgowia i międzymózgowia",
+          "Śródmózgowia i rdzenia kręgowego",
+          "Mostu i móżdżku",
+          "Rdzenia przedłużonego"
+        ],
+        correct: 0
+      },
+      {
+        question: "Ontogenetyczny podział mózgowia jest istotny klinicznie, ponieważ:",
+        answers: [
+          "Zaburzenia rozwojowe często dotyczą konkretnych pęcherzyków i ich pochodnych",
+          "Dotyczy tylko struktury kości czaszki",
+          "Jest używany tylko w anatomii zwierząt bezkręgowych",
+          "Zastępuje badania obrazowe"
+        ],
+        correct: 0
+      },
+      {
+        question: "W badaniach neuropsychologicznych wiedza o ontogenetycznym podziale mózgowia pomaga m.in. w:",
+        answers: [
+          "Oceny wyłącznie poziomu IQ",
+          "Interpretacji zmian rozwojowych i malformacji (np. agenezji ciała modzelowatego)",
+          "Badaniu wyłącznie mięśni szkieletowych",
+          "Opisie wyłącznie nerwów obwodowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest PRAWIDŁOWE?",
+        answers: [
+          "Kresomózgowie i międzymózgowie są częścią przodomózgowia w ontogenezie",
+          "Kresomózgowie pochodzi ze śródmózgowia",
+          "Móżdżek pochodzi z międzymózgowia",
+          "Rdzeń przedłużony pochodzi z przodomózgowia"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest FAŁSZYWE?",
+        answers: [
+          "Śródmózgowie pozostaje jednym niepodzielonym pęcherzykiem wtórnym",
+          "Tyłomózgowie dzieli się na metencephalon i myelencephalon",
+          "Wzgórze i podwzgórze należą do międzymózgowia",
+          "Móżdżek należy do kresomózgowia"
+        ],
+        correct: 3
+      },
+      {
+        question: "Które zdanie najlepiej opisuje relację między mózgowiem a rdzeniem kręgowym?",
+        answers: [
+          "Rdzeń kręgowy jest częścią mózgowia",
+          "Mózgowie i rdzeń kręgowy razem tworzą ośrodkowy układ nerwowy",
+          "Mózgowie jest częścią rdzenia kręgowego",
+          "Mózgowie należy do obwodowego układu nerwowego"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
