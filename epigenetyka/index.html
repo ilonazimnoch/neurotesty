@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 20 — Epigenetyka</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 20 — Epigenetyka</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Epigenetyka zajmuje się badaniem:",
+        answers: [
+          "Wyłącznie zmian sekwencji DNA",
+          "Odwracalnych zmian ekspresji genów, które nie wynikają ze zmiany sekwencji DNA",
+          "Tylko zmian liczby chromosomów",
+          "Wyłącznie mutacji punktowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Klasyczne epigenetyczne modyfikacje obejmują m.in.:",
+        answers: [
+          "Metylację DNA i modyfikacje histonów",
+          "Zmianę liczby chromosomów",
+          "Duże delecje chromosomowe",
+          "Rekombinację crossing-over"
+        ],
+        correct: 0
+      },
+      {
+        question: "Epigenom to:",
+        answers: [
+          "Pełna sekwencja nukleotydów DNA",
+          "Zestaw wszystkich epigenetycznych modyfikacji DNA i białek histonowych w komórce",
+          "Zbiór wszystkich mutacji punktowych",
+          "Tylko metylacja DNA"
+        ],
+        correct: 1
+      },
+      {
+        question: "Metylacja DNA polega zwykle na przyłączeniu grupy metylowej do:",
+        answers: [
+          "Reszty fosforanowej",
+          "Deoksyrybozy",
+          "Cytozyny w kontekście CpG",
+          "Tyminy w kontekście TpA"
+        ],
+        correct: 2
+      },
+      {
+        question: "Wysoka metylacja promotora genu zazwyczaj prowadzi do:",
+        answers: [
+          "Zwiększenia ekspresji genu",
+          "Zmniejszenia lub wyciszenia ekspresji genu",
+          "Zmiany sekwencji DNA",
+          "Zwiększenia liczby chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wyspy CpG (CpG islands) to:",
+        answers: [
+          "Regiony o niskiej gęstości par CpG",
+          "Regiony bogate w pary nukleotydów CpG, często zlokalizowane w promotorach genów",
+          "Fragmenty mtDNA",
+          "Regiony zawsze wolne od metylacji"
+        ],
+        correct: 1
+      },
+      {
+        question: "Demetylacja DNA może być związana z:",
+        answers: [
+          "Wyciszeniem genu",
+          "Aktywacją ekspresji genu",
+          "Zmianą liczby chromosomów",
+          "Zawsze powstaniem mutacji punktowej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Histony to:",
+        answers: [
+          "Białka strukturalne błony komórkowej",
+          "Białka, wokół których owija się DNA, tworząc nukleosomy",
+          "Enzymy replikujące DNA",
+          "Receptory błonowe"
+        ],
+        correct: 1
+      },
+      {
+        question: "Acetylacja ogonów histonowych (np. H3, H4) jest zazwyczaj związana z:",
+        answers: [
+          "Kondensacją chromatyny i wyciszeniem genów",
+          "Rozluźnieniem chromatyny i większą aktywnością transkrypcyjną",
+          "Zmianą liczby chromosomów",
+          "Delecją genów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Deacetylacja histonów prowadzi najczęściej do:",
+        answers: [
+          "Rozluźnienia chromatyny",
+          "Kondensacji chromatyny i zmniejszenia ekspresji genów",
+          "Insertu mutacji punktowej",
+          "Zwiększenia liczby genów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Metylacja histonów:",
+        answers: [
+          "Zawsze aktywuje geny",
+          "Zawsze wycisza geny",
+          "Może prowadzić do aktywacji lub represji w zależności od miejsca i rodzaju modyfikacji",
+          "Nie ma wpływu na ekspresję genów"
+        ],
+        correct: 2
+      },
+      {
+        question: "Euchromatyna charakteryzuje się:",
+        answers: [
+          "Wysoką kondensacją i brakiem aktywnej transkrypcji",
+          "Luźniejszą strukturą i wyższą aktywnością transkrypcyjną",
+          "Obecnością wyłącznie mtDNA",
+          "Wyłącznie strukturami telomerowymi"
+        ],
+        correct: 1
+      },
+      {
+        question: "Heterochromatyna to:",
+        answers: [
+          "Luźno upakowana chromatyna aktywna transkrypcyjnie",
+          "Silnie skondensowana chromatyna, często transkrypcyjnie nieaktywna",
+          "Tylko chromatyna w mitochondriach",
+          "Zawsze regiony kodujące białka"
+        ],
+        correct: 1
+      },
+      {
+        question: "Czynniki środowiskowe, takie jak stres, dieta czy toksyny, mogą:",
+        answers: [
+          "Nie mieć żadnego wpływu na epigenom",
+          "Modyfikować wzory metylacji DNA i modyfikacje histonów",
+          "Zmien iać wyłącznie sekwencję nukleotydów",
+          "Zawsze zwiększać liczbę chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Klasyczny przykład wpływu wczesnych doświadczeń (np. opieki matczynej u zwierząt) na epigenetykę dotyczy:",
+        answers: [
+          "Metylacji promotorów genów związanych z odpowiedzią stresową",
+          "Zmiany liczby chromosomów płci",
+          "Tylko zwiększenia masy mózgu",
+          "Wyłącznie syntezy białek mięśniowych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Epigenetyczne zmiany związane ze stresem mogą wpływać na:",
+        answers: [
+          "Wyłącznie kolor oczu",
+          "Ekspresję receptorów glukokortykoidowych i regulację osi HPA",
+          "Liczbę chromosomów",
+          "Tylko poziom glukozy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Dziedziczenie epigenetyczne oznacza, że:",
+        answers: [
+          "Wzory epigenetyczne nigdy nie są przekazywane dalej",
+          "Niektóre modyfikacje epigenetyczne mogą być przekazywane przez podziały komórkowe, a czasem między pokoleniami",
+          "Zawsze dochodzi do całkowitego resetu epigenomu",
+          "Dotyczy tylko mtDNA"
+        ],
+        correct: 1
+      },
+      {
+        question: "Podczas rozwoju zarodkowego dochodzi zwykle do:",
+        answers: [
+          "Całkowitego braku zmian w metylacji DNA",
+          "Szeroko zakrojonego 'resetu' i ponownego ustanawiania wzorów metylacji",
+          "Tylko lokalnych zmian w intronach",
+          "Zmniejszenia liczby chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Piętno genomowe (imprinting) polega na:",
+        answers: [
+          "Jednakowej ekspresji alleli matczynego i ojcowskiego",
+          "Różnicach w metylacji i ekspresji alleli w zależności od pochodzenia rodzicielskiego",
+          "Zmien ie sekwencji DNA",
+          "Wyłącznie zmianie liczby chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Epigenetyka w kontekście neuropsychologii dotyczy m.in.:",
+        answers: [
+          "Tylko zmian w strukturze czaszki",
+          "Związków między doświadczeniem (np. stresem, uczeniem się) a zmianami ekspresji genów w mózgu",
+          "Wyłącznie zmian liczby neuronów",
+          "Tylko monogenowych chorób neurologicznych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zmiany epigenetyczne w mózgu mogą wpływać na:",
+        answers: [
+          "Plastyczność synaptyczną i pamięć",
+          "Tylko kolor włosów",
+          "Wyłącznie liczbę chromosomów",
+          "Jedynie przewodnictwo nerwowo-mięśniowe"
+        ],
+        correct: 0
+      },
+      {
+        question: "W badaniach nad depresją epigenetyka jest ważna, ponieważ:",
+        answers: [
+          "Depresja nie ma żadnego komponentu genetycznego",
+          "Doświadczenia stresowe mogą modyfikować epigenetycznie geny związane z układem stresu i neuroprzekaźnikami",
+          "Dotyczy tylko struktury czaszki",
+          "Zawsze zmienia liczbę chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Metody badania metylacji DNA obejmują m.in.:",
+        answers: [
+          "EEG",
+          "Sekwencjonowanie DNA po traktowaniu bisulfitem",
+          "fMRI",
+          "PET"
+        ],
+        correct: 1
+      },
+      {
+        question: "Chromatin immunoprecipitation (ChIP) to technika służąca do:",
+        answers: [
+          "Badania potencjałów wywołanych",
+          "Badania wiązania białek (np. histonów, czynników transkrypcyjnych) do określonych regionów DNA",
+          "Pomiaru aktywności elektrycznej serca",
+          "Określania liczby chromosomów"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
