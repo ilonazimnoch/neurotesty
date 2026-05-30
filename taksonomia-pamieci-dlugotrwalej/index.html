@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 37 — Taksonomia pamięci długotrwałej</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 37 — Taksonomia pamięci długotrwałej</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Klasyczny podstawowy podział pamięci wyróżnia:",
+        answers: [
+          "Pamięć krótko- i długoterminową",
+          "Pamięć roboczą i sensoryczną",
+          "Tylko pamięć proceduralną",
+          "Tylko pamięć ikoniczną"
+        ],
+        correct: 0
+      },
+      {
+        question: "W obrębie pamięci długotrwałej wyróżnia się głównie:",
+        answers: [
+          "Pamięć deklaratywną (jawną) i niedeklaratywną (utajoną)",
+          "Pamięć wyłącznie ruchową i wyłącznie werbalną",
+          "Tylko pamięć krótkotrwałą",
+          "Tylko pamięć sensoryczną"
+        ],
+        correct: 0
+      },
+      {
+        question: "Pamięć deklaratywna (jawna) to przede wszystkim:",
+        answers: [
+          "Pamięć umiejętności ruchowych",
+          "Świadome przypominanie faktów i zdarzeń",
+          "Pamięć odruchów rdzeniowych",
+          "Pamięć odruchów warunkowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pamięć epizodyczna odnosi się do:",
+        answers: [
+          "Wiedzy pozbawionej kontekstu",
+          "Autobiograficznych wspomnień zdarzeń w określonym czasie i miejscu",
+          "Pamięci ruchów na rowerze",
+          "Pamięci odruchów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pamięć semantyczna to:",
+        answers: [
+          "Wiedza o faktach, pojęciach i znaczeniach słów",
+          "Pamięć miejsca zaparkowania samochodu wczoraj",
+          "Pamięć procedury jazdy na rowerze",
+          "Pamięć odruchu kolanowego"
+        ],
+        correct: 0
+      },
+      {
+        question: "Przykład zadania badającego głównie pamięć epizodyczną to:",
+        answers: [
+          "Nazwanie możliwie wielu zwierząt w minutę",
+          "Odtworzenie listy słów uczonej przed chwilą w określonym kontekście",
+          "Uzupełnianie brakujących liter w znanych słowach",
+          "Naciskanie klawiszy według wzoru ruchu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Przykład zadania badającego głównie pamięć semantyczną to:",
+        answers: [
+          "Rozpoznanie wcześniej prezentowanej listy obrazków",
+          "Test wiadomości ogólnych (np. stolica kraju, znaczenie słowa)",
+          "Nauka sekwencji palcami na klawiaturze",
+          "Odzyskiwanie rachunku z pamięci roboczej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pamięć niedeklaratywna (utajona) charakteryzuje się tym, że:",
+        answers: [
+          "Zawsze wymaga świadomego przypominania",
+          "Przejawia się w zmianach zachowania bez konieczności świadomego przywoływania informacji",
+          "Dotyczy tylko liczb",
+          "Nie występuje u ludzi"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pamięć proceduralna dotyczy głównie:",
+        answers: [
+          "Pamięci epizodów życiowych",
+          "Umiejętności i nawyków (np. jazda na rowerze, gra na instrumencie)",
+          "Wiedzy encyklopedycznej",
+          "Pamięci twarzy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pryming (torowanie) to:",
+        answers: [
+          "Rodzaj pamięci roboczej",
+          "Ułatwione przetwarzanie bodźca wynikające z wcześniejszego jego przetwarzania, często bez świadomości",
+          "Rodzaj pamięci epizodycznej",
+          "Tylko odruch warunkowy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Warunkowanie klasyczne i instrumentalne zalicza się do:",
+        answers: [
+          "Pamięci deklaratywnej",
+          "Pamięci proceduralnej",
+          "Form uczenia asocjacyjnego w ramach pamięci niedeklaratywnej",
+          "Pamięci sensorycznej"
+        ],
+        correct: 2
+      },
+      {
+        question: "Pamięć robocza (working memory) to:",
+        answers: [
+          "Część pamięci długotrwałej",
+          "System utrzymywania i manipulowania informacją w krótkim czasie dla bieżących zadań",
+          "Wyłącznie pamięć proceduralna",
+          "Tylko pamięć semantyczna"
+        ],
+        correct: 1
+      },
+      {
+        question: "Główną strukturą związaną z pamięcią roboczą (szczególnie częścią wykonawczą) jest:",
+        answers: [
+          "Móżdżek",
+          "Kora przedczołowa",
+          "Hipokamp",
+          "Pień mózgu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pamięć robocza różni się od pamięci długotrwałej m.in. tym, że:",
+        answers: [
+          "Ma nieograniczoną pojemność",
+          "Ma ograniczoną pojemność i czas przechowywania",
+          "Nie jest potrzebna w codziennym funkcjonowaniu",
+          "Dotyczy tylko bodźców wizualnych"
+        ],
+        correct: 1
+      },
+      {
+        question: "W klasycznych zespołach amnestycznych typowy profil obejmuje:",
+        answers: [
+          "Głębokie zaburzenia pamięci deklaratywnej przy stosunkowo zachowanej pamięci proceduralnej",
+          "Całkowitą utratę wszystkich form pamięci",
+          "Izolowane zaburzenia pamięci proceduralnej",
+          "Brak zaburzeń pamięci"
+        ],
+        correct: 0
+      },
+      {
+        question: "U pacjentów z chorobą Parkinsona bardziej nasilone mogą być deficyty:",
+        answers: [
+          "Pamięci epizodycznej przy zachowanej proceduralnej",
+          "Uczenia proceduralnego i nawyków ruchowych",
+          "Pamięci semantycznej wyłącznie",
+          "Tylko pamięci sensorycznej"
+        ],
+        correct: 1
+      },
+      {
+        question: "W modelu L.R. Squire'a pamięć długotrwała dzieli się na:",
+        answers: [
+          "Deklaratywną i proceduralną jako jedyne kategorie",
+          "Deklaratywną (epizodyczną i semantyczną) oraz niedeklaratywną (proceduralną, pryming, warunkowanie)",
+          "Tylko pamięć emocjonalną",
+          "Tylko pamięć roboczą"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pamięć emocjonalna (np. lęk warunkowy) jest zwykle klasyfikowana jako:",
+        answers: [
+          "Część pamięci deklaratywnej",
+          "Element pamięci niedeklaratywnej, często zależny od ciała migdałowatego",
+          "Wyłącznie pamięć semantyczna",
+          "Tylko pamięć robocza"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zadanie uczenia się sekwencji przy naciskaniu klawiszy (bez instrukcji werbalnej) bada głównie:",
+        answers: [
+          "Pamięć semantyczną",
+          "Pamięć proceduralną",
+          "Pamięć epizodyczną",
+          "Pamięć roboczą"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zadanie rozpoznawania wcześniej prezentowanych par twarzy i imion bada przede wszystkim:",
+        answers: [
+          "Pamięć epizodyczną",
+          "Pamięć proceduralną",
+          "Pamięć prymingu",
+          "Pamięć sensoryczną"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest PRAWIDŁOWE?",
+        answers: [
+          "Pamięć deklaratywna zawsze wymaga ruchu",
+          "Pamięć deklaratywna jest świadoma i możliwa do zwerbalizowania",
+          "Pamięć niedeklaratywna zawsze wymaga szczegółowego raportu słownego",
+          "Pamięć proceduralna to to samo co pamięć epizodyczna"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest FAŁSZYWE?",
+        answers: [
+          "Pamięć proceduralna może być zachowana przy poważnej amnezji epizodycznej",
+          "Pryming może występować bez świadomości wcześniejszej ekspozycji",
+          "Pamięć semantyczna dotyczy wiedzy o świecie",
+          "Pamięć epizodyczna nie ma żadnego związku z kontekstem"
+        ],
+        correct: 3
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
