@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 14 — Substancje halucynogenne i dysocjacyjne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 14 — Substancje halucynogenne i dysocjacyjne</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Substancje halucynogenne to głównie takie, które:",
+        answers: [
+          "Działają tylko nasennie",
+          "Zmieniają percepcję, nastrój i procesy poznawcze, często wywołując iluzje i halucynacje",
+          "Zawsze powodują utratę przytomności",
+          "Wyłącznie działają przeciwbólowo"
+        ],
+        correct: 1
+      },
+      {
+        question: "Substancje dysocjacyjne charakteryzują się przede wszystkim:",
+        answers: [
+          "Sedacją bez zmian świadomości",
+          "Wrażeniem oderwania od ciała i otoczenia (derealizacja, depersonalizacja)",
+          "Zwiększeniem masy mięśniowej",
+          "Poprawą wszystkich funkcji poznawczych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Do klasycznych halucynogenów serotoninergicznych zalicza się m.in.:",
+        answers: [
+          "LSD, psylocybinę, meskalinę",
+          "Amfetaminę, kokainę",
+          "Morfinę, heroinę",
+          "Diazepam, lorazepam"
+        ],
+        correct: 0
+      },
+      {
+        question: "LSD (dietylamid kwasu lizergowego) działa głównie jako:",
+        answers: [
+          "Antagonista receptorów GABA-A",
+          "Agonista/częściowy agonista receptorów serotoninowych 5-HT2A",
+          "Antagonista receptorów dopaminowych D2",
+          "Bloker kanałów sodowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Psylocybina (z tzw. 'magicznych grzybów') po metabolizmie do psylocyny działa głównie na:",
+        answers: [
+          "Receptory 5-HT2A",
+          "Receptory GABA-B",
+          "Receptory opioidowe",
+          "Receptory nikotynowe"
+        ],
+        correct: 0
+      },
+      {
+        question: "Meskalina jest klasycznym halucynogenem występującym naturalnie w:",
+        answers: [
+          "Liściach koki",
+          "Kaktusach (np. peyotl)",
+          "Nasieniu maku",
+          "Liściach tytoniu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Klasyczne halucynogeny serotoninergiczne modulują przede wszystkim:",
+        answers: [
+          "Układ GABAergiczny w rdzeniu kręgowym",
+          "Sieci korowo-limbiczne, zwłaszcza poprzez receptory 5-HT2A w korze czołowej",
+          "Wyłącznie móżdżek",
+          "Tylko pień mózgu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Efektem działania klasycznych halucynogenów obserwowanym w badaniach fMRI jest często:",
+        answers: [
+          "Zwiększona sztywność sieci tzw. default mode network (DMN)",
+          "Zmniejszona spójność DMN i zwiększona łączność między różnymi obszarami mózgu",
+          "Całkowite wyłączenie kory sensorycznej",
+          "Brak jakichkolwiek zmian funkcjonalnych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Typowe subiektywne efekty LSD obejmują:",
+        answers: [
+          "Wyłącznie senność i znużenie",
+          "Zmiany percepcji wzrokowej, synestezje, zmieniony tok myślenia",
+          "Tylko analgezję",
+          "Tylko sedację bez zmian percepcji"
+        ],
+        correct: 1
+      },
+      {
+        question: "'Bad trip' to określenie dotyczące:",
+        answers: [
+          "Przyjemnych doświadczeń po LSD",
+          "Uciążliwych, lękowych lub przerażających przeżyć pod wpływem halucynogenów",
+          "Wyłącznie objawów somatycznych",
+          "Braku jakichkolwiek efektów"
+        ],
+        correct: 1
+      },
+      {
+        question: "HPPD (hallucinogen persisting perception disorder) odnosi się do:",
+        answers: [
+          "Trwałego zniesienia percepcji",
+          "Utrzymywania się zaburzeń percepcji (np. 'afterimages', zniekształceń wzrokowych) po ustąpieniu działania halucynogenu",
+          "Braku tolerancji na halucynogeny",
+          "Wyłącznie zaburzeń pamięci"
+        ],
+        correct: 1
+      },
+      {
+        question: "U osób z predyspozycją do zaburzeń psychotycznych używanie halucynogenów:",
+        answers: [
+          "Nie ma żadnego znaczenia",
+          "Może zwiększać ryzyko ujawnienia się objawów psychotycznych",
+          "Zawsze chroni przed psychozą",
+          "Działa jak neuroleptyk"
+        ],
+        correct: 1
+      },
+      {
+        question: "Klasycznym przykładem substancji dysocjacyjnej jest:",
+        answers: [
+          "LSD",
+          "Ketamina",
+          "Psylocybina",
+          "Meskalina"
+        ],
+        correct: 1
+      },
+      {
+        question: "Główny mechanizm działania ketaminy i PCP polega na:",
+        answers: [
+          "Blokowaniu receptorów opioidowych",
+          "Antagonizmie wobec receptorów NMDA (glutaminergicznych)",
+          "Agonizmie receptorów GABA-A",
+          "Zwiększaniu wychwytu zwrotnego serotoniny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Efekty subiektywne ketaminy obejmują często:",
+        answers: [
+          "Wrażenie oderwania od ciała, derealizację, depersonalizację",
+          "Wyłącznie sedację bez zmian świadomości",
+          "Tylko analgezję bez zmian percepcji",
+          "Tylko poprawę pamięci"
+        ],
+        correct: 0
+      },
+      {
+        question: "Deksometorfan (DXM), stosowany w syropach przeciwkaszlowych, w wysokich dawkach może działać jako:",
+        answers: [
+          "Typowy neuroleptyk",
+          "Substancja dysocjacyjna o mechanizmie zbliżonym do antagonizmu NMDA",
+          "SSRI",
+          "Benzodiazepina"
+        ],
+        correct: 1
+      },
+      {
+        question: "Ketamina w niskich dawkach, w kontrolowanym środowisku klinicznym, była badana jako potencjalny lek na:",
+        answers: [
+          "Schizofrenię paranoidalną",
+          "Depresję lekooporną o szybkim początku działania",
+          "Chorobę Alzheimera",
+          "Padaczkę"
+        ],
+        correct: 1
+      },
+      {
+        question: "Ryzyko rekreacyjnego używania ketaminy obejmuje m.in.:",
+        answers: [
+          "Brak ryzyka uzależnienia",
+          "Zaburzenia pamięci, ryzyko wypadków, problemy z układem moczowym przy przewlekłym używaniu",
+          "Poprawę wszystkich funkcji poznawczych",
+          "Brak jakichkolwiek skutków ubocznych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Klasyczne halucynogeny serotoninergiczne (np. LSD, psylocybina) charakteryzują się:",
+        answers: [
+          "Bardzo wysoką toksycznością fizyczną przy typowych dawkach",
+          "Niską toksycznością fizyczną przy typowych dawkach, ale ryzykiem psychicznych powikłań",
+          "Brakiem jakiegokolwiek wpływu na mózg",
+          "Silnym potencjałem uzależniającym fizycznie jak opioidy"
+        ],
+        correct: 1
+      },
+      {
+        question: "W przypadku halucynogenów istotnym czynnikiem wpływającym na przebieg doświadczenia są:",
+        answers: [
+          "Wyłącznie właściwości farmakologiczne",
+          "Tzw. 'set and setting' — nastawienie, stan psychiczny i otoczenie",
+          "Tylko wiek metrykalny",
+          "Wyłącznie masa ciała"
+        ],
+        correct: 1
+      },
+      {
+        question: "Który z poniższych NIE jest klasycznym halucynogenem serotoninergicznym?",
+        answers: [
+          "LSD",
+          "Psylocybina",
+          "Ketamina",
+          "Meskalina"
+        ],
+        correct: 2
+      },
+      {
+        question: "Która z poniższych substancji jest typowym przykładem halucynogenu pochodzenia roślinnego?",
+        answers: [
+          "LSD",
+          "Psylocybina",
+          "Ketamina",
+          "DXM"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest PRAWIDŁOWE?",
+        answers: [
+          "Wszystkie halucynogeny i dysocjanty działają na te same receptory",
+          "Klasyczne halucynogeny serotoninergiczne zwykle działają poprzez receptory 5-HT2A, a dysocjanty (np. ketamina) głównie przez blokadę NMDA",
+          "Halucynogeny nie wpływają na sieci mózgowe",
+          "Substancje dysocjacyjne nie powodują zmian świadomości"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
