@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 32 — Strukturalne i funkcjonalne zmiany w mózgu w schizofrenii</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 32 — Strukturalne i funkcjonalne zmiany w mózgu w schizofrenii</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Przez strukturalne zmiany w mózgu w schizofrenii rozumie się przede wszystkim:",
+        answers: [
+          "Zmiany w sekwencji DNA",
+          "Różnice w objętości, grubości kory, kształcie i wielkości struktur mózgowych",
+          "Wyłącznie zmiany w zachowaniu",
+          "Tylko zmiany poziomu glukozy we krwi"
+        ],
+        correct: 1
+      },
+      {
+        question: "Funkcjonalne zmiany w mózgu odnoszą się głównie do:",
+        answers: [
+          "Zmien w strukturze kości czaszki",
+          "Zmien w aktywności i łączności funkcjonalnej między obszarami mózgu podczas spoczynku lub zadań",
+          "Zmien w kolorze włosów",
+          "Zmien w masie ciała"
+        ],
+        correct: 1
+      },
+      {
+        question: "W wielu badaniach obrazowych w schizofrenii stwierdzano:",
+        answers: [
+          "Powiększenie całkowitej objętości mózgu",
+          "Niewielkie zmniejszenie całkowitej objętości mózgu i/lub kory",
+          "Brak jakichkolwiek różnic strukturalnych",
+          "Zawsze identyczną objętość mózgu jak w grupie kontrolnej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Typowym znaleziskiem w strukturze komór mózgu u części osób ze schizofrenią jest:",
+        answers: [
+          "Zmniejszenie objętości komór bocznych",
+          "Powiększenie komór bocznych (ventriculomegalia)",
+          "Brak komór bocznych",
+          "Zastąpienie komór tkanką kostną"
+        ],
+        correct: 1
+      },
+      {
+        question: "Badania morfometrii oparte na MRI sugerują w schizofrenii m.in.:",
+        answers: [
+          "Zwiększenie grubości kory w płatach czołowych",
+          "Zmniejszenie grubości kory w różnych obszarach, szczególnie czołowych i skroniowych",
+          "Brak różnic w grubości kory",
+          "Całkowity zanik kory"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zmiany strukturalne w korze mogą odzwierciedlać m.in.:",
+        answers: [
+          "Zmiany w gęstości synaps, wielkości neuronów i organizacji warstw",
+          "Wyłącznie liczbę chromosomów",
+          "Zmiany w kościach czaszki",
+          "Zmiany w mięśniach"
+        ],
+        correct: 0
+      },
+      {
+        question: "W licznych badaniach u części pacjentów ze schizofrenią wykazano zmiany objętościowe m.in. w:",
+        answers: [
+          "Hipokampie i strukturach limbicznych",
+          "Rdzeniu kręgowym",
+          "Móżdżku wyłącznie",
+          "Nerwach obwodowych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Zmiany objętości jąder podstawy (np. prążkowia) mogą być związane z:",
+        answers: [
+          "Wyłącznie wiekiem pacjenta",
+          "Chorobą i/lub długotrwałym stosowaniem leków przeciwpsychotycznych",
+          "Zmianami w grupie krwi",
+          "Tylko dietą"
+        ],
+        correct: 1
+      },
+      {
+        question: "W badaniach fMRI spoczynkowego (resting-state) u osób ze schizofrenią obserwuje się często:",
+        answers: [
+          "Brak jakiejkolwiek synchronizacji między obszarami mózgu",
+          "Zmiany w łączności funkcjonalnej w sieciach mózgowych (np. sieć domyślna, sieci uwagowe)",
+          "Zawsze identyczną łączność jak u osób zdrowych",
+          "Wyłącznie wzrost aktywności móżdżku"
+        ],
+        correct: 1
+      },
+      {
+        question: "W zadaniowych badaniach fMRI dotyczących funkcji poznawczych u pacjentów ze schizofrenią często stwierdza się:",
+        answers: [
+          "Brak jakichkolwiek różnic względem grupy kontrolnej",
+          "Odmienny wzorzec aktywacji (np. osłabioną aktywność kory przedczołowej podczas zadań pamięci roboczej)",
+          "Tylko zwiększoną aktywność hipokampa",
+          "Tylko większą aktywność móżdżku"
+        ],
+        correct: 1
+      },
+      {
+        question: "Współczesne modele schizofrenii często podkreślają tzw. hipotezę dyskonekcji, która zakłada, że:",
+        answers: [
+          "Problemem jest wyłącznie lokalne uszkodzenie jednego obszaru",
+          "Kluczowe są zaburzenia łączności i koordynacji między regionami mózgu (sieciami)",
+          "Tylko nadmierna liczba neuronów jest istotna",
+          "Struktura mózgu jest całkowicie prawidłowa"
+        ],
+        correct: 1
+      },
+      {
+        question: "Dyskonekcja może dotyczyć m.in. połączeń między:",
+        answers: [
+          "Kresomózgowiem a stopą",
+          "Korą przedczołową a strukturami limbicznymi i skroniowymi",
+          "Móżdżkiem a nerwem wzrokowym",
+          "Rdzeniem kręgowym a paznokciami"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zmiany funkcjonalne mogą wiązać się z dysregulacją układów neuroprzekaźników, m.in.:",
+        answers: [
+          "Dopaminergicznego, glutaminergicznego i GABA-ergicznego",
+          "Tylko cholinergicznego nerwowo–mięśniowego",
+          "Tylko histaminergicznego",
+          "Tylko opioidowego"
+        ],
+        correct: 0
+      },
+      {
+        question: "Klasyczna \"hipoteza dopaminowa\" schizofrenii łączy pozytywne objawy z:",
+        answers: [
+          "Obniżoną aktywnością dopaminergiczną w szlaku mezolimbicznym",
+          "Podwyższoną aktywnością dopaminergiczną w szlaku mezolimbicznym",
+          "Brakiem dopaminy w mózgu",
+          "Wyłącznie zmianami w móżdżku"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wielu autorów podkreśla, że zmiany strukturalne w schizofrenii mają charakter:",
+        answers: [
+          "Wyłącznie pourazowy",
+          "Rozwojowy – związany z nieprawidłowym dojrzewaniem sieci mózgowych (np. przycinaniem synaps)",
+          "Związany tylko z przebytymi infekcjami",
+          "Pojawiają się dopiero w bardzo późnej starości"
+        ],
+        correct: 1
+      },
+      {
+        question: "Okres dojrzewania (adolescencji) jest szczególnie istotny, ponieważ:",
+        answers: [
+          "Nie zachodzą wtedy żadne zmiany w mózgu",
+          "Zachodzą intensywne procesy dojrzewania kory przedczołowej i reorganizacji synaptycznej",
+          "Mózg jest już całkowicie rozwinięty",
+          "Dotyczy tylko móżdżku"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zmiany objętościowe i funkcjonalne w korze przedczołowej są często łączone z:",
+        answers: [
+          "Wyłącznie objawami pozytywnymi",
+          "Objawami negatywnymi i deficytami funkcji wykonawczych",
+          "Tylko poprawą pamięci",
+          "Brakiem wpływu na funkcje poznawcze"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zaburzenia łączności między hipokampem a korą mogą wiązać się z:",
+        answers: [
+          "Wyłącznie poprawą pamięci",
+          "Zaburzeniami pamięci epizodycznej i dezorganizacją myślenia",
+          "Zmniejszeniem ryzyka schizofrenii",
+          "Brakiem jakiegokolwiek wpływu na funkcje poznawcze"
+        ],
+        correct: 1
+      },
+      {
+        question: "Badania podłużne sugerują, że część zmian strukturalnych może:",
+        answers: [
+          "W ogóle nie zmieniać się w czasie",
+          "Nasilać się z czasem, szczególnie przy ciężkim przebiegu i braku leczenia",
+          "Znikać natychmiast po pierwszym epizodzie",
+          "Być obecna wyłącznie u osób po 80. roku życia"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
