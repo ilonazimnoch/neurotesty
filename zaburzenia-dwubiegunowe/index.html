@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 34 — Zaburzenia dwubiegunowe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 34 — Zaburzenia dwubiegunowe</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Klasyczną cechą zaburzenia dwubiegunowego jest:",
+        answers: [
+          "Występowanie wyłącznie epizodów depresyjnych",
+          "Naprzemienne występowanie epizodów manii / hipomanii i depresji",
+          "Wyłącznie objawy lękowe",
+          "Utrwalone objawy psychotyczne bez zmian nastroju"
+        ],
+        correct: 1
+      },
+      {
+        question: "Mania w zaburzeniu dwubiegunowym charakteryzuje się m.in.:",
+        answers: [
+          "Obniżonym nastrojem i spadkiem energii",
+          "Podwyższonym lub drażliwym nastrojem, zwiększoną energią i aktywnością",
+          "Wyłącznie bezsennością bez zmiany nastroju",
+          "Wyłącznie spowolnieniem psychoruchowym"
+        ],
+        correct: 1
+      },
+      {
+        question: "Hipomania różni się od manii tym, że:",
+        answers: [
+          "Trwa dłużej i jest cięższa",
+          "Objawy są łagodniejsze i zwykle nie powodują pełnej dezorganizacji funkcjonowania czy hospitalizacji",
+          "Nie wiąże się z podwyższonym nastrojem",
+          "Zawsze zawiera objawy psychotyczne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Epizod mieszany w zaburzeniu dwubiegunowym oznacza:",
+        answers: [
+          "Występowanie tylko objawów depresyjnych",
+          "Jednoczesne lub bardzo szybkie przeplatanie się objawów manii/hipomanii i depresji",
+          "Występowanie wyłącznie objawów lękowych",
+          "Brak jakichkolwiek zmian nastroju"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zaburzenie dwubiegunowe typu I definiuje się przez:",
+        answers: [
+          "Obecność przynajmniej jednego epizodu pełnej manii",
+          "Obecność wyłącznie hipomanii",
+          "Brak epizodów nastroju podwyższonego",
+          "Występowanie tylko epizodów lękowych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Zaburzenie dwubiegunowe typu II charakteryzuje się:",
+        answers: [
+          "Przynajmniej jednym epizodem manii",
+          "Przynajmniej jednym epizodem hipomanii i jednym dużym epizodem depresji, bez pełnej manii",
+          "Wyłącznie epizodami depresyjnymi",
+          "Tylko objawami psychotycznymi"
+        ],
+        correct: 1
+      },
+      {
+        question: "Cykloimia (cyklotymia) to:",
+        answers: [
+          "Łagodne, przewlekłe wahania nastroju z licznymi objawami hipomanii i depresji niespełniającymi kryteriów pełnych epizodów",
+          "Wyłącznie epizody manii",
+          "Wyłącznie epizody depresji",
+          "Zaburzenie lękowe"
+        ],
+        correct: 0
+      },
+      {
+        question: "Do typowych objawów manii należą:",
+        answers: [
+          "Spowolnienie psychoruchowe, anhedonia, poczucie winy",
+          "Podwyższony nastrój, gonitwa myśli, zmniejszona potrzeba snu",
+          "Wyłącznie objawy somatyczne",
+          "Brak zmian aktywności"
+        ],
+        correct: 1
+      },
+      {
+        question: "W manii często obserwuje się:",
+        answers: [
+          "Zawężenie uwagi i wycofanie społeczne",
+          "Zwiększoną impulsywność i podejmowanie ryzykownych decyzji",
+          "Brak wpływu na zachowanie",
+          "Całkowity bezruch"
+        ],
+        correct: 1
+      },
+      {
+        question: "W epizodzie depresyjnym w przebiegu choroby afektywnej dwubiegunowej typowe są:",
+        answers: [
+          "Podwyższony nastrój i nadmierny optymizm",
+          "Obniżony nastrój, anhedonia, zaburzenia snu i apetytu",
+          "Wyłącznie halucynacje wzrokowe",
+          "Zawsze objawy katatoniczne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Badania neuropsychologiczne w zaburzeniu dwubiegunowym wskazują często na deficyty w zakresie:",
+        answers: [
+          "Pamięci roboczej i funkcji wykonawczych",
+          "Wyłącznie percepcji barw",
+          "Wyłącznie pamięci proceduralnej",
+          "Braku jakichkolwiek deficytów"
+        ],
+        correct: 0
+      },
+      {
+        question: "U części pacjentów z zaburzeniem dwubiegunowym deficyty poznawcze są obserwowane:",
+        answers: [
+          "Tylko w ostrej manii",
+          "Także w remisji, jako względnie utrwalone obniżenie funkcjonowania poznawczego",
+          "Nigdy nie występują",
+          "Tylko w przebiegu epizodów psychotycznych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zaburzenia funkcji wykonawczych w zaburzeniu dwubiegunowym mogą obejmować:",
+        answers: [
+          "Trudności w planowaniu, hamowaniu reakcji i elastyczności poznawczej",
+          "Wyłącznie deficyty w rozpoznawaniu twarzy",
+          "Tylko zaburzenia orientacji przestrzennej",
+          "Tylko zaburzenia mowy"
+        ],
+        correct: 0
+      },
+      {
+        question: "Badania obrazowe w zaburzeniu dwubiegunowym sugerują m.in.:",
+        answers: [
+          "Całkowity brak zmian w strukturze mózgu",
+          "Zmiany objętościowe i funkcjonalne w korze przedczołowej i strukturach limbicznych",
+          "Zmiany wyłącznie w rdzeniu kręgowym",
+          "Zmiany tylko w móżdżku"
+        ],
+        correct: 1
+      },
+      {
+        question: "W neurobiologii zaburzeń dwubiegunowych podkreśla się znaczenie m.in. układów:",
+        answers: [
+          "Dopaminergicznego, glutaminergicznego i GABAergicznego",
+          "Wyłącznie cholinergicznego nerwowo-mięśniowego",
+          "Tylko histaminergicznego",
+          "Wyłącznie opioidowego"
+        ],
+        correct: 0
+      },
+      {
+        question: "W odniesieniu do komponenty genetycznej zaburzenia dwubiegunowego przyjmuje się, że:",
+        answers: [
+          "Nie ma żadnego podłoża genetycznego",
+          "Dziedziczność jest wysoka, ale wielogenowa i poligeniczna",
+          "Choroba jest wyłącznie monogenowa",
+          "Tylko chromosomy płciowe są istotne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Czynniki środowiskowe w zaburzeniu dwubiegunowym:",
+        answers: [
+          "Nie odgrywają żadnej roli",
+          "Mogą modulować ryzyko i przebieg choroby (np. stres, rytm dobowy, substancje psychoaktywne)",
+          "Są ważniejsze niż genetyka w 100% przypadków",
+          "Ograniczają się wyłącznie do infekcji"
+        ],
+        correct: 1
+      },
+      {
+        question: "U pacjentów z zaburzeniem dwubiegunowym często obserwuje się:",
+        answers: [
+          "Stabilny rytm snu i czuwania bez zaburzeń",
+          "Zaburzenia rytmów dobowych, zmiany długości i jakości snu",
+          "Brak jakichkolwiek problemów ze snem",
+          "Tylko hipersomnię bez innych problemów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zaburzenia snu mogą:",
+        answers: [
+          "Nie mieć wpływu na przebieg choroby",
+          "Poprzedzać epizody manii lub depresji i działać jako czynniki wyzwalające",
+          "Występować tylko u osób zdrowych",
+          "Zawsze chronić przed nawrotami"
+        ],
+        correct: 1
+      },
+      {
+        question: "Podstawową grupą leków stosowanych profilaktycznie w zaburzeniu dwubiegunowym są:",
+        answers: [
+          "Benzodiazepiny",
+          "Leki normotymiczne (stabilizatory nastroju), np. sole litu, niektóre leki przeciwpadaczkowe",
+          "Wyłącznie leki przeciwpsychotyczne",
+          "Tylko leki nasenne"
+        ],
+        correct: 1
+      },
+      {
+        question: "W leczeniu epizodu manii stosuje się często:",
+        answers: [
+          "Wyłącznie leki przeciwdepresyjne",
+          "Leki normotymiczne i/lub przeciwpsychotyczne",
+          "Tylko leki nasenne",
+          "Wyłącznie psychoterapię bez farmakoterapii"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
