@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 23 — Pień mózgu, móżdżek, wzgórze i podwzgórze</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 23 — Pień mózgu, móżdżek, wzgórze i podwzgórze</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Pień mózgu w klasycznym ujęciu anatomicznym obejmuje:",
+        answers: [
+          "Śródmózgowie, most, rdzeń przedłużony",
+          "Wzgórze, podwzgórze, hipokamp",
+          "Móżdżek, most, rdzeń kręgowy",
+          "Półkule mózgu i móżdżek"
+        ],
+        correct: 0
+      },
+      {
+        question: "Do podstawowych funkcji pnia mózgu należy m.in.:",
+        answers: [
+          "Precyzyjna analiza bodźców wzrokowych wysokiego rzędu",
+          "Utrzymywanie podstawowych funkcji życiowych (oddychanie, krążenie) i poziomu pobudzenia",
+          "Wyłącznie kontrola ruchów precyzyjnych dłoni",
+          "Zapamiętywanie epizodyczne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Formacja siatkowata (twór siatkowaty) w pniu mózgu odpowiada głównie za:",
+        answers: [
+          "Przewodzenie bólu obwodowego",
+          "Regulację poziomu czuwania i snu, modulację pobudzenia",
+          "Analizę słów i zdań",
+          "Kontrolę ruchów gałek ocznych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Uszkodzenie struktur pnia mózgu może prowadzić do:",
+        answers: [
+          "Delikatnych zaburzeń pamięci semantycznej bez innych objawów",
+          "Zaburzeń świadomości, niewydolności oddechowej, a nawet śmierci",
+          "Wyłącznie ślepoty korowej",
+          "Izolowanego zaniku kory wzrokowej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Większość jąder nerwów czaszkowych znajduje się w:",
+        answers: [
+          "Pniu mózgu",
+          "Móżdżku",
+          "Wzgórzu",
+          "Podwzgórzu"
+        ],
+        correct: 0
+      },
+      {
+        question: "Drogi wstępujące (czuciowe) i zstępujące (ruchowe) przechodzą przez:",
+        answers: [
+          "Tylko korę mózgową",
+          "Pień mózgu, łącząc rdzeń kręgowy z wyższymi piętrami mózgowia",
+          "Wyłącznie móżdżek",
+          "Wyłącznie układ limbiczny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Móżdżek anatomicznie położony jest:",
+        answers: [
+          "Przed płatem czołowym",
+          "Grzbietowo względem mostu i rdzenia przedłużonego",
+          "W obrębie płata skroniowego",
+          "W obrębie płata ciemieniowego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Klasyczną funkcją móżdżku jest:",
+        answers: [
+          "Generowanie świadomych decyzji moralnych",
+          "Koordynacja ruchów, utrzymanie równowagi i napięcia mięśniowego",
+          "Analiza znaczenia słów",
+          "Przetwarzanie emocji strachu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Uszkodzenie móżdżku prowadzi najczęściej do:",
+        answers: [
+          "Porażeń spastycznych po stronie przeciwnej",
+          "Ataksji, drżenia zamiarowego, zaburzeń równowagi",
+          "Czuciowego zaniku bólu",
+          "Izolowanych zaburzeń pamięci epizodycznej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń o móżdżku jest PRAWIDŁOWE?",
+        answers: [
+          "Móżdżek uczestniczy wyłącznie w ruchu",
+          "Badania sugerują udział móżdżku także w funkcjach poznawczych i emocjonalnych",
+          "Móżdżek jest częścią rdzenia kręgowego",
+          "Móżdżek nie otrzymuje informacji z kory mózgowej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wzgórze anatomicznie jest częścią:",
+        answers: [
+          "Kresomózgowia",
+          "Międzymózgowia",
+          "Śródmózgowia",
+          "Tyłomózgowia"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kluczową funkcją wzgórza jest:",
+        answers: [
+          "Wyłącznie regulacja temperatury ciała",
+          "Przekazywanie (przełączanie) informacji czuciowych i innych do odpowiednich obszarów kory mózgowej",
+          "Generowanie potencjałów czynnościowych w motoneuronach rdzenia",
+          "Wytwarzanie płynu mózgowo-rdzeniowego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Który rodzaj modalności czuciowej nie przełącza się we wzgórzu?",
+        answers: [
+          "Wzrok",
+          "Słuch",
+          "Węch",
+          "Czucie somatosensoryczne"
+        ],
+        correct: 2
+      },
+      {
+        question: "Uszkodzenia jąder wzgórza mogą prowadzić do:",
+        answers: [
+          "Izolowanych zaburzeń tylko węchu",
+          "Zaburzeń czucia, bólu, uwagi i integracji informacji czuciowych",
+          "Wyłącznie zaburzeń równowagi",
+          "Wyłącznie zaburzeń pamięci proceduralnej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Podwzgórze anatomicznie położone jest:",
+        answers: [
+          "Powyżej wzgórza",
+          "Brzusznie względem wzgórza, w obrębie międzymózgowia",
+          "W obrębie płata czołowego",
+          "W obrębie móżdżku"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kluczowe funkcje podwzgórza obejmują:",
+        answers: [
+          "Wyłącznie koordynację ruchów",
+          "Regulację homeostazy (głód, pragnienie, temperatura), rytmów dobowych i wydzielanie hormonów (poprzez przysadkę)",
+          "Wyłącznie przetwarzanie bodźców wzrokowych",
+          "Generowanie potencjałów czynnościowych w mięśniach"
+        ],
+        correct: 1
+      },
+      {
+        question: "Podwzgórze łączy układ nerwowy z układem hormonalnym m.in. poprzez:",
+        answers: [
+          "Bezpośrednie unerwienie mięśni",
+          "Kontrolę przysadki mózgowej (przysadki przedniej i tylnej)",
+          "Rdzeń kręgowy",
+          "Wyłącznie móżdżek"
+        ],
+        correct: 1
+      },
+      {
+        question: "Uszkodzenia podwzgórza mogą prowadzić do:",
+        answers: [
+          "Izolowanych zaburzeń pola widzenia",
+          "Zaburzeń łaknienia, termoregulacji, rytmów dobowych i wydzielania hormonów",
+          "Wyłącznie niedowładu kończyn",
+          "Tylko zaburzeń słuchu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń najlepiej opisuje relację między pniem mózgu a wzgórzem i podwzgórzem?",
+        answers: [
+          "Wzgórze i podwzgórze są częścią pnia mózgu",
+          "Wzgórze i podwzgórze leżą powyżej pnia mózgu, w obrębie międzymózgowia",
+          "Pień mózgu leży nad wzgórzem",
+          "Struktury te są całkowicie od siebie oddzielone funkcjonalnie"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych zdań jest PRAWIDŁOWE?",
+        answers: [
+          "Pień mózgu odpowiada wyłącznie za świadome procesy poznawcze",
+          "Pień mózgu zawiera struktury kluczowe dla podstawowych funkcji życiowych i poziomu świadomości",
+          "Móżdżek odpowiada tylko za emocje",
+          "Wzgórze nie ma połączeń z korą"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest FAŁSZYWE?",
+        answers: [
+          "Móżdżek bierze udział w koordynacji ruchu",
+          "Wzgórze jest ważnym 'przełącznikiem' informacji do kory",
+          "Podwzgórze reguluje wiele funkcji homeostatycznych",
+          "Pień mózgu nie ma żadnego znaczenia dla świadomości"
+        ],
+        correct: 3
+      },
+      {
+        question: "Które zdanie najlepiej opisuje związek tych struktur z zachowaniem?",
+        answers: [
+          "Pień mózgu, móżdżek, wzgórze i podwzgórze tworzą sieć kluczową dla integracji bodźców, regulacji pobudzenia i koordynacji reakcji organizmu",
+          "Struktury te są istotne tylko w życiu płodowym",
+          "Mają znaczenie wyłącznie dla ruchów odruchowych kończyn dolnych",
+          "Nie mają związku z funkcjami poznawczymi ani emocjonalnymi"
+        ],
+        correct: 0
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
