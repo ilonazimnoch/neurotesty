@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 21 — Współczynnik encefalizacji</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 21 — Współczynnik encefalizacji</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Współczynnik encefalizacji (EQ, encephalization quotient) służy do:",
+        answers: [
+          "Dokładnego mierzenia liczby neuronów w mózgu",
+          "Porównywania względnej wielkości mózgu różnych gatunków, z uwzględnieniem masy ciała",
+          "Obliczania ilorazu inteligencji (IQ)",
+          "Mierzenia gęstości istoty białej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zwykłe porównanie surowej masy mózgu między gatunkami jest mylące, ponieważ:",
+        answers: [
+          "Wszystkie mózgi ważą tyle samo",
+          "Większe zwierzęta mają z reguły większe ciała i mózgi, więc trzeba uwzględnić masę ciała",
+          "Masa mózgu nie ma żadnego znaczenia",
+          "Tylko liczba neuronów jest istotna"
+        ],
+        correct: 1
+      },
+      {
+        question: "Współczynnik encefalizacji porównuje:",
+        answers: [
+          "Rzeczywistą masę mózgu do masy mózgu przewidywanej dla danego rozmiaru ciała",
+          "Rzeczywistą masę mózgu do długości życia",
+          "Masę mózgu do objętości płuc",
+          "Liczbę neuronów do liczby synaps"
+        ],
+        correct: 0
+      },
+      {
+        question: "Ogólna idea wzoru na współczynnik encefalizacji polega na:",
+        answers: [
+          "Obliczeniu stosunku masy mózgu do masy ciała bez żadnych przekształceń",
+          "Porównaniu masy mózgu organizmu do masy mózgu oczekiwanej na podstawie zależności między mózgiem a ciałem w danej grupie gatunków",
+          "Dodaniu masy mózgu i masy ciała",
+          "Podzieleniu liczby neuronów przez liczbę synaps"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wartość EQ > 1 oznacza, że:",
+        answers: [
+          "Mózg jest mniejszy niż oczekiwany dla tej masy ciała",
+          "Mózg jest większy niż oczekiwany dla tej masy ciała",
+          "Mózg ma dokładnie oczekiwaną wielkość",
+          "Mózg nie pełni funkcji poznawczych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wartość EQ ≈ 1 oznacza, że:",
+        answers: [
+          "Mózg jest znacznie większy niż oczekiwany",
+          "Mózg jest znacznie mniejszy niż oczekiwany",
+          "Mózg jest zbliżony do wielkości oczekiwanej dla tej masy ciała",
+          "Mózg nie zawiera neuronów"
+        ],
+        correct: 2
+      },
+      {
+        question: "Wartość EQ < 1 oznacza, że:",
+        answers: [
+          "Mózg jest większy niż oczekiwany",
+          "Mózg jest mniejszy niż oczekiwany dla tej masy ciała",
+          "Mózg nie istnieje",
+          "Gatunek nie ma układu nerwowego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Gatunki uważane za mające względnie wysoki współczynnik encefalizacji to m.in.:",
+        answers: [
+          "Ssaki drapieżne, naczelne, niektóre waleniowate",
+          "Większość ryb pozbawionych mózgu",
+          "Wyłącznie organizmy jednokomórkowe",
+          "Tylko owady"
+        ],
+        correct: 0
+      },
+      {
+        question: "Wysoki współczynnik encefalizacji u ludzi w porównaniu z innymi gatunkami:",
+        answers: [
+          "W ogóle nie wiąże się z możliwościami poznawczymi",
+          "Jest interpretowany jako jeden z wskaźników zwiększonych możliwości poznawczych",
+          "Oznacza, że człowiek ma najmniejszy mózg",
+          "Nie ma żadnego znaczenia"
+        ],
+        correct: 1
+      },
+      {
+        question: "Ograniczeniem współczynnika encefalizacji jest m.in. to, że:",
+        answers: [
+          "Idealnie przewiduje inteligencję osobniczą",
+          "Nie uwzględnia organizacji wewnętrznej mózgu (np. gęstości neuronów, budowy kory)",
+          "Jest miarą czysto subiektywną",
+          "Dotyczy tylko ludzi"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kolejnym ograniczeniem EQ jest to, że:",
+        answers: [
+          "Mierzy jedynie liczbę synaps",
+          "Nie uwzględnia różnic w proporcjach między różnymi częściami mózgu (np. kora vs. pień mózgu)",
+          "Zastępuje wszystkie inne miary neuroanatomiczne",
+          "Nie wymaga danych o masie ciała"
+        ],
+        correct: 1
+      },
+      {
+        question: "W neuropsychologii i neurobiologii ewolucyjnej współczynnik encefalizacji jest używany do:",
+        answers: [
+          "Dokładnego określania IQ każdej jednostki",
+          "Porównywania względnego rozwoju mózgu w ewolucji różnych linii gatunkowych",
+          "Mierzenia ciśnienia krwi",
+          "Oceny poziomu glukozy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Analizy porównawcze EQ sugerują, że:",
+        answers: [
+          "Wszystkie gatunki mają identyczny stosunek mózgu do ciała",
+          "Różne grupy (np. naczelne, waleniowate, ptaki) wykazują niezależne 'ścieżki' zwiększania rozmiaru mózgu względem ciała",
+          "Tylko człowiek ma mózg",
+          "EQ nie różni się między gatunkami"
+        ],
+        correct: 1
+      },
+      {
+        question: "Współczynnik encefalizacji nie mówi nic bezpośrednio o:",
+        answers: [
+          "Względnej wielkości mózgu",
+          "Potencjale energetycznym mózgu",
+          "Konkretnej organizacji sieci neuronalnych i ich specjalizacji",
+          "Relacji masa mózgu/masa ciała"
+        ],
+        correct: 2
+      },
+      {
+        question: "Wysoki EQ u danego gatunku można ogólnie interpretować jako:",
+        answers: [
+          "Wskazówkę, że mózg tego gatunku jest relatywnie 'duży' jak na masę ciała i może wspierać złożone zachowania",
+          "Dowód, że gatunek nie ma żadnych zdolności poznawczych",
+          "Wskazanie, że gatunek nie ma kory mózgowej",
+          "Wskaźnik długości życia"
+        ],
+        correct: 0
+      },
+      {
+        question: "Niski EQ może sugerować, że:",
+        answers: [
+          "Mózg jest relatywnie mały w stosunku do ciała i prawdopodobnie wspiera prostszy repertuar zachowań",
+          "Gatunek jest na pewno bardziej inteligentny niż człowiek",
+          "Mózg nie pełni żadnej funkcji",
+          "Gatunek nie ma układu nerwowego"
+        ],
+        correct: 0
+      },
+      {
+        question: "Mózg o dużym EQ jest również:",
+        answers: [
+          "Całkowicie obojętny energetycznie",
+          "Bardzo kosztowny metabolicznie w stosunku do reszty ciała",
+          "Zawsze mniejszy energetycznie niż serce",
+          "Niezależny od dopływu glukozy"
+        ],
+        correct: 1
+      },
+      {
+        question: "'Hipoteza drogiej tkanki' ('expensive tissue hypothesis') sugeruje, że:",
+        answers: [
+          "Zwiększenie rozmiaru mózgu nie ma wpływu na inne narządy",
+          "Ewolucyjny wzrost rozmiaru mózgu mógł wymagać kompensacji energetycznej (np. kosztem jelit)",
+          "Mózg nie zużywa energii",
+          "Tylko mięśnie są 'drogą tkanką'"
+        ],
+        correct: 1
+      },
+      {
+        question: "Porównując EQ między gatunkami, należy pamiętać, że:",
+        answers: [
+          "Różne grupy mogą mieć odmienne 'linie bazowe' zależności mózg--ciało",
+          "Wszystkie gatunki podlegają takim samym zależnościom",
+          "EQ jest identyczny dla wszystkich ssaków",
+          "EQ dotyczy tylko naczelnych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Wysoki EQ nie gwarantuje, że:",
+        answers: [
+          "Gatunek ma skomplikowane zachowania społeczne",
+          "Mózg jest relatywnie duży",
+          "Mózg jest kosztowny energetycznie",
+          "Gatunek ma rozwiniętą korę mózgową"
+        ],
+        correct: 0
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
