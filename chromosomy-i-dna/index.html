@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 16 — Chromosomy i struktura DNA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 16 — Chromosomy i struktura DNA</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Kwas deoksyrybonukleinowy (DNA) jest główną cząsteczką:",
+        answers: [
+          "Przenoszącą energię w komórce",
+          "Odpowiedzialną za długoterminowe przechowywanie informacji genetycznej",
+          "Tworzącą błonę komórkową",
+          "Regulującą wyłącznie metabolizm glukozy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Podstawową jednostką strukturalną DNA jest:",
+        answers: [
+          "Aminokwas",
+          "Nukleotyd",
+          "Cukier prosty",
+          "Fosfolipid"
+        ],
+        correct: 1
+      },
+      {
+        question: "Nukleotyd DNA składa się z:",
+        answers: [
+          "Cukru, zasady azotowej i reszty fosforanowej",
+          "Dwóch cukrów i jednej zasady azotowej",
+          "Tylko z zasady azotowej",
+          "Białka i tłuszczu"
+        ],
+        correct: 0
+      },
+      {
+        question: "Cukrem w DNA jest:",
+        answers: [
+          "Ryboza",
+          "Deoksyryboza",
+          "Glukoza",
+          "Fruktoza"
+        ],
+        correct: 1
+      },
+      {
+        question: "Do zasad azotowych występujących w DNA należą:",
+        answers: [
+          "Adenina, tymina, cytozyna, guanina",
+          "Adenina, uracyl, cytozyna, guanina",
+          "Tyrozyna, tryptofan, leucyna, izoleucyna",
+          "Glutaminian, GABA, dopamina, serotonina"
+        ],
+        correct: 0
+      },
+      {
+        question: "W cząsteczce DNA adenina (A) tworzy parę z:",
+        answers: [
+          "Guaniną (G)",
+          "Cytozyną (C)",
+          "Tyminą (T)",
+          "Uracylem (U)"
+        ],
+        correct: 2
+      },
+      {
+        question: "W cząsteczce DNA cytozyna (C) tworzy parę z:",
+        answers: [
+          "Guaniną (G)",
+          "Adeniną (A)",
+          "Tyminą (T)",
+          "Uracylem (U)"
+        ],
+        correct: 0
+      },
+      {
+        question: "Strukturę podwójnej helisy DNA opisali w 1953 roku:",
+        answers: [
+          "Watson i Crick",
+          "Golgi i Cajal",
+          "Freud i Jung",
+          "Broca i Wernicke"
+        ],
+        correct: 0
+      },
+      {
+        question: "Dwie nici DNA biegną względem siebie:",
+        answers: [
+          "Równolegle w tym samym kierunku",
+          "Antyrównolegle (przeciwnie skierowane: 5'→3' i 3'→5')",
+          "Zupełnie przypadkowo",
+          "Spiralnie, ale zawsze w tym samym kierunku"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wiązania wodorowe między parami zasad:",
+        answers: [
+          "Spajają obie nici DNA",
+          "Łączą cukier z fosforanem",
+          "Tworzą cytoplazmę",
+          "Występują tylko w białkach"
+        ],
+        correct: 0
+      },
+      {
+        question: "Sekwencja nukleotydów w DNA koduje:",
+        answers: [
+          "Kolejność aminokwasów w białkach",
+          "Sekwencję cukrów we krwi",
+          "Układ fosfolipidów w błonie",
+          "Kształt mitochondriów"
+        ],
+        correct: 0
+      },
+      {
+        question: "Gen to:",
+        answers: [
+          "Dowolny fragment DNA",
+          "Odcinek DNA kodujący informację potrzebną do wytworzenia jednego białka lub innego funkcjonalnego produktu",
+          "Zawsze cały chromosom",
+          "Wyłącznie sekwencja niekodująca"
+        ],
+        correct: 1
+      },
+      {
+        question: "Nici DNA w chromosomie człowieka zawierają zarówno sekwencje kodujące (eksony), jak i:",
+        answers: [
+          "Tylko białka",
+          "Introny i inne sekwencje niekodujące",
+          "Wyłącznie RNA",
+          "Tylko lipidy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Chromosom to:",
+        answers: [
+          "Pojedynczy nukleotyd",
+          "Uporządkowana struktura DNA i białek (głównie histonów) w jądrze komórkowym",
+          "Cząsteczka białkowa bez DNA",
+          "Fragment błony komórkowej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kompletny zestaw chromosomów w jądrze komórki somatycznej człowieka obejmuje:",
+        answers: [
+          "23 chromosomy",
+          "46 chromosomów ułożonych w 23 pary",
+          "92 chromosomy",
+          "22 chromosomy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Autosomy to:",
+        answers: [
+          "Wszystkie chromosomy oprócz płciowych",
+          "Wyłącznie chromosomy płciowe",
+          "Mitochondrialne cząsteczki DNA",
+          "Tylko chromosomy X"
+        ],
+        correct: 0
+      },
+      {
+        question: "Chromosomy płciowe u typowej biologicznie kobiety to:",
+        answers: [
+          "XY",
+          "XX",
+          "YY",
+          "XO"
+        ],
+        correct: 1
+      },
+      {
+        question: "Centromer chromosomu to:",
+        answers: [
+          "Końcowy fragment chromosomu",
+          "Zwężony region, w którym łączą się chromatydy siostrzane",
+          "Miejsce syntezy białek",
+          "Fragment kodujący zawsze jedno białko"
+        ],
+        correct: 1
+      },
+      {
+        question: "Telomery to:",
+        answers: [
+          "Środkowe części chromosomu",
+          "Końcowe odcinki chromosomu zawierające powtarzalne sekwencje chroniące DNA",
+          "Miejsca przyczepu rybosomów",
+          "Regiony kodujące wyłącznie neuroprzekaźniki"
+        ],
+        correct: 1
+      },
+      {
+        question: "Komórki somatyczne człowieka są diploidalne, co oznacza, że:",
+        answers: [
+          "Mają jeden zestaw chromosomów",
+          "Mają dwa zestawy chromosomów — po jednym od każdego z rodziców",
+          "Nie zawierają DNA",
+          "Mają wyłącznie chromosomy płciowe"
+        ],
+        correct: 1
+      },
+      {
+        question: "Komórki rozrodcze (gamety) człowieka są:",
+        answers: [
+          "Diploidalne",
+          "Haploidalne",
+          "Triploidalne",
+          "Pozbawione chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Mitoza to proces, w którym:",
+        answers: [
+          "Z jednej komórki powstają cztery gamety",
+          "Z jednej komórki powstają dwie komórki potomne o identycznym zestawie chromosomów",
+          "Dochodzi do rekombinacji chromosomów homologicznych",
+          "Zawsze powstają komórki haploidalne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Mejoza to proces podziału, w którym:",
+        answers: [
+          "Powstają komórki somatyczne",
+          "Powstają gamety o zredukowanej (haploidalnej) liczbie chromosomów",
+          "Liczba chromosomów pozostaje niezmieniona",
+          "Powstaje DNA mitochondrialne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Mitochondrialne DNA (mtDNA):",
+        answers: [
+          "Jest przekazywane głównie w linii matczynej",
+          "Jest przekazywane wyłącznie przez ojca",
+          "Nie koduje żadnych białek",
+          "Istnieje tylko w komórkach nerwowych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Mutacja to:",
+        answers: [
+          "Tymczasowa zmiana w strukturze białka",
+          "Trwała zmiana sekwencji DNA",
+          "Zmiana stężenia neuroprzekaźników",
+          "Zmiana potencjału spoczynkowego neuronu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Mutacje punktowe dotyczą:",
+        answers: [
+          "Zmiany liczby całych chromosomów",
+          "Zmiany pojedynczego nukleotydu lub niewielkiej liczby nukleotydów",
+          "Zmiany struktury białek bez udziału DNA",
+          "Wyłącznie intronów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Aneuploidia (np. trisomia 21) to przykład:",
+        answers: [
+          "Mutacji punktowej",
+          "Zmiany liczby chromosomów w zestawie",
+          "Zmiany struktury pojedynczego genu",
+          "Braku jakichkolwiek zmian w chromosomach"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
