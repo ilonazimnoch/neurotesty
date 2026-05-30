@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 35 — Zaburzenia lękowe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 35 — Zaburzenia lękowe</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Zaburzenia lękowe charakteryzują się przede wszystkim:",
+        answers: [
+          "Utrwalonym obniżonym nastrojem bez lęku",
+          "Nadmiernym, nieadekwatnym lub utrwalonym lękiem oraz objawami somatycznymi i poznawczymi",
+          "Wyłącznie omamami słuchowymi",
+          "Wyłącznie zaburzeniami pamięci"
+        ],
+        correct: 1
+      },
+      {
+        question: "Do zaburzeń lękowych w klasyfikacjach należą m.in.:",
+        answers: [
+          "Zespół stresu pourazowego i zaburzenia osobowości",
+          "Lęk uogólniony, fobia społeczna, fobie specyficzne, napady paniki",
+          "Schizofrenia i choroba afektywna dwubiegunowa",
+          "Otępienie i choroba Parkinsona"
+        ],
+        correct: 1
+      },
+      {
+        question: "Lęk uogólniony (GAD) charakteryzuje się głównie:",
+        answers: [
+          "Napadami paniki ograniczonymi do sytuacji społecznych",
+          "Przewlekłym, nadmiernym zamartwianiem się wieloma sprawami oraz napięciem mięśniowym",
+          "Wyłącznie lękiem przed podróżowaniem",
+          "Brakiem objawów somatycznych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Typowe objawy somatyczne lęku obejmują:",
+        answers: [
+          "Senność, brak napięcia mięśniowego",
+          "Tachykardię, przyspieszony oddech, pocenie się, drżenie",
+          "Wyłącznie ból brzucha",
+          "Wyłącznie świąd skóry"
+        ],
+        correct: 1
+      },
+      {
+        question: "Poznawcze objawy lęku to m.in.:",
+        answers: [
+          "Poczucie spokoju i bezpieczeństwa",
+          "Katastroficzne interpretacje, przewidywanie najgorszego, trudności z koncentracją",
+          "Całkowity brak myśli",
+          "Zawsze omamy słuchowe"
+        ],
+        correct: 1
+      },
+      {
+        question: "Behawioralne objawy lęku obejmują:",
+        answers: [
+          "Aktywne poszukiwanie sytuacji lękotwórczych",
+          "Unikanie sytuacji budzących lęk lub kompulsywne sprawdzanie",
+          "Brak jakiejkolwiek reakcji",
+          "Tylko zwiększony apetyt"
+        ],
+        correct: 1
+      },
+      {
+        question: "Napad paniki to:",
+        answers: [
+          "Długotrwały, łagodny lęk",
+          "Nagły, intensywny epizod lęku z licznymi objawami somatycznymi i poznawczymi",
+          "Wyłącznie uczucie smutku",
+          "Wyłącznie zaburzenie snu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zaburzenie paniczne charakteryzuje się m.in.:",
+        answers: [
+          "Wyłącznie jednym napadem paniki w życiu",
+          "Nawracającymi napadami paniki oraz lękiem przed ich wystąpieniem",
+          "Tylko stałym obniżeniem nastroju",
+          "Wyłącznie fobiami specyficznymi"
+        ],
+        correct: 1
+      },
+      {
+        question: "Fobia społeczna (zaburzenie lęku społecznego) to:",
+        answers: [
+          "Lęk przed każdym wyjściem z domu niezależnie od ludzi",
+          "Nasilony lęk przed oceną i ośmieszeniem w sytuacjach społecznych lub wystąpieniach publicznych",
+          "Lęk wyłącznie przed zwierzętami",
+          "Wyłącznie lęk przed ciemnością"
+        ],
+        correct: 1
+      },
+      {
+        question: "Ciało migdałowate (amygdala) w kontekście lęku odgrywa kluczową rolę w:",
+        answers: [
+          "Analizie bodźców smakowych",
+          "Ocenie zagrożenia i generowaniu reakcji lękowej",
+          "Kontroli motorycznej kończyn",
+          "Regulacji równowagi"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kora przedczołowa w regulacji lęku jest ważna, ponieważ:",
+        answers: [
+          "Nie ma połączeń z układem limbicznym",
+          "Uczestniczy w poznawczej ocenie zagrożenia i hamowaniu reakcji emocjonalnych",
+          "Odpowiada tylko za czucie bólu",
+          "Odpowiada tylko za ruch"
+        ],
+        correct: 1
+      },
+      {
+        question: "Hipokamp w kontekście lęku i zaburzeń lękowych wiąże się m.in. z:",
+        answers: [
+          "Pamięcią kontekstową sytuacji zagrożenia",
+          "Tylko kontrolą równowagi",
+          "Wyłącznie produkcją hormonów",
+          "Brakiem znaczenia"
+        ],
+        correct: 0
+      },
+      {
+        question: "W patofizjologii lęku ważną rolę odgrywa m.in. układ:",
+        answers: [
+          "Dopaminergiczny wyłącznie",
+          "GABA-ergiczny, serotoninergiczny i noradrenergiczny",
+          "Tylko cholinergiczny nerwowo–mięśniowy",
+          "Tylko glutaminianu w rdzeniu kręgowym"
+        ],
+        correct: 1
+      },
+      {
+        question: "GABA (kwas gamma-aminomasłowy) w kontekście lęku jest:",
+        answers: [
+          "Głównym neuroprzekaźnikiem pobudzającym",
+          "Głównym neuroprzekaźnikiem hamującym w mózgu, którego działanie łagodzące może być wzmacniane przez leki przeciwlękowe",
+          "Hormonem tarczycy",
+          "Tylko neuropeptydem jelitowym"
+        ],
+        correct: 1
+      },
+      {
+        question: "U osób z zaburzeniami lękowymi często obserwuje się:",
+        answers: [
+          "Brak reakcji osi HPA na stres",
+          "Nadmierną lub nieprawidłową aktywację osi HPA i zwiększoną reaktywność na stres",
+          "Stały brak kortyzolu",
+          "Zawsze prawidłową regulację stresu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Do farmakologicznego leczenia zaburzeń lękowych najczęściej stosuje się:",
+        answers: [
+          "Wyłącznie leki przeciwpsychotyczne",
+          "Inhibitory wychwytu zwrotnego serotoniny (SSRI) i inne leki przeciwdepresyjne o działaniu przeciwlękowym",
+          "Tylko środki przeczyszczające",
+          "Tylko leki nasenne bez działania przeciwlękowego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Benzodiazepiny działają głównie poprzez:",
+        answers: [
+          "Blokadę receptorów dopaminowych",
+          "Wzmocnienie działania GABA na receptorach GABA_A",
+          "Zmniejszenie ilości serotoniny",
+          "Zwiększenie wydzielania adrenaliny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Podstawową metodą psychoterapii o udowodnionej skuteczności w zaburzeniach lękowych jest:",
+        answers: [
+          "Psychoanaliza bez ekspozycji",
+          "Terapia poznawczo–behawioralna (CBT), często z elementami ekspozycji",
+          "Wyłącznie terapia artystyczna",
+          "Brak jakiejkolwiek psychoterapii"
+        ],
+        correct: 1
+      },
+      {
+        question: "Z perspektywy neuropsychologii zaburzenia lękowe wiążą się m.in. z:",
+        answers: [
+          "Brakiem jakichkolwiek zniekształceń poznawczych",
+          "Biasami uwagi i interpretacji w kierunku bodźców zagrażających",
+          "Wyłącznie zaburzeniami pamięci semantycznej",
+          "Tylko zaburzeniami czucia bólu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Utrwalanie lęku w modelach warunkowania klasycznego wiąże się z tym, że:",
+        answers: [
+          "Neutralny bodziec nie ma znaczenia",
+          "Neutralny bodziec skojarzony z bodźcem awersyjnym może sam wywoływać reakcję lękową",
+          "Tylko bodźce wrodzone wywołują lęk",
+          "Nie dochodzi do żadnego uczenia"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
