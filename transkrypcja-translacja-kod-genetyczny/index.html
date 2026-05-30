@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 17 — Transkrypcja, translacja i kod genetyczny</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 17 — Transkrypcja, translacja i kod genetyczny</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Klasyczne 'prawo przepływu informacji genetycznej' (dogmat centralny) opisuje sekwencję:",
+        answers: [
+          "Białko → RNA → DNA",
+          "DNA → RNA → białko",
+          "RNA → DNA → białko",
+          "Białko → DNA → RNA"
+        ],
+        correct: 1
+      },
+      {
+        question: "Transkrypcja to proces:",
+        answers: [
+          "Przepisywania informacji z DNA na RNA",
+          "Składania białka z aminokwasów",
+          "Kopiowania DNA na DNA",
+          "Usuwania intronów z białka"
+        ],
+        correct: 0
+      },
+      {
+        question: "Translacja to proces:",
+        answers: [
+          "Przepisywania DNA na RNA",
+          "Przepisywania RNA na DNA",
+          "Tłumaczenia sekwencji mRNA na sekwencję aminokwasów w białku",
+          "Replikacji DNA"
+        ],
+        correct: 2
+      },
+      {
+        question: "Enzym odpowiedzialny za syntezę RNA podczas transkrypcji to:",
+        answers: [
+          "Polimeraza DNA",
+          "Polimeraza RNA",
+          "Helikaza",
+          "Ligaza"
+        ],
+        correct: 1
+      },
+      {
+        question: "Podczas transkrypcji w DNA w miejsce tyminy (T) w RNA pojawia się:",
+        answers: [
+          "Adenina (A)",
+          "Guanina (G)",
+          "Cytozyna (C)",
+          "Uracyl (U)"
+        ],
+        correct: 3
+      },
+      {
+        question: "Które zdanie najlepiej opisuje początek transkrypcji?",
+        answers: [
+          "Polimeraza RNA wiąże się z promotorem genu",
+          "Rybosom wiąże się z kodonem start",
+          "DNA jest cięte przez endonukleazy",
+          "mRNA jest rozkładane"
+        ],
+        correct: 0
+      },
+      {
+        question: "Nić DNA, na podstawie której syntetyzowane jest RNA, nazywa się:",
+        answers: [
+          "Nicią kodującą",
+          "Nicią matrycową (wzorcem)",
+          "Nicią komplementarną mRNA",
+          "Nicią telomerową"
+        ],
+        correct: 1
+      },
+      {
+        question: "Fragmenty pre-mRNA usuwane podczas dojrzewania transkryptu to:",
+        answers: [
+          "Eksony",
+          "Introny",
+          "Promotory",
+          "Telomery"
+        ],
+        correct: 1
+      },
+      {
+        question: "Eksony w genie to sekwencje:",
+        answers: [
+          "Niekodujące",
+          "Zawsze usuwane z mRNA",
+          "Zawierające informację, która pozostaje w dojrzałym mRNA",
+          "Występujące tylko w DNA mitochondrialnym"
+        ],
+        correct: 2
+      },
+      {
+        question: "Dojrzałe mRNA różni się od pre-mRNA m.in. tym, że:",
+        answers: [
+          "Nie zawiera kapu 5'",
+          "Zawiera usunięte introny i połączone eksony",
+          "Nie ma ogona poli(A)",
+          "Zawiera tylko introny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Translacja zachodzi głównie w:",
+        answers: [
+          "Jądrze komórkowym",
+          "Aparacie Golgiego",
+          "Rybosomach",
+          "Lizosomach"
+        ],
+        correct: 2
+      },
+      {
+        question: "tRNA pełni podczas translacji funkcję:",
+        answers: [
+          "Matrycy dla syntezy mRNA",
+          "Cząsteczki transportującej odpowiedni aminokwas do rybosomu",
+          "Enzymu rozkładającego mRNA",
+          "Receptora błonowego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Antykodon to:",
+        answers: [
+          "Sekwencja trzech nukleotydów w mRNA",
+          "Sekwencja trzech nukleotydów w tRNA komplementarna do kodonu w mRNA",
+          "Enzym uczestniczący w transkrypcji",
+          "Końcowy fragment białka"
+        ],
+        correct: 1
+      },
+      {
+        question: "Rybosom składa się z:",
+        answers: [
+          "Samego białka",
+          "Samego RNA",
+          "rRNA i białek",
+          "DNA i białek histonowych"
+        ],
+        correct: 2
+      },
+      {
+        question: "Translacja rozpoczyna się, gdy rybosom rozpozna na mRNA:",
+        answers: [
+          "Kodon stop",
+          "Kodon start (najczęściej AUG)",
+          "Dowolny kodon",
+          "Sekwencję poli(A)"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kod genetyczny jest trójkowy, co oznacza, że:",
+        answers: [
+          "Jeden nukleotyd koduje jeden aminokwas",
+          "Dwa nukleotydy kodują jeden aminokwas",
+          "Trzy nukleotydy (kodon) kodują jeden aminokwas",
+          "Cztery nukleotydy kodują jeden aminokwas"
+        ],
+        correct: 2
+      },
+      {
+        question: "Kodon start w mRNA u eukariontów to najczęściej:",
+        answers: [
+          "UAA",
+          "UGA",
+          "AUG",
+          "UAG"
+        ],
+        correct: 2
+      },
+      {
+        question: "Kodony stop (sygnały zakończenia translacji) to m.in.:",
+        answers: [
+          "AUG i UGG",
+          "UAA, UAG, UGA",
+          "AAA, CCC, GGG",
+          "UUU, UUC"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kod genetyczny jest zdegenerowany, co oznacza, że:",
+        answers: [
+          "Jeden kodon może kodować wiele różnych aminokwasów",
+          "Różne kodony mogą kodować ten sam aminokwas",
+          "Tylko jeden kodon istnieje dla każdego aminokwasu",
+          "Kod genetyczny ulega ciągłym zmianom w trakcie życia"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kod genetyczny jest (z nielicznymi wyjątkami) uniwersalny, co oznacza, że:",
+        answers: [
+          "U wszystkich organizmów te same kodony zwykle oznaczają te same aminokwasy",
+          "Zawsze różni się między gatunkami",
+          "Dotyczy tylko ssaków",
+          "Nie ma znaczenia dla ewolucji"
+        ],
+        correct: 0
+      },
+      {
+        question: "Mutacja typu missense (zmiany sensu) polega na:",
+        answers: [
+          "Zmiennie kodonu na kodon stop",
+          "Zmiennie jednego aminokwasu na inny",
+          "Usunięciu całego genu",
+          "Zmiennie liczby chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Mutacja nonsensowna (nonsense) prowadzi do:",
+        answers: [
+          "Zastąpienia jednego aminokwasu innym",
+          "Powstania wcześniejszego kodonu stop i skrócenia białka",
+          "Zawsze dłuższego białka",
+          "Zmienny liczby chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Mutacja przesunięcia ramki odczytu (frameshift) zwykle wynika z:",
+        answers: [
+          "Dodania lub usunięcia nukleotydu w liczbie niepodzielnej przez 3",
+          "Zmienny tylko ostatniego kodonu",
+          "Zastąpienia jednego nukleotydu innym bez zmiany liczby zasad",
+          "Zmienny liczby chromosomów"
+        ],
+        correct: 0
+      },
+      {
+        question: "Transkrypcja i translacja są istotne dla neuronów, ponieważ:",
+        answers: [
+          "Neurony nie syntetyzują białek",
+          "Białka (np. receptory, kanały jonowe, enzymy) warunkują funkcjonowanie neuronu",
+          "Tylko DNA decyduje o funkcji neuronu",
+          "W neuronach zachodzi wyłącznie translacja"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zmiany w sekwencji DNA kodującej kanał jonowy w neuronie mogą:",
+        answers: [
+          "Nie mieć nigdy żadnych skutków",
+          "Zmienić właściwości kanału i prowadzić do zaburzeń pobudliwości",
+          "Zmienić wyłącznie liczbę chromosomów",
+          "Dotyczyć tylko komórek mięśniowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Alternatywny splicing (różne sposoby składania eksonów) pozwala na:",
+        answers: [
+          "Powstanie tylko jednego białka z jednego genu",
+          "Powstanie wielu różnych białek z jednego genu",
+          "Całkowite wyłączenie genu",
+          "Zmienny liczby chromosomów"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
