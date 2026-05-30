@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 36 — Przyśrodkowe płaty skroniowe, międzymózgowie i kora mózgowa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 36 — Przyśrodkowe płaty skroniowe, międzymózgowie i kora mózgowa</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Do struktur przyśrodkowego płata skroniowego zalicza się przede wszystkim:",
+        answers: [
+          "Korę ruchową i somatosensoryczną",
+          "Hipokamp, zakręt przyhipokampowy, ciało migdałowate i struktury okołowęchowe",
+          "Móżdżek i rdzeń kręgowy",
+          "Wyłącznie korę wzrokową"
+        ],
+        correct: 1
+      },
+      {
+        question: "Przyśrodkowe płaty skroniowe pełnią kluczową rolę w:",
+        answers: [
+          "Regulacji napięcia mięśniowego",
+          "Pamięci deklaratywnej (epizodycznej i w pewnym stopniu semantycznej)",
+          "Odruchach rdzeniowych",
+          "Wyłącznie ruchu gałek ocznych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Hipokamp jest szczególnie ważny dla:",
+        answers: [
+          "Kodowania i konsolidacji nowych wspomnień epizodycznych",
+          "Przechowywania trwałych odruchów rdzeniowych",
+          "Regulacji napięcia mięśniowego",
+          "Wykonywania ruchów dowolnych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Klasyczny przypadek pacjenta H.M. wykazał, że uszkodzenie hipokampa prowadzi do:",
+        answers: [
+          "Izolowanych zaburzeń ruchu",
+          "Ciężkiej anterogradej amnezji dla pamięci deklaratywnej przy względnie zachowanej pamięci proceduralnej",
+          "Całkowitego zaniku wszystkich form pamięci",
+          "Wyłącznie zaburzeń uwagi"
+        ],
+        correct: 1
+      },
+      {
+        question: "Przyśrodkowy płat skroniowy jest szczególnie istotny w fazie:",
+        answers: [
+          "Wydobywania starych wspomnień w całości",
+          "Wczesnego kodowania i konsolidacji nowych śladów pamięciowych",
+          "Zautomatyzowanych czynności ruchowych",
+          "Wyłącznie pamięci sensorycznej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Uszkodzenia przyśrodkowych płatów skroniowych prowadzą typowo do:",
+        answers: [
+          "Zaburzeń pamięci epizodycznej przy względnym oszczędzeniu pamięci proceduralnej",
+          "Izolowanej utraty umiejętności motorycznych",
+          "Wyłącznie zaburzeń pamięci ruchowej",
+          "Braku zaburzeń pamięci"
+        ],
+        correct: 0
+      },
+      {
+        question: "Pamięć semantyczna (wiedza o faktach, pojęciach) jest związana z:",
+        answers: [
+          "Wyłącznie hipokampem",
+          "Szeroką siecią korową (szczególnie płaty skroniowe i czołowe), przy udziale MTS",
+          "Tylko móżdżkiem",
+          "Tylko jądrami podstawy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Do międzymózgowia zalicza się m.in.:",
+        answers: [
+          "Wzgórze i podwzgórze",
+          "Móżdżek i rdzeń kręgowy",
+          "Kory ruchowe",
+          "Płaty ciemieniowe"
+        ],
+        correct: 0
+      },
+      {
+        question: "Wzgórze pełni kluczową rolę jako:",
+        answers: [
+          "Główny ośrodek hormonalny",
+          "Przekaźnik informacji czuciowych i ruchowych do kory mózgowej (z wyjątkiem węchu)",
+          "Ośrodek równowagi",
+          "Główny generator rytmu serca"
+        ],
+        correct: 1
+      },
+      {
+        question: "Podwzgórze uczestniczy m.in. w:",
+        answers: [
+          "Regulacji temperatury ciała, głodu, pragnienia i rytmów dobowych",
+          "Odruchach rdzeniowych",
+          "Wyłącznie kształtowaniu odruchów warunkowych",
+          "Wyłącznie sterowaniu okiem"
+        ],
+        correct: 0
+      },
+      {
+        question: "Klasyczny obwód pamięci deklaratywnej obejmuje m.in.:",
+        answers: [
+          "Hipokamp – ciało suteczkowate – wzgórze – kora czołowa",
+          "Móżdżek – rdzeń kręgowy – mięśnie",
+          "Rdzeń – pień mózgu – rdzeń",
+          "Sam hipokamp bez połączeń"
+        ],
+        correct: 0
+      },
+      {
+        question: "Uszkodzenia ciał suteczkowatych i jąder wzgórza (np. w zespole Wernickego–Korsakowa) prowadzą do:",
+        answers: [
+          "Izolowanych zaburzeń ruchu",
+          "Poważnych zaburzeń pamięci epizodycznej i konfabulacji",
+          "Wyłącznie zaburzeń wzroku",
+          "Wyłącznie zaburzeń słuchu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kora przedczołowa w kontekście pamięci odgrywa ważną rolę w:",
+        answers: [
+          "Kodowaniu informacji sensorycznych bez znaczenia",
+          "Strategiach kodowania, monitorowaniu i organizacji materiału oraz wydobywaniu informacji w kontekście celów",
+          "Wyłącznie pamięci proceduralnej",
+          "Wyłącznie odruchach rdzeniowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kora skroniowa boczna (neokora) jest szczególnie związana z:",
+        answers: [
+          "Pamięcią proceduralną",
+          "Przechowywaniem reprezentacji semantycznych (pojęć, słów, faktów)",
+          "Wyłącznie planowaniem ruchu",
+          "Wyłącznie pamięcią ikoniczną"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kora ciemieniowa może uczestniczyć m.in. w:",
+        answers: [
+          "Przechowywaniu śladów pamięci epizodycznej",
+          "Tylko w czuciu dotyku",
+          "Tylko w kontroli pracy serca",
+          "Wyłącznie w równowadze"
+        ],
+        correct: 0
+      },
+      {
+        question: "Całkowita, rozległa bilateralna lezja przyśrodkowych płatów skroniowych spowoduje typowo:",
+        answers: [
+          "Trwałą amnezję anterogradową dla pamięci deklaratywnej z zachowaną pamięcią proceduralną",
+          "Izolowaną utratę umiejętności jazdy na rowerze",
+          "Tylko zaburzenia uwagi",
+          "Brak objawów"
+        ],
+        correct: 0
+      },
+      {
+        question: "Uszkodzenia wzgórza (jąder przyśrodkowych) mogą prowadzić do obrazu klinicznego zbliżonego do:",
+        answers: [
+          "Czysto ruchowego parkinsonizmu",
+          "Zespołu amnestycznego z zaburzeniami pamięci epizodycznej",
+          "Tylko afazji ruchowej",
+          "Wyłącznie aleksji"
+        ],
+        correct: 1
+      },
+      {
+        question: "Uszkodzenia kory przedczołowej mogą skutkować m.in.:",
+        answers: [
+          "Izolowanymi deficytami przechowywania pamięci",
+          "Zaburzeniami strategii kodowania, organizacji materiału, monitorowania i kontroli wydobywania (pamięć źródła)",
+          "Brakiem wpływu na pamięć",
+          "Wyłącznie utratą pamięci proceduralnej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Współczesne modele pamięci epizodycznej podkreślają, że:",
+        answers: [
+          "Hipokamp działa w izolacji",
+          "Pamięć epizodyczna wynika z interakcji hipokampa z rozległymi sieciami korowymi",
+          "Wyłącznie kora wzrokowa jest ważna",
+          "Jedynie móżdżek uczestniczy w pamięci epizodycznej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Proces konsolidacji długoterminowej pamięci deklaratywnej zakłada m.in., że:",
+        answers: [
+          "Hipokamp jest zawsze niezbędny przez całe życie śladu",
+          "Z upływem czasu reprezentacje stają się coraz bardziej zależne od kory neokortykalnej",
+          "Tylko wzgórze przechowuje wspomnienia",
+          "Pamięć deklaratywna przestaje istnieć"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
