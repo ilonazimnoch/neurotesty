@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 26 — Rozdzielczość czasowa, rozdzielczość przestrzenna i inwazyjność</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 26 — Rozdzielczość czasowa, rozdzielczość przestrzenna i inwazyjność</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Rozdzielczość czasowa w kontekście metod badania mózgu odnosi się do:",
+        answers: [
+          "Zdolności metody do odróżniania aktywności w różnych obszarach mózgu",
+          "Zdolności metody do śledzenia zmian aktywności w czasie, z odpowiednio małym odstępem czasowym",
+          "Głębokości penetracji sygnału",
+          "Stopnia inwazyjności badania"
+        ],
+        correct: 1
+      },
+      {
+        question: "Rozdzielczość przestrzenna odnosi się do:",
+        answers: [
+          "Zdolności metody do śledzenia szybkich zmian w czasie",
+          "Zdolności metody do rozróżnienia, z jak małego obszaru mózgu pochodzi sygnał",
+          "Gęstości neuronów w korze",
+          "Wpływu metody na sen"
+        ],
+        correct: 1
+      },
+      {
+        question: "Inwazyjność metody badania mózgu opisuje:",
+        answers: [
+          "Tylko koszt badania",
+          "Stopień ingerencji w organizm (np. konieczność wprowadzania elektrod do mózgu, promieniowanie)",
+          "Rozdzielczość czasową",
+          "Rozdzielczość przestrzenną"
+        ],
+        correct: 1
+      },
+      {
+        question: "Metoda o bardzo wysokiej rozdzielczości czasowej, ale relatywnie słabszej rozdzielczości przestrzennej to typowo:",
+        answers: [
+          "EEG",
+          "fMRI",
+          "PET",
+          "Strukturalne MRI"
+        ],
+        correct: 0
+      },
+      {
+        question: "Metoda o bardzo wysokiej rozdzielczości przestrzennej, ale słabej rozdzielczości czasowej (rzędu sekund) to typowo:",
+        answers: [
+          "EEG",
+          "fMRI",
+          "EEG śródczaszkowe",
+          "EKG"
+        ],
+        correct: 1
+      },
+      {
+        question: "Połączenie względnie dobrej rozdzielczości czasowej i przestrzennej zapewniają m.in.:",
+        answers: [
+          "Inwazyjne rejestracje śródczaszkowe (np. ECoG)",
+          "Wyłącznie metody strukturalne",
+          "Tylko badania zachowania",
+          "Tylko badania genetyczne"
+        ],
+        correct: 0
+      },
+      {
+        question: "EEG (elektroencefalografia) charakteryzuje się:",
+        answers: [
+          "Bardzo dobrą rozdzielczością czasową (milisekundy) i stosunkowo słabą rozdzielczością przestrzenną",
+          "Bardzo dobrą rozdzielczością przestrzenną i słabą czasową",
+          "Brakiem możliwości śledzenia zmian w czasie",
+          "Koniecznością operacyjnego wszczepienia elektrod u wszystkich pacjentów"
+        ],
+        correct: 0
+      },
+      {
+        question: "fMRI (funkcjonalny rezonans magnetyczny) charakteryzuje się:",
+        answers: [
+          "Bardzo dobrą rozdzielczością przestrzenną (milimetry) i rozdzielczością czasową rzędu sekund (sygnał hemodynamiczny)",
+          "Rozdzielczością czasową milisekundową",
+          "Brakiem rozdzielczości przestrzennej",
+          "Koniecznością chirurgicznego otwarcia czaszki"
+        ],
+        correct: 0
+      },
+      {
+        question: "PET (pozytonowa tomografia emisyjna) w porównaniu z fMRI ma zwykle:",
+        answers: [
+          "Lepszą rozdzielczość czasową i przestrzenną",
+          "Gorszą rozdzielczość czasową (minuty) i przestrzenną, ale umożliwia pomiar metabolizmu i receptorów",
+          "Dokładnie takie same parametry",
+          "Brak promieniowania"
+        ],
+        correct: 1
+      },
+      {
+        question: "MEG (magnetoencefalografia) w porównaniu z EEG:",
+        answers: [
+          "Ma podobnie wysoką rozdzielczość czasową i zwykle lepszą lokalizację źródeł w mózgu",
+          "Ma gorszą rozdzielczość czasową",
+          "Nie mierzy aktywności mózgu",
+          "Jest metodą wyłącznie strukturalną"
+        ],
+        correct: 0
+      },
+      {
+        question: "Klasyczne EEG z elektrodami na powierzchni skóry głowy jest metodą:",
+        answers: [
+          "Wysoko inwazyjną",
+          "Nieinwazyjną",
+          "Wymagającą otwarcia czaszki",
+          "Zawsze połączoną z promieniowaniem jonizującym"
+        ],
+        correct: 1
+      },
+      {
+        question: "fMRI jest metodą:",
+        answers: [
+          "Inwazyjną z użyciem promieniowania jonizującego",
+          "Względnie nieinwazyjną, opartą na polu magnetycznym i sygnale BOLD",
+          "Zawsze wymagającą implantów",
+          "Połączoną z wprowadzaniem elektrod do mózgu"
+        ],
+        correct: 1
+      },
+      {
+        question: "PET jest metodą:",
+        answers: [
+          "Całkowicie nieinwazyjną bez podawania czegokolwiek",
+          "Związaną z podaniem radioznacznika i ekspozycją na promieniowanie jonizujące",
+          "Wymagającą otwarcia czaszki",
+          "Identyczną z EEG"
+        ],
+        correct: 1
+      },
+      {
+        question: "Rejestracje śródczaszkowe (np. ECoG) są metodami:",
+        answers: [
+          "Nieinwazyjnymi, wykonywanymi u zdrowych ochotników",
+          "Wysoce inwazyjnymi, stosowanymi np. u pacjentów przed operacjami neurochirurgicznymi",
+          "Bez kontaktu z mózgiem",
+          "Bez jakiegokolwiek ryzyka"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wybór metody badania mózgu zależy często od kompromisu między:",
+        answers: [
+          "Rozdzielczością czasową, przestrzenną, inwazyjnością i możliwościami technicznymi",
+          "Kolorem aparatu",
+          "Preferencjami estetycznymi badacza",
+          "Wyłącznie ceną elektrod"
+        ],
+        correct: 0
+      },
+      {
+        question: "Jeśli badacza interesuje bardzo szybka dynamika procesów (np. potencjały wywołane), preferowaną metodą będzie raczej:",
+        answers: [
+          "EEG lub MEG",
+          "PET",
+          "Strukturalne MRI",
+          "Klasyczna tomografia komputerowa"
+        ],
+        correct: 0
+      },
+      {
+        question: "Jeśli badacza interesuje dokładna lokalizacja aktywacji w małych strukturach głębokich, lepszym wyborem będzie:",
+        answers: [
+          "EEG",
+          "fMRI wysokopolowe",
+          "Badanie zachowania bez obrazowania",
+          "EKG"
+        ],
+        correct: 1
+      },
+      {
+        question: "W kontekście interfejsów mózg--komputer (BCI) EEG jest często wykorzystywane, ponieważ:",
+        answers: [
+          "Ma wysoką rozdzielczość czasową i jest nieinwazyjne",
+          "Jest inwazyjne i wymaga operacji",
+          "Nie mierzy aktywności mózgu",
+          "Nie nadaje się do rejestracji sygnału ciągłego"
+        ],
+        correct: 0
+      },
+      {
+        question: "Wysoka rozdzielczość czasowa w BCI jest ważna, ponieważ:",
+        answers: [
+          "Umożliwia śledzenie szybkich zmian sygnału i bardziej responsyjną komunikację z urządzeniem",
+          "Nie ma znaczenia",
+          "Dotyczy wyłącznie struktury kości",
+          "Utrudnia dekodowanie sygnału"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest PRAWIDŁOWE?",
+        answers: [
+          "Rozdzielczość czasowa i przestrzenna opisują ten sam aspekt metody",
+          "Rozdzielczość czasowa i przestrzenna odnoszą się do różnych właściwości metody (czas vs lokalizacja)",
+          "Inwazyjność nie ma znaczenia",
+          "Tylko metody inwazyjne mają wysoką rozdzielczość przestrzenną"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest FAŁSZYWE?",
+        answers: [
+          "EEG ma bardzo dobrą rozdzielczość czasową",
+          "fMRI ma bardzo dobrą rozdzielczość przestrzenną",
+          "PET wymaga podania radioznacznika",
+          "ECoG jest całkowicie nieinwazyjne"
+        ],
+        correct: 3
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
