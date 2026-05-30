@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 19 — Badania asocjacyjne w skali całego genomu (GWAS)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 19 — Badania asocjacyjne w skali całego genomu (GWAS)</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Badanie asocjacyjne w skali całego genomu (GWAS) to:",
+        answers: [
+          "Analiza pojedynczego genu w jednej rodzinie",
+          "Przesiew całego genomu w poszukiwaniu SNP związanych z daną cechą lub chorobą w dużej populacji",
+          "Analiza wyłącznie mtDNA",
+          "Badanie wyłącznie struktury chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Typowym celem GWAS w neuropsychologii jest:",
+        answers: [
+          "Ustalenie dokładnej przyczyny monogenowej choroby",
+          "Identyfikacja wielu SNP o małym efekcie, związanych z ryzykiem zaburzeń psychicznych lub cech poznawczych",
+          "Badanie wyłącznie anatomii mózgu",
+          "Pomiar potencjałów wywołanych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Klasyczny projekt GWAS dla choroby binarnej (np. schizofrenii) polega na:",
+        answers: [
+          "Porównaniu SNP między grupą przypadków (chorych) i grupą kontrolną",
+          "Porównaniu wyłącznie krewnych pierwszego stopnia",
+          "Analizie tylko jednego SNP",
+          "Pomiarze wyłącznie wywiadu rodzinnego"
+        ],
+        correct: 0
+      },
+      {
+        question: "W GWAS cechy ilościowej (np. wynik testu pamięci roboczej) analizuje się zwykle z użyciem:",
+        answers: [
+          "Testu t dla jednej próby",
+          "Regresji liniowej z genotypem SNP jako predyktorem",
+          "Analizy wariancji tylko dla środowiska",
+          "Wyłącznie testów nieparametrycznych"
+        ],
+        correct: 1
+      },
+      {
+        question: "W analizie GWAS pojedynczy SNP jest zwykle kodowany jako 0, 1 lub 2, co odpowiada:",
+        answers: [
+          "Liczbie chromosomów w jądrze",
+          "Liczbie kopii allelu ryzyka (np. 0 = brak, 1 = heterozygota, 2 = homozygota)",
+          "Liczbie genów w locus",
+          "Liczbie intronów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Model addytywny w GWAS zakłada, że:",
+        answers: [
+          "Jeden allel ma efekt, drugi nie",
+          "Efekt dwóch kopii allelu ryzyka jest w przybliżeniu podwojeniem efektu jednej kopii",
+          "Efekt działa tylko w homozygocie",
+          "Genotyp nie ma znaczenia"
+        ],
+        correct: 1
+      },
+      {
+        question: "GWAS testuje zazwyczaj:",
+        answers: [
+          "Kilka SNP",
+          "Tysiące SNP",
+          "Setki tysięcy do milionów SNP",
+          "Tylko jeden marker na chromosom"
+        ],
+        correct: 2
+      },
+      {
+        question: "Z powodu bardzo wielu testów w GWAS konieczne jest:",
+        answers: [
+          "Zignorowanie poziomu istotności",
+          "Korekta na wielokrotne porównania (np. bardzo niski próg istotności)",
+          "Użycie tylko opisowej statystyki",
+          "Ograniczenie analizy do 10 SNP"
+        ],
+        correct: 1
+      },
+      {
+        question: "Typowy próg istotności dla GWAS (po korekcji) wynosi około:",
+        answers: [
+          "p < 0,05",
+          "p < 0,01",
+          "p < 5×10^-8",
+          "p < 1"
+        ],
+        correct: 2
+      },
+      {
+        question: "W GWAS wynik dla danego SNP zwykle raportuje się jako:",
+        answers: [
+          "Sama p-wartość",
+          "p-wartość oraz miary wielkości efektu (np. iloraz szans, beta)",
+          "Tylko liczba osób w badaniu",
+          "Wyłącznie wartości R^2"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wykres Manhattan (Manhattan plot) przedstawia:",
+        answers: [
+          "Rozkład wyników w jednej rodzinie",
+          "Uporządkowane wzdłuż chromosomów SNP na osi X i -log10(p) na osi Y",
+          "Wyłącznie strukturę chromosomów",
+          "Dynamikę potencjałów czynnościowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Na wykresie Manhattan SNP powyżej poziomej linii odpowiadającej progowi istotności:",
+        answers: [
+          "Uznaje się za statystycznie istotnie związane z cechą",
+          "Zawsze są błędami pomiaru",
+          "Ignoruje się",
+          "Odpowiadają wyłącznie chromosomom płci"
+        ],
+        correct: 0
+      },
+      {
+        question: "QQ-plot w GWAS służy do oceny:",
+        answers: [
+          "Zależności między wiekiem a genotypem",
+          "Odchyleń rozkładu obserwowanych p-wartości od oczekiwanego przy braku asocjacji",
+          "Struktury chromosomów",
+          "Rozkładu wyników testu IQ"
+        ],
+        correct: 1
+      },
+      {
+        question: "Stratyfikacja populacyjna to:",
+        answers: [
+          "Losowa zmienność genetyczna",
+          "Różnice częstości alleli między podgrupami populacji (np. pochodzenia etnicznego) niezwiązane z chorobą",
+          "Proces mutacji punktowych",
+          "Zawsze artefakt laboratoryjny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Stratyfikacja populacyjna, jeśli nie jest kontrolowana, może prowadzić do:",
+        answers: [
+          "Fałszywie dodatnich asocjacji",
+          "Zawsze braku asocjacji",
+          "Tylko fałszywie ujemnych wyników",
+          "Braku jakiegokolwiek wpływu"
+        ],
+        correct: 0
+      },
+      {
+        question: "Jedną z metod kontroli stratyfikacji populacyjnej w GWAS jest:",
+        answers: [
+          "Usunięcie wszystkich SNP",
+          "Dodanie do modelu głównych składowych (PC) opisujących strukturę populacji",
+          "Ignorowanie pochodzenia osób badanych",
+          "Analiza tylko jednej osoby"
+        ],
+        correct: 1
+      },
+      {
+        question: "Z powodu sprzężenia nierównowagowego (LD) SNP istotny w GWAS:",
+        answers: [
+          "Zawsze jest przyczynową mutacją",
+          "Może być tylko markerem położonym blisko prawdziwej mutacji przyczynowej",
+          "Nigdy nie ma znaczenia",
+          "Dotyczy tylko mtDNA"
+        ],
+        correct: 1
+      },
+      {
+        question: "Tag SNP to:",
+        answers: [
+          "SNP o największej częstości",
+          "SNP wybrany jako reprezentant grupy silnie skorelowanych SNP w danym regionie",
+          "Zawsze mutacja nonsensowna",
+          "Zawsze w regionie kodującym"
+        ],
+        correct: 1
+      },
+      {
+        question: "Istotne wyniki GWAS powinny:",
+        answers: [
+          "Być zaakceptowane bez dalszych badań",
+          "Być replikowane w niezależnych próbach, aby potwierdzić asocjację",
+          "Zawsze prowadzić do natychmiastowego stosowania klinicznego",
+          "Być od razu interpretowane jako przyczynowe"
+        ],
+        correct: 1
+      },
+      {
+        question: "Efekt pojedynczego SNP w GWAS dla zaburzeń psychicznych jest zwykle:",
+        answers: [
+          "Bardzo duży (OR > 10)",
+          "Niewielki (np. OR blisko 1,1 lub mniejszy)",
+          "Zawsze równy 0",
+          "Zawsze dominujący"
+        ],
+        correct: 1
+      },
+      {
+        question: "Poligeniczność oznacza, że:",
+        answers: [
+          "Jedna cecha zależy od jednego genu",
+          "Do cechy przyczynia się wiele genów, z których każdy ma niewielki efekt",
+          "Cecha nie ma komponenty genetycznej",
+          "SNP nie mają znaczenia"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wyniki GWAS dla zaburzeń psychicznych sugerują, że:",
+        answers: [
+          "Istnieje jeden główny gen odpowiedzialny za każde zaburzenie",
+          "Ryzyko jest rozproszone na dużą liczbę wariantów o małym efekcie",
+          "Genetyka nie odgrywa żadnej roli",
+          "Wyłącznie środowisko decyduje o wystąpieniu choroby"
+        ],
+        correct: 1
+      },
+      {
+        question: "Polygenic risk score (PRS) to:",
+        answers: [
+          "Pojedynczy SNP o dużym efekcie",
+          "Suma efektów wielu SNP ważona ich oszacowanymi efektami z GWAS",
+          "Miara liczby chromosomów",
+          "Wskaźnik środowiskowego ryzyka"
+        ],
+        correct: 1
+      },
+      {
+        question: "PRS może być używany do:",
+        answers: [
+          "Szacowania indywidualnego ryzyka i badania związków genetyki z cechami w populacji",
+          "Diagnozowania chorób z 100% pewnością",
+          "Badania wyłącznie mtDNA",
+          "Pomiaru aktywności mózgu w fMRI"
+        ],
+        correct: 0
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
