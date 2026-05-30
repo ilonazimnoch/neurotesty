@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 31 — Dziedziczny komponent schizofrenii</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 31 — Dziedziczny komponent schizofrenii</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Stwierdzenie, że schizofrenia ma silny komponent dziedziczny oznacza, że:",
+        answers: [
+          "Jest wywoływana pojedynczym genem dominującym",
+          "Ryzyko zachorowania jest istotnie podwyższone w rodzinach, ale geny nie są jedynym czynnikiem",
+          "Czynniki środowiskowe nie mają żadnego znaczenia",
+          "Choroba jest zakaźna"
+        ],
+        correct: 1
+      },
+      {
+        question: "Dziedziczność (heritability) schizofrenii w badaniach populacyjnych szacuje się (w dużym przybliżeniu) na około:",
+        answers: [
+          "0–10%",
+          "20–30%",
+          "60–80%",
+          "100%"
+        ],
+        correct: 2
+      },
+      {
+        question: "Badania bliźniąt jednojajowych (MZ) i dwujajowych (DZ) są ważne, ponieważ:",
+        answers: [
+          "Pozwalają całkowicie wyeliminować wpływ środowiska",
+          "Pozwalają porównać zgodność zachorowań przy różnym stopniu pokrewieństwa genetycznego",
+          "Dotyczą tylko środowiska prenatalnego",
+          "Nie mają zastosowania w schizofrenii"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zgodność (concordance) schizofrenii w parach bliźniąt jednojajowych jest:",
+        answers: [
+          "Mniejsza niż w parach dwujajowych",
+          "Większa niż w parach dwujajowych, ale wyraźnie <100%",
+          "Zawsze 100%",
+          "Taka sama jak w populacji ogólnej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Badania adopcyjne są istotne, ponieważ:",
+        answers: [
+          "Pozwalają oddzielić wpływ genów od środowiska rodzinnego, gdy dzieci wychowują się poza rodziną biologiczną",
+          "Eliminują wpływ genów",
+          "Badają wyłącznie wpływ infekcji",
+          "Nie można ich zastosować w schizofrenii"
+        ],
+        correct: 0
+      },
+      {
+        question: "Ryzyko zachorowania na schizofrenię w populacji ogólnej wynosi około:",
+        answers: [
+          "<1%",
+          "10%",
+          "50%",
+          "90%"
+        ],
+        correct: 0
+      },
+      {
+        question: "Ryzyko zachorowania na schizofrenię u rodzeństwa osoby chorej jest:",
+        answers: [
+          "Zbliżone do populacyjnego",
+          "Wyższe niż w populacji ogólnej (ok. kilkuprocentowe, np. 7–10%)",
+          "Zawsze 100%",
+          "Zawsze 50%"
+        ],
+        correct: 1
+      },
+      {
+        question: "Ryzyko schizofrenii u bliźniąt jednojajowych (jeśli jedno jest chore) jest:",
+        answers: [
+          "Mniejsze niż u rodzeństwa",
+          "Znacznie wyższe niż w populacji ogólnej (np. rzędu 40–50%), ale <100%",
+          "Zawsze 0%",
+          "Zawsze 100%"
+        ],
+        correct: 1
+      },
+      {
+        question: "Schizofrenia jest obecnie uważana za zaburzenie:",
+        answers: [
+          "Monogenowe (wywoływane jednym genem)",
+          "Poligenowe, z udziałem wielu wariantów genetycznych o małym efekcie",
+          "Zawsze wywołane pojedynczą mutacją de novo",
+          "Wyłącznie mitochondrialne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Poligenowe ryzyko (polygenic risk) oznacza, że:",
+        answers: [
+          "Jeden gen w pełni determinuje chorobę",
+          "Suma efektów wielu wariantów genetycznych zwiększa lub zmniejsza podatność na chorobę",
+          "Genetyka nie ma znaczenia",
+          "Wyłącznie geny recesywne są ważne"
+        ],
+        correct: 1
+      },
+      {
+        question: "W badaniach asocjacyjnych całego genomu (GWAS) w schizofrenii identyfikuje się:",
+        answers: [
+          "Pojedynczy gen odpowiedzialny za wszystkie przypadki",
+          "Wiele loci ryzyka (SNP) związanych z niewielkim wzrostem ryzyka",
+          "Wyłącznie mutacje mitochondrialne",
+          "Tylko geny odpowiedzialne za kolor oczu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Polimorfizmy pojedynczego nukleotydu (SNP) to:",
+        answers: [
+          "Zmiany w liczbie chromosomów",
+          "Najczęstszy typ wariantu genetycznego polegający na różnicy pojedynczej zasady nukleinowej",
+          "Duże delecje chromosomowe",
+          "Zawsze patogenne mutacje"
+        ],
+        correct: 1
+      },
+      {
+        question: "Z badań genetycznych wynika, że:",
+        answers: [
+          "Ryzyko genetyczne dla schizofrenii jest całkowicie specyficzne",
+          "Istnieje częściowe nakładanie się czynników genetycznych schizofrenii z innymi zaburzeniami (np. zaburzeniami schizoafektywnymi, chorobą dwubiegunową)",
+          "Schizofrenia nie ma żadnego tła genetycznego",
+          "Dotyczy wyłącznie genów związanych z metabolizmem glukozy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Fakt, że zgodność w parach MZ <100% sugeruje, że:",
+        answers: [
+          "Geny w ogóle nie są ważne",
+          "Oprócz genów ważne są także czynniki środowiskowe i losowe",
+          "Środowisko nie ma znaczenia",
+          "Bliźnięta MZ nie dzielą genów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Przykładem czynnika środowiskowego związanego z ryzykiem schizofrenii jest m.in.:",
+        answers: [
+          "Ekspozycja prenatalna na infekcje, stres okołoporodowy, używanie substancji psychoaktywnych u osób podatnych",
+          "Kolor włosów",
+          "Grupa krwi",
+          "Liczba zębów"
+        ],
+        correct: 0
+      },
+      {
+        question: "Interakcja geny--środowisko (G×E) oznacza, że:",
+        answers: [
+          "Geny i środowisko działają zupełnie niezależnie",
+          "Efekt środowiska może zależeć od wariantów genetycznych i odwrotnie",
+          "Tylko geny są ważne",
+          "Tylko środowisko jest ważne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń najlepiej opisuje aktualny model dziedziczenia schizofrenii?",
+        answers: [
+          "Prosty model Mendla z jednym genem dominującym",
+          "Złożone zaburzenie poligenowe z dodatkowymi rzadkimi wariantami o większym efekcie i wpływem środowiska",
+          "Model całkowicie środowiskowy",
+          "Model wyłącznie mitochondrialny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wskaźniki dziedziczności (heritability) opisują:",
+        answers: [
+          "Prawdopodobieństwo odziedziczenia choroby przez danego człowieka",
+          "Proporcję zmienności cechy w populacji przypisywaną czynnikom genetycznym, przy danym środowisku",
+          "Wyłącznie wpływ środowiska",
+          "Tylko ryzyko infekcji"
+        ],
+        correct: 1
+      },
+      {
+        question: "Informacja o dziedzicznym komponencie schizofrenii w poradnictwie genetycznym powinna być przekazywana:",
+        answers: [
+          "Jako gwarancja zachorowania u dzieci",
+          "Z podkreśleniem podwyższonego, ale nie deterministycznego ryzyka oraz roli czynników środowiskowych",
+          "Jako informacja, że geny nie mają znaczenia",
+          "Wyłącznie w formie ostrzeżeń"
+        ],
+        correct: 1
+      },
+      {
+        question: "Stygmatyzacja osób z obciążeniem rodzinnym jest:",
+        answers: [
+          "Nieistotnym problemem",
+          "Ważnym problemem etycznym, wymagającym ostrożnego przekazu informacji genetycznej",
+          "Zalecaną praktyką",
+          "Elementem standardu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest PRAWIDŁOWE?",
+        answers: [
+          "Dziedziczność ~70% oznacza, że 70% osób z ryzykiem na pewno zachoruje",
+          "Dziedziczność ~70% dotyczy populacji, nie indywidualnych prognoz ryzyka i nie oznacza determinizmu genetycznego",
+          "Dziedziczność ~70% oznacza brak wpływu środowiska",
+          "Dziedziczność ~70% oznacza, że choroba jest monogenowa"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
