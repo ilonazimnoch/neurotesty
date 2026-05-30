@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 18 — Polimorfizm pojedynczego nukleotydu (SNP)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 18 — Polimorfizm pojedynczego nukleotydu (SNP)</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Polimorfizm pojedynczego nukleotydu (SNP) to:",
+        answers: [
+          "Zmiana liczby całych chromosomów",
+          "Zmiana polegająca na różnicy w jednym nukleotydzie w określonym miejscu genomu",
+          "Usunięcie całego genu",
+          "Zawsze duża delecja obejmująca tysiące par zasad"
+        ],
+        correct: 1
+      },
+      {
+        question: "Aby wariant uznać za SNP, musi on:",
+        answers: [
+          "Występować tylko u jednej osoby na świecie",
+          "Występować z częstością co najmniej około 1% w populacji",
+          "Dotyczyć wyłącznie intronów",
+          "Dotyczyć wyłącznie chromosomów płci"
+        ],
+        correct: 1
+      },
+      {
+        question: "SNP są najczęstszą formą:",
+        answers: [
+          "Mutacji zmiany liczby chromosomów",
+          "Wariantu genetycznego w genomie człowieka",
+          "Zmiany struktury białka",
+          "Reorganizacji chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Szacuje się, że w genomie człowieka występują:",
+        answers: [
+          "Tysiące SNP",
+          "Dziesiątki tysięcy SNP",
+          "Miliony SNP",
+          "Zero SNP"
+        ],
+        correct: 2
+      },
+      {
+        question: "SNP mogą występować:",
+        answers: [
+          "Tylko w regionach kodujących białka",
+          "Tylko w intronach",
+          "Zarówno w regionach kodujących, jak i niekodujących",
+          "Tylko w mtDNA"
+        ],
+        correct: 2
+      },
+      {
+        question: "SNP w regionie kodującym może prowadzić do:",
+        answers: [
+          "Zmiany aminokwasu lub braku zmiany w sekwencji białka",
+          "Zmiany liczby chromosomów",
+          "Zawsze utraty całego genu",
+          "Zawsze powstania kodonu stop"
+        ],
+        correct: 0
+      },
+      {
+        question: "SNP w regionie niekodującym może:",
+        answers: [
+          "Nigdy nie mieć żadnego efektu",
+          "Wpływać na poziom ekspresji genu (np. poprzez promotor, miejsca wiązania czynników transkrypcyjnych)",
+          "Zawsze powodować zmianę aminokwasu",
+          "Istnieć tylko w telomerach"
+        ],
+        correct: 1
+      },
+      {
+        question: "SNP synonimiczny (silent) w eksonie to taki, który:",
+        answers: [
+          "Zmienia aminokwas",
+          "Nie zmienia aminokwasu, mimo zmiany kodonu",
+          "Zawsze tworzy kodon stop",
+          "Zawsze znajduje się w intronie"
+        ],
+        correct: 1
+      },
+      {
+        question: "SNP nonsynonimiczny (missense) w regionie kodującym:",
+        answers: [
+          "Nie zmienia sekwencji białka",
+          "Zmienia jeden aminokwas na inny",
+          "Zawsze skutkuje delecją całego genu",
+          "Zawsze powoduje zmianę liczby chromosomów"
+        ],
+        correct: 1
+      },
+      {
+        question: "SNP typu nonsense w regionie kodującym może:",
+        answers: [
+          "Zmienić kodon na kodon stop i skrócić białko",
+          "Nie zmieniać struktury białka",
+          "Zawsze zwiększać długość białka",
+          "Występować tylko w intronach"
+        ],
+        correct: 0
+      },
+      {
+        question: "Allel to:",
+        answers: [
+          "Cały chromosom",
+          "Wariant sekwencji genu lub SNP w konkretnym miejscu genomu",
+          "Zawsze mutacja chorobotwórcza",
+          "Wyłącznie sekwencja niekodująca"
+        ],
+        correct: 1
+      },
+      {
+        question: "Osoba heterozygotyczna w danym miejscu SNP ma:",
+        answers: [
+          "Dwa identyczne allele",
+          "Dwa różne allele",
+          "Brak alleli",
+          "Trzy allele"
+        ],
+        correct: 1
+      },
+      {
+        question: "Genotyp AA, AG lub GG dla konkretnego SNP opisuje:",
+        answers: [
+          "Typ chromosomu płci",
+          "Kombinację alleli w tym miejscu genomu",
+          "Liczbę chromosomów w jądrze",
+          "Zawsze chorobę monogenową"
+        ],
+        correct: 1
+      },
+      {
+        question: "Minor allele frequency (MAF) oznacza:",
+        answers: [
+          "Częstość występowania rzadszego allelu w populacji",
+          "Liczbę chromosomów w jądrze",
+          "Częstość wyłącznie allelu dominującego",
+          "Zawsze 50%"
+        ],
+        correct: 0
+      },
+      {
+        question: "SNP o MAF = 0,30 w populacji oznacza, że:",
+        answers: [
+          "Rzadszy allel występuje u 30% wszystkich chromosomów w tej populacji",
+          "30% ludzi ma mutację w tym genie",
+          "Dotyczy tylko 30 osób",
+          "Nie można interpretować tej wartości"
+        ],
+        correct: 0
+      },
+      {
+        question: "SNP kojarzony z wyższym ryzykiem choroby (np. depresji) zazwyczaj:",
+        answers: [
+          "Determinuje z 100% pewnością wystąpienie choroby",
+          "Zmienia prawdopodobieństwo choroby, ale nie jest sam w sobie deterministyczny",
+          "Zawsze jest neutralny",
+          "Zawsze dotyczy tylko mtDNA"
+        ],
+        correct: 1
+      },
+      {
+        question: "W badaniach asocjacyjnych (GWAS) SNP związany z chorobą psychiczną:",
+        answers: [
+          "Zawsze jest przyczyną tej choroby",
+          "Może być markerem w pobliżu genu wpływającego na ryzyko",
+          "Nie ma żadnego znaczenia",
+          "Dotyczy tylko chromosomów płci"
+        ],
+        correct: 1
+      },
+      {
+        question: "SNP w regionie genu kodującego receptor serotoniny może:",
+        answers: [
+          "Zmieniać strukturę receptora lub jego ekspresję",
+          "Nie mieć nigdy żadnego efektu biologicznego",
+          "Dotyczyć wyłącznie neuronów ruchowych",
+          "Zawsze powodować zanik genu"
+        ],
+        correct: 0
+      },
+      {
+        question: "SNP w promotorze genu kodującego transporter dopaminy (DAT) może:",
+        answers: [
+          "Zmieniać poziom ekspresji transportera i wpływać na wychwyt dopaminy",
+          "Zawsze powodować delecję całego chromosomu",
+          "Nie mieć nigdy żadnego wpływu na funkcję neuronu",
+          "Dotyczyć tylko astrocytów"
+        ],
+        correct: 0
+      },
+      {
+        question: "Farmakogenomika bada m.in. wpływ SNP na:",
+        answers: [
+          "Właściwości elektryczne synaps",
+          "Odpowiedź organizmu na leki (np. metabolizm, skuteczność, działania niepożądane)",
+          "Liczbę neuronów w mózgu",
+          "Strukturę błony komórkowej"
+        ],
+        correct: 1
+      },
+      {
+        question: "SNP w genach kodujących enzymy metabolizujące leki (np. CYP450) mogą:",
+        answers: [
+          "Nie mieć wpływu na farmakoterapię",
+          "Powodować różnice w szybkości metabolizmu leków psychotropowych",
+          "Zawsze powodować śmierć komórki",
+          "Dotyczyć tylko leków przeciwbakteryjnych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Genotypowanie SNP polega na:",
+        answers: [
+          "Pomiarze potencjału czynnościowego w neuronie",
+          "Określeniu, jaki wariant nukleotydu (allel) występuje u danej osoby w danym miejscu genomu",
+          "Liczeniu liczby neuronów w hipokampie",
+          "Badaniu wyłącznie mtDNA"
+        ],
+        correct: 1
+      },
+      {
+        question: "Mikromacierze SNP (SNP arrays) pozwalają na:",
+        answers: [
+          "Jednoczesne zbadanie milionów miejsc SNP w genomie",
+          "Wyłącznie sekwencjonowanie jednego genu",
+          "Pomiar EEG",
+          "Badanie struktury białek"
+        ],
+        correct: 0
+      },
+      {
+        question: "Sekwencjonowanie całogenomowe (WGS) w kontekście SNP umożliwia:",
+        answers: [
+          "Zbadanie tylko jednego SNP",
+          "Zidentyfikowanie wszystkich wariantów, w tym SNP i większych zmian strukturalnych",
+          "Tylko badanie mtDNA",
+          "Wyłącznie pomiar ekspresji genów"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
