@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 24 — Struktury podkorowe (jądra podstawy i układ limbiczny)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 24 — Struktury podkorowe (jądra podstawy i układ limbiczny)</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Struktury podkorowe to:",
+        answers: [
+          "Wyłącznie kora mózgowa",
+          "Zgrupowania istoty szarej położone głębiej pod korą mózgową",
+          "Tylko drogi istoty białej",
+          "Wyłącznie pień mózgu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Do jąder podstawy (prążkowia) zalicza się m.in.:",
+        answers: [
+          "Jądro ogoniaste, skorupę, gałkę bladą",
+          "Wzgórze i podwzgórze",
+          "Móżdżek i most",
+          "Hipokamp i ciało migdałowate"
+        ],
+        correct: 0
+      },
+      {
+        question: "Do głównych struktur układu limbicznego zalicza się m.in.:",
+        answers: [
+          "Hipokamp, ciało migdałowate, zakręt obręczy",
+          "Móżdżek i most",
+          "Rdzeń przedłużony i most",
+          "Wyłącznie korę wzrokową"
+        ],
+        correct: 0
+      },
+      {
+        question: "Jądra podstawy uczestniczą głównie w:",
+        answers: [
+          "Regulacji ruchów, nawyków i procesów nagrody",
+          "Wyłącznie w regulacji temperatury ciała",
+          "Obróbce bodźców wzrokowych",
+          "Wytwarzaniu płynu mózgowo-rdzeniowego"
+        ],
+        correct: 0
+      },
+      {
+        question: "Klasyczna pętla korowo-prążkowiowo-wzgórzowo-korowa opisuje:",
+        answers: [
+          "Obieg informacji między korą, jądrami podstawy i wzgórzem",
+          "Tylko połączenia między korą a móżdżkiem",
+          "Wyłącznie obieg informacji w rdzeniu kręgowym",
+          "Połączenia wyłącznie w hipokampie"
+        ],
+        correct: 0
+      },
+      {
+        question: "Głównym wejściem do prążkowia (jądra ogoniastego i skorupy) są projekcje:",
+        answers: [
+          "Z kory mózgowej i wzgórza",
+          "Z rdzenia kręgowego",
+          "Z mięśni szkieletowych",
+          "Z nerwów czaszkowych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Gałka blada (globus pallidus) i istota czarna (część siatkowata) pełnią funkcję:",
+        answers: [
+          "Głównych wyjść jąder podstawy do wzgórza",
+          "Wyłącznie struktur czuciowych",
+          "Wyłącznie jąder ruchowych rdzenia",
+          "Tylko dróg wstępujących"
+        ],
+        correct: 0
+      },
+      {
+        question: "Szlak bezpośredni jąder podstawy (bardzo ogólnie) sprzyja:",
+        answers: [
+          "Hamowaniu ruchu",
+          "Ułatwieniu inicjacji ruchu (fasilitacji) przez odhamowanie wzgórza",
+          "Zatrzymaniu wszystkich ruchów",
+          "Wyłącznie regulacji temperatury"
+        ],
+        correct: 1
+      },
+      {
+        question: "Szlak pośredni jąder podstawy (bardzo ogólnie) sprzyja:",
+        answers: [
+          "Hamowaniu niepożądanych ruchów",
+          "Ułatwieniu wszystkich ruchów",
+          "Wyłącznie kontroli głodu",
+          "Wyłącznie przetwarzaniu bólu"
+        ],
+        correct: 0
+      },
+      {
+        question: "Neuroprzekaźnikiem kluczowym dla modulacji jąder podstawy jest m.in.:",
+        answers: [
+          "Dopamina z istoty czarnej",
+          "Acetylocholina z rdzenia kręgowego",
+          "Glicyna z kory mózgowej",
+          "Histamina z mięśni"
+        ],
+        correct: 0
+      },
+      {
+        question: "Choroba Parkinsona jest klasycznym przykładem zaburzenia związanego z:",
+        answers: [
+          "Degeneracją neuronów dopaminergicznych istoty czarnej i dysfunkcją jąder podstawy",
+          "Uszkodzeniem wyłącznie kory wzrokowej",
+          "Uszkodzeniem wyłącznie móżdżku",
+          "Uszkodzeniem wyłącznie wzgórza"
+        ],
+        correct: 0
+      },
+      {
+        question: "Objawy parkinsonowskie (sztywność, bradykinezja) można interpretować jako wynik:",
+        answers: [
+          "Nadmiernej aktywności szlaku bezpośredniego",
+          "Zaburzenia równowagi między szlakiem bezpośrednim i pośrednim na niekorzyść inicjacji ruchu",
+          "Wyłącznie uszkodzenia kory czołowej",
+          "Nadmiernego pobudzenia móżdżku"
+        ],
+        correct: 1
+      },
+      {
+        question: "Układ limbiczny tradycyjnie wiąże się z:",
+        answers: [
+          "Regulacją emocji, motywacji i pamięci",
+          "Wyłącznie kontrolą ruchów dowolnych",
+          "Wyłącznie przetwarzaniem bodźców wzrokowych",
+          "Tylko regulacją równowagi"
+        ],
+        correct: 0
+      },
+      {
+        question: "Hipokamp jest kluczowy dla:",
+        answers: [
+          "Pamięci epizodycznej i konsolidacji nowych wspomnień",
+          "Regulacji odruchów rdzeniowych",
+          "Wyłącznie kontroli ruchów gałek ocznych",
+          "Przewodzenia bólu"
+        ],
+        correct: 0
+      },
+      {
+        question: "Ciało migdałowate (amygdala) odgrywa ważną rolę w:",
+        answers: [
+          "Analizie bodźców wzrokowych wysokiego rzędu",
+          "Przetwarzaniu emocji, zwłaszcza strachu i znaczenia emocjonalnego bodźców",
+          "Wyłącznie kontroli równowagi",
+          "Przewodnictwie czuciowym z rdzenia"
+        ],
+        correct: 1
+      },
+      {
+        question: "Uszkodzenie hipokampa obustronne typowo prowadzi do:",
+        answers: [
+          "Amnezji następczej (trudności w zapamiętywaniu nowych informacji)",
+          "Kompletnej utraty wszystkich wspomnień z dzieciństwa",
+          "Wyłącznie zaburzeń ruchu",
+          "Wyłącznie zaburzeń widzenia"
+        ],
+        correct: 0
+      },
+      {
+        question: "Struktury układu limbicznego mają liczne połączenia z:",
+        answers: [
+          "Korą przedczołową, zakrętem obręczy i podwzgórzem",
+          "Wyłącznie rdzeniem kręgowym",
+          "Tylko móżdżkiem",
+          "Tylko zwojami współczulnymi"
+        ],
+        correct: 0
+      },
+      {
+        question: "Dzięki połączeniom limbiczno-przedczołowym możliwa jest:",
+        answers: [
+          "Integracja emocji i procesów decyzyjnych",
+          "Wyłącznie kontrola odruchów rdzeniowych",
+          "Izolacja emocji od myślenia",
+          "Wyłącznie kontrola ruchów gałek ocznych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Zaburzenia funkcji jąder podstawy mogą przejawiać się jako:",
+        answers: [
+          "Ataksja i zaburzenia równowagi",
+          "Spowolnienie ruchowe, drżenie spoczynkowe lub ruchy mimowolne (pląsawicze)",
+          "Wyłącznie deficyty w pamięci epizodycznej",
+          "Wyłącznie zaburzenia węchowe"
+        ],
+        correct: 1
+      },
+      {
+        question: "Dysfunkcja układu limbicznego może wiązać się z:",
+        answers: [
+          "Obojętnością emocjonalną lub nadmierną reaktywnością emocjonalną",
+          "Wyłącznie zaburzeniami równowagi",
+          "Brakiem wpływu na zachowanie",
+          "Tylko zaburzeniami czucia bólu"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest PRAWIDŁOWE?",
+        answers: [
+          "Jądra podstawy są całkowicie niezależne od kory mózgowej",
+          "Jądra podstawy tworzą pętle z korą i wzgórzem, modulując wybór i wykonywanie działań",
+          "Układ limbiczny nie ma połączeń z korą",
+          "Hipokamp odpowiada tylko za odruchy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest FAŁSZYWE?",
+        answers: [
+          "Układ limbiczny jest zaangażowany w przetwarzanie emocji",
+          "Hipokamp jest ważny dla pamięci epizodycznej",
+          "Ciało migdałowate nie ma żadnego związku z lękiem",
+          "Struktury podkorowe mogą wpływać na zachowanie"
+        ],
+        correct: 2
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
