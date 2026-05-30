@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 15 — Szlaki neuronowe w uzależnieniu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 15 — Szlaki neuronowe w uzależnieniu</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Kluczowym szlakiem dopaminergicznym związanym z uzależnieniem jest szlak:",
+        answers: [
+          "Mezostriatalny (istota czarna → prążkowie)",
+          "Mezolimbokortykalny (VTA → jądro półleżące i kora przedczołowa)",
+          "Nigrospinalny",
+          "Cerebello-kortykalny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pole brzuszne nakrywki (VTA) wysyła projekcje dopaminergiczne głównie do:",
+        answers: [
+          "Móżdżku",
+          "Rdzenia kręgowego",
+          "Jądra półleżącego i kory przedczołowej",
+          "Rdzenia przedłużonego"
+        ],
+        correct: 2
+      },
+      {
+        question: "Jądro półleżące (nucleus accumbens) jest kluczowe, ponieważ:",
+        answers: [
+          "Reguluje odruchy rdzeniowe",
+          "Integruje sygnały dopaminergiczne i glutaminergiczne jako 'bramka' układu nagrody",
+          "Odpowiada wyłącznie za ruchy dowolne",
+          "Jest jedynym miejscem działania GABA"
+        ],
+        correct: 1
+      },
+      {
+        question: "Układ nagrody obejmuje oprócz VTA i jądra półleżącego również połączenia z:",
+        answers: [
+          "Korą przedczołową (PFC)",
+          "Rdzeniem kręgowym",
+          "Móżdżkiem",
+          "Rdzeniem przedłużonym"
+        ],
+        correct: 0
+      },
+      {
+        question: "Dopamina w układzie nagrody koduje przede wszystkim:",
+        answers: [
+          "Proste uczucie przyjemności",
+          "Błąd przewidywania nagrody (różnica między oczekiwaną a otrzymaną nagrodą)",
+          "Wyłącznie poziom lęku",
+          "Wyłącznie ból"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wzrost wyrzutu dopaminy w jądrze półleżącym w odpowiedzi na narkotyk:",
+        answers: [
+          "Osłabia skojarzenie między substancją a nagrodą",
+          "Wzmacnia skojarzenia między substancją, kontekstem a nagrodą",
+          "Zawsze wywołuje sedację",
+          "Nie ma znaczenia dla uczenia się"
+        ],
+        correct: 1
+      },
+      {
+        question: "Naturalne nagrody i narkotyki uzależniające:",
+        answers: [
+          "Działają na zupełnie odrębne szlaki",
+          "Aktywują częściowo wspólny układ dopaminergiczny nagrody",
+          "Nie mają związku z dopaminą",
+          "Nie wpływają na jądro półleżące"
+        ],
+        correct: 1
+      },
+      {
+        question: "Różne narkotyki (opioidy, alkohol, kokaina itd.) mimo odmiennych mechanizmów szczegółowych:",
+        answers: [
+          "Wspólnie prowadzą do zwiększenia aktywności dopaminergicznej w układzie nagrody",
+          "Zawsze zmniejszają poziom dopaminy",
+          "Działają wyłącznie na receptory GABA",
+          "Nie wpływają na transmisję synaptyczną"
+        ],
+        correct: 0
+      },
+      {
+        question: "Alkohol zwiększa dopaminę m.in. poprzez:",
+        answers: [
+          "Bezpośrednią aktywację receptorów D2",
+          "Modulację układów GABA i glutaminianu, wpływając pośrednio na neurony dopaminergiczne VTA",
+          "Blokowanie receptorów opioidowych",
+          "Zwiększanie wychwytu zwrotnego dopaminy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Nikotyna zwiększa wyrzut dopaminy głównie poprzez:",
+        answers: [
+          "Blokowanie receptorów GABA-A",
+          "Aktywację nikotynowych receptorów cholinergicznych na neuronach dopaminergicznych VTA",
+          "Blokadę receptorów NMDA",
+          "Zahamowanie syntezy dopaminy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Glutaminianowe projekcje z kory przedczołowej do jądra półleżącego:",
+        answers: [
+          "Nie mają znaczenia dla uzależnienia",
+          "Przekazują informacje o kontekście, bodźcach wyprzedzających i celach",
+          "Przewodzą wyłącznie ból",
+          "Zastępują całkowicie dopaminę"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wielokrotne narażenie na narkotyk może w synapsach glutaminergicznych jądra półleżącego wywołać:",
+        answers: [
+          "Brak plastyczności",
+          "Długotrwałe wzmocnienie (LTP) i zmiany w receptorach AMPA/NMDA",
+          "Wyłącznie długotrwałe osłabienie (LTD)",
+          "Całkowity zanik synaps"
+        ],
+        correct: 1
+      },
+      {
+        question: "Plastyczność synaptyczna w szlakach korowo-limbicznych przyczynia się do:",
+        answers: [
+          "Utrwalenia nawyków poszukiwania substancji",
+          "Zmniejszenia reaktywności na bodźce związane z narkotykiem",
+          "Całkowitego zaniku motywacji",
+          "Zwiększenia kontroli nad używaniem"
+        ],
+        correct: 0
+      },
+      {
+        question: "Przekształcanie się używania substancji w działanie nawykowe wiąże się m.in. ze wzrostem roli:",
+        answers: [
+          "Prążkowia grzbietowego (dorsal striatum)",
+          "Móżdżku",
+          "Rdzenia kręgowego",
+          "Kory wzrokowej"
+        ],
+        correct: 0
+      },
+      {
+        question: "U osób uzależnionych w korze przedczołowej często obserwuje się:",
+        answers: [
+          "Poprawę kontroli impulsów",
+          "Osłabienie funkcji wykonawczych (planowanie, hamowanie reakcji)",
+          "Brak zmian",
+          "Zwiększoną aktywność wyłącznie w korze wzrokowej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Osłabiona funkcja kory przedczołowej sprzyja:",
+        answers: [
+          "Skutecznemu opieraniu się pokusom",
+          "Nasileniu impulsywności i trudnościom w powstrzymaniu się od sięgania po substancję",
+          "Całkowitej obojętności na substancję",
+          "Brakowi nawrotów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Jednym z ważnych czynników wywołujących nawroty (relapse) jest:",
+        answers: [
+          "Brak jakichkolwiek bodźców",
+          "Stres, aktywujący oś HPA i układy noradrenergiczne",
+          "Tylko obecność pożywienia",
+          "Wyłącznie zmiany pogody"
+        ],
+        correct: 1
+      },
+      {
+        question: "Który z poniższych bodźców może wyzwalać głód (craving)?",
+        answers: [
+          "Bodźce środowiskowe skojarzone z używaniem (miejsca, osoby)",
+          "Wyłącznie bodźce bólowe",
+          "Tylko bodźce dźwiękowe niezwiązane z używaniem",
+          "Żaden bodziec nie wpływa na craving"
+        ],
+        correct: 0
+      },
+      {
+        question: "Struktura kluczowa dla reakcji na bodźce lękowe i stresowe, ważna w nawrotach, to:",
+        answers: [
+          "Hipokamp",
+          "Ciało migdałowate",
+          "Móżdżek",
+          "Rdzeń przedłużony"
+        ],
+        correct: 1
+      },
+      {
+        question: "Hipokamp w uzależnieniu odgrywa ważną rolę, ponieważ:",
+        answers: [
+          "Nie ma związku z pamięcią",
+          "Koduje kontekstowe wspomnienia związane z używaniem substancji",
+          "Zajmuje się wyłącznie sterowaniem motorycznym",
+          "Blokuje tworzenie skojarzeń"
+        ],
+        correct: 1
+      },
+      {
+        question: "W uzależnieniu obserwuje się często zwiększoną reaktywność układu nagrody na:",
+        answers: [
+          "Naturalne nagrody, ale nie narkotyki",
+          "Bodźce związane z substancją w porównaniu z innymi nagrodami",
+          "Wszystkie bodźce w jednakowym stopniu",
+          "Tylko bodźce awersyjne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Jednocześnie naturalne nagrody (np. jedzenie, seks) u osób uzależnionych:",
+        answers: [
+          "Zyskują na znaczeniu",
+          "Często tracą zdolność wywoływania silnej aktywacji układu nagrody",
+          "Nie zmieniają swojej wartości motywacyjnej",
+          "Zawsze wywołują silniejszą aktywację niż narkotyki"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
