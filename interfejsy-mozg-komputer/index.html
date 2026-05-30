@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 28 — Interfejsy mózg--komputer (BCI)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 28 — Interfejsy mózg--komputer (BCI)</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Interfejs mózg--komputer (BCI, brain--computer interface) to:",
+        answers: [
+          "Urządzenie do obrazowania kości czaszki",
+          "System umożliwiający bezpośrednią komunikację między aktywnością mózgu a urządzeniem zewnętrznym, z pominięciem mięśni",
+          "Zwykła klawiatura komputerowa",
+          "Urządzenie do pomiaru tętna"
+        ],
+        correct: 1
+      },
+      {
+        question: "Klasyczny schemat działania BCI obejmuje etapy:",
+        answers: [
+          "Rejestracja sygnału, ekstrakcja cech, klasyfikacja/dekodowanie, sterowanie urządzeniem",
+          "Tylko rejestrację sygnału",
+          "Tylko analizę zachowania",
+          "Wyłącznie generowanie bodźców wzrokowych"
+        ],
+        correct: 0
+      },
+      {
+        question: "Do nieinwazyjnych BCI zazwyczaj zalicza się systemy oparte na:",
+        answers: [
+          "EEG rejestrowanym z powierzchni skóry głowy",
+          "ECoG (elektrokortykografii śródczaszkowej)",
+          "Mikroelektrodach wszczepionych w korę",
+          "Bezpośredniej stymulacji rdzenia"
+        ],
+        correct: 0
+      },
+      {
+        question: "Do inwazyjnych BCI zalicza się systemy oparte na:",
+        answers: [
+          "EEG powierzchniowym",
+          "ECoG i mikroelektrodach wszczepionych w tkankę mózgu",
+          "Okulografii",
+          "Pomiarze tętna"
+        ],
+        correct: 1
+      },
+      {
+        question: "Główna zaleta inwazyjnych BCI w porównaniu z nieinwazyjnymi to:",
+        answers: [
+          "Niższe ryzyko medyczne",
+          "Wyższa rozdzielczość przestrzenna i lepszy stosunek sygnału do szumu",
+          "Brak konieczności operacji",
+          "Brak różnic"
+        ],
+        correct: 1
+      },
+      {
+        question: "Główna wada inwazyjnych BCI to:",
+        answers: [
+          "Brak sygnału mózgowego",
+          "Konieczność zabiegu neurochirurgicznego, ryzyko powikłań i długoterminowej stabilności elektrod",
+          "Słaba rozdzielczość czasowa",
+          "Wysoka dawka promieniowania"
+        ],
+        correct: 1
+      },
+      {
+        question: "W BCI opartym na EEG wykorzystuje się m.in. potencjały:",
+        answers: [
+          "P300, potencjały wywołane wzrokowo, rytmy sensomotoryczne",
+          "Wyłącznie EKG",
+          "Tylko sygnały z mięśni",
+          "Tylko szumy urządzenia"
+        ],
+        correct: 0
+      },
+      {
+        question: "Paradgmat P300 speller polega na:",
+        answers: [
+          "Sterowaniu tylko za pomocą ruchu gałek ocznych",
+          "Wywoływaniu komponentu P300 w odpowiedzi na rzadkie podświetlenia liter w macierzy, co pozwala odczytać wybór użytkownika",
+          "Bezpośredniej stymulacji mięśni dłoni",
+          "Wyłącznie pasywnym monitorowaniu snu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Rytmy sensomotoryczne (mu, beta) nad korą ruchową w BCI są modulowane przez:",
+        answers: [
+          "Tylko przez bodźce dźwiękowe",
+          "Wyobrażenie ruchu (motor imagery) lub rzeczywisty ruch",
+          "Tylko przez mruganie",
+          "Tylko przez bodźce bólowe"
+        ],
+        correct: 1
+      },
+      {
+        question: "BCI oparte na motor imagery (MI-BCI) wymagają od użytkownika:",
+        answers: [
+          "Napinania mięśni",
+          "Wyobrażania sobie konkretnych ruchów (np. ręką, stopą) w celu modulacji rytmów EEG",
+          "Głośnego mówienia",
+          "Poruszania oczami"
+        ],
+        correct: 1
+      },
+      {
+        question: "BCI może umożliwiać komunikację szczególnie osobom:",
+        answers: [
+          "Bez jakichkolwiek zaburzeń ruchu",
+          "Z tzw. zespołem zamknięcia (locked-in), które nie mogą mówić ani poruszać kończynami",
+          "Wyłącznie dzieciom w wieku przedszkolnym",
+          "Wyłącznie osobom z zaburzeniami wzroku"
+        ],
+        correct: 1
+      },
+      {
+        question: "BCI może służyć do sterowania:",
+        answers: [
+          "Tylko światłem w pokoju",
+          "Kursorem, protezą, wózkiem inwalidzkim lub robotycznym ramieniem",
+          "Wyłącznie temperaturą ciała",
+          "Tylko pracą serca"
+        ],
+        correct: 1
+      },
+      {
+        question: "Ważnym zastosowaniem BCI jest:",
+        answers: [
+          "Zastąpienie wszystkich zwykłych metod komunikacji u zdrowych osób",
+          "Komunikacja wspomagająca u osób z poważnymi ograniczeniami motorycznymi",
+          "Wyłącznie diagnostyka złamań kości",
+          "Wyłącznie poprawa sportowych osiągnięć zdrowych osób"
+        ],
+        correct: 1
+      },
+      {
+        question: "W wielu systemach BCI kluczową rolę odgrywa sprzężenie zwrotne (feedback), ponieważ:",
+        answers: [
+          "Nie ma żadnego znaczenia dla użytkownika",
+          "Pozwala użytkownikowi uczyć się modulować swoją aktywność mózgową i poprawiać kontrolę nad interfejsem",
+          "Dotyczy tylko ustawień aparatu",
+          "Jest potrzebne tylko w EEG spoczynkowym"
+        ],
+        correct: 1
+      },
+      {
+        question: "Trening z wykorzystaniem BCI może prowadzić do:",
+        answers: [
+          "Braku jakichkolwiek zmian",
+          "Plastycznych zmian w sieciach neuronalnych związanych z kontrolą ruchu i uwagą",
+          "Całkowitego zaniku aktywności mózgu",
+          "Uszkodzenia kory"
+        ],
+        correct: 1
+      },
+      {
+        question: "Jednym z głównych wyzwań w BCI opartym na EEG jest:",
+        answers: [
+          "Zbyt wysoka rozdzielczość przestrzenna",
+          "Niski stosunek sygnału do szumu, artefakty i duża zmienność między- i wewnątrzosobnicza",
+          "Brak danych do analizy",
+          "Brak artefaktów"
+        ],
+        correct: 1
+      },
+      {
+        question: "Kolejnym wyzwaniem w BCI jest tzw. 'BCI-illiteracy', co oznacza:",
+        answers: [
+          "Brak umiejętności czytania w EEG",
+          "Fakt, że część użytkowników nie jest w stanie osiągnąć wystarczającej kontroli nad BCI mimo treningu",
+          "Brak znajomości alfabetu",
+          "Niemożność korzystania z klawiatury"
+        ],
+        correct: 1
+      },
+      {
+        question: "W kontekście nieinwazyjnych BCI istotnym ograniczeniem jest także:",
+        answers: [
+          "Konieczność operacji neurochirurgicznej",
+          "Wrażliwość na ruch, mruganie i zakłócenia elektryczne",
+          "Brak jakichkolwiek artefaktów",
+          "Promieniowanie jonizujące"
+        ],
+        correct: 1
+      },
+      {
+        question: "Współczesne kierunki rozwoju BCI obejmują m.in.:",
+        answers: [
+          "Zmniejszanie dokładności systemów",
+          "Poprawę dekodowania sygnałów, zastosowanie metod uczenia maszynowego i głębokiego uczenia",
+          "Wyłącznie prostsze algorytmy",
+          "Całkowite odejście od EEG"
+        ],
+        correct: 1
+      },
+      {
+        question: "Hybrydowe BCI (hBCI) to systemy, które:",
+        answers: [
+          "Łączą sygnały z mózgu z sygnałami innymi (np. EMG, ruchy oczu) lub różne modalności neuroobrazowania",
+          "Nie wykorzystują w ogóle sygnałów mózgowych",
+          "Wykorzystują wyłącznie sygnały z mięśni",
+          "Są zawsze inwazyjne"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest PRAWIDŁOWE w kontekście etyki BCI?",
+        answers: [
+          "Nie ma żadnych kwestii etycznych",
+          "Istotne są m.in. kwestie prywatności danych mózgowych, zgody, autonomii i potencjalnej manipulacji",
+          "BCI dotyczy tylko zwierząt, więc etyka nie jest istotna",
+          "Etyka BCI ogranicza się wyłącznie do kosztów sprzętu"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
