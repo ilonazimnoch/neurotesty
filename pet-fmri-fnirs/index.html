@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 30 — Metody tomograficzne (PET, fMRI, fNIRS)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 30 — Metody tomograficzne (PET, fMRI, fNIRS)</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Metody tomograficzne w badaniu mózgu (PET, fMRI, fNIRS) polegają ogólnie na:",
+        answers: [
+          "Bezpośrednim pomiarze potencjałów czynnościowych neuronów jednym elektrodą",
+          "Rekonstrukcji obrazów przekrojowych mózgu na podstawie sygnałów rejestrowanych w wielu detektorach",
+          "Tylko pomiarze temperatury skóry głowy",
+          "Jedynie rejestracji ruchu gałek ocznych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Metody te są zaliczane przede wszystkim do:",
+        answers: [
+          "Metod strukturalnych",
+          "Metod funkcjonalnych obrazowania aktywności mózgu (czasem w połączeniu z obrazowaniem strukturalnym)",
+          "Metod genetycznych",
+          "Metod czysto behawioralnych"
+        ],
+        correct: 1
+      },
+      {
+        question: "PET (pozytonowa tomografia emisyjna) opiera się na:",
+        answers: [
+          "Emisji promieniowania rentgenowskiego z lampy",
+          "Rejestracji promieniowania powstającego w wyniku anihilacji pozyton--elektron po podaniu radioznacznika",
+          "Rejestracji pól magnetycznych",
+          "Rejestracji potencjałów elektrycznych na skórze głowy"
+        ],
+        correct: 1
+      },
+      {
+        question: "W PET do krwi pacjenta podaje się:",
+        answers: [
+          "Kontrast zawierający jod",
+          "Radioaktywny znacznik (np. z glukozą lub ligandem receptora)",
+          "Tylko sól fizjologiczną",
+          "Wyłącznie powietrze"
+        ],
+        correct: 1
+      },
+      {
+        question: "PET pozwala m.in. na badanie:",
+        answers: [
+          "Struktury kości czaszki",
+          "Metabolizmu glukozy, przepływu krwi i gęstości niektórych receptorów",
+          "Tylko aktywności mięśni",
+          "Wyłącznie potencjałów czynnościowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Rozdzielczość czasowa PET jest typowo:",
+        answers: [
+          "Millisekundowa",
+          "Rzędu kilkudziesięciu sekund do minut",
+          "Rzędu mikrosekund",
+          "Dokładnie taka jak EEG"
+        ],
+        correct: 1
+      },
+      {
+        question: "fMRI (funkcjonalny rezonans magnetyczny) najczęściej wykorzystuje sygnał:",
+        answers: [
+          "EEG",
+          "BOLD (blood-oxygen-level-dependent)",
+          "Emisji pozytonów",
+          "Promieniowania rentgenowskiego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Sygnał BOLD odzwierciedla głównie:",
+        answers: [
+          "Bezpośrednio potencjały czynnościowe",
+          "Zmiany utlenowania krwi związane z lokalnym przepływem krwi i zużyciem tlenu",
+          "Zmiany temperatury kości",
+          "Tylko ruch płynu mózgowo-rdzeniowego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Rozdzielczość przestrzenna fMRI (przy typowych ustawieniach) jest:",
+        answers: [
+          "Rzędu kilku milimetrów",
+          "Rzędu dziesiątek centymetrów",
+          "Rzędu mikrometrów",
+          "Brak rozdzielczości przestrzennej"
+        ],
+        correct: 0
+      },
+      {
+        question: "Rozdzielczość czasowa fMRI jest ograniczona przez:",
+        answers: [
+          "Bardzo szybkie zmiany pola magnetycznego",
+          "Powolną dynamikę odpowiedzi hemodynamicznej (rzędu sekund)",
+          "Odpowiedź mięśniową",
+          "Szybkość naprawy DNA"
+        ],
+        correct: 1
+      },
+      {
+        question: "fNIRS (funkcjonalna spektroskopia bliskiej podczerwieni) opiera się na:",
+        answers: [
+          "Polu magnetycznym",
+          "Promieniowaniu jonizującym",
+          "Emisji i detekcji światła w zakresie bliskiej podczerwieni, przechodzącego przez tkanki",
+          "Rejestracji potencjałów mięśniowych"
+        ],
+        correct: 2
+      },
+      {
+        question: "fNIRS, podobnie jak fMRI, mierzy głównie:",
+        answers: [
+          "Potencjały czynnościowe neuronów",
+          "Zmiany utlenowania hemoglobiny i związane z tym zmiany przepływu krwi",
+          "Temperaturę ciała",
+          "Promieniowanie kosmiczne"
+        ],
+        correct: 1
+      },
+      {
+        question: "W porównaniu z fMRI, fNIRS ma zwykle:",
+        answers: [
+          "Gorszą rozdzielczość przestrzenną i mniejszą głębokość penetracji, ale jest tańsze i bardziej przenośne",
+          "Lepszą rozdzielczość przestrzenną",
+          "Większą głębokość penetracji",
+          "Zawsze wymaga kriogenicznego chłodzenia"
+        ],
+        correct: 0
+      },
+      {
+        question: "fMRI jest metodą:",
+        answers: [
+          "Względnie nieinwazyjną, bez promieniowania jonizującego",
+          "Zawsze wymagającą wstrzyknięcia radioznacznika",
+          "Wyłącznie strukturalną",
+          "Wymagającą otwarcia czaszki"
+        ],
+        correct: 0
+      },
+      {
+        question: "PET wiąże się z:",
+        answers: [
+          "Brakiem jakiejkolwiek ekspozycji na promieniowanie",
+          "Ekspozycją na promieniowanie jonizujące umożliwiające detekcję radioznacznika",
+          "Wyłącznie polem magnetycznym",
+          "Tylko światłem widzialnym"
+        ],
+        correct: 1
+      },
+      {
+        question: "fNIRS jest metodą:",
+        answers: [
+          "Nieinwazyjną, wykorzystującą słabe światło w zakresie NIR",
+          "Wysoce inwazyjną",
+          "Zawsze wymagającą operacji",
+          "Opartą na promieniowaniu rentgenowskim"
+        ],
+        correct: 0
+      },
+      {
+        question: "Pod względem rozdzielczości czasowej (najlepsza → najsłabsza) prawidłowa kolejność to:",
+        answers: [
+          "PET → fMRI → fNIRS",
+          "fNIRS/fMRI → PET",
+          "PET → fNIRS → fMRI",
+          "Wszystkie mają taką samą rozdzielczość"
+        ],
+        correct: 1
+      },
+      {
+        question: "Pod względem rozdzielczości przestrzennej (najlepsza → najsłabsza) typowo:",
+        answers: [
+          "fMRI → PET → fNIRS",
+          "PET → fMRI → fNIRS",
+          "fNIRS → fMRI → PET",
+          "Wszystkie mają identyczną rozdzielczość"
+        ],
+        correct: 0
+      },
+      {
+        question: "PET ma szczególną przewagę nad fMRI i fNIRS, gdy badamy:",
+        answers: [
+          "Potencjały czynnościowe",
+          "Rozmieszczenie określonych receptorów lub metabolizm konkretnych związków",
+          "Struktury kości",
+          "Wyłącznie morfologię mózgu"
+        ],
+        correct: 1
+      },
+      {
+        question: "fMRI jest szeroko stosowane do:",
+        answers: [
+          "Badania funkcjonalnej organizacji mózgu podczas wykonywania zadań poznawczych",
+          "Diagnostyki złamań kości",
+          "Bezpośredniego pomiaru potencjałów czynnościowych pojedynczych neuronów",
+          "Badania struktury DNA"
+        ],
+        correct: 0
+      },
+      {
+        question: "fNIRS znajduje zastosowanie m.in. w:",
+        answers: [
+          "Badaniach funkcji kory mózgowej u niemowląt i w środowiskach, gdzie fMRI jest trudne do zastosowania",
+          "Diagnostyce złamań czaszki",
+          "Badaniu struktury kości",
+          "Pomiarze fal mózgowych z głębokich jąder podstawy"
+        ],
+        correct: 0
+      },
+      {
+        question: "PET jest wykorzystywane klinicznie m.in. w:",
+        answers: [
+          "Diagnostyce chorób neurodegeneracyjnych (np. choroba Alzheimera) i onkologii",
+          "Diagnostyce krótkowzroczności",
+          "Badaniu wyłącznie kości kończyn",
+          "Badaniu słuchu"
+        ],
+        correct: 0
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
