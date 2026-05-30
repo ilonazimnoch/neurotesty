@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 29 — Magnetoencefalografia (MEG) i przezczaszkowa stymulacja magnetyczna (TMS)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 29 — Magnetoencefalografia (MEG) i przezczaszkowa stymulacja magnetyczna (TMS)</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Magnetoencefalografia (MEG) to metoda, która:",
+        answers: [
+          "Rejestruje potencjały elektryczne na skórze głowy",
+          "Rejestruje bardzo słabe pola magnetyczne generowane przez aktywność neuronów",
+          "Mierzy jedynie przepływ krwi w mózgu",
+          "Używa promieniowania rentgenowskiego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Sygnał MEG powstaje głównie w wyniku:",
+        answers: [
+          "Przepływu prądu w mięśniach szkieletowych",
+          "Prądów postsynaptycznych w komórkach piramidowych kory mózgowej",
+          "Ruchu krwi w tętnicach mózgowych",
+          "Aktywności siatkówki"
+        ],
+        correct: 1
+      },
+      {
+        question: "W odróżnieniu od EEG, MEG jest mniej podatne na:",
+        answers: [
+          "Artefakty mięśniowe",
+          "Zniekształcenia wynikające z przewodnictwa przez czaszkę i skórę",
+          "Zakłócenia pola magnetycznego Ziemi",
+          "Szum termiczny"
+        ],
+        correct: 1
+      },
+      {
+        question: "Rozdzielczość czasowa MEG jest:",
+        answers: [
+          "Bardzo dobra (rzędu milisekund), podobnie jak EEG",
+          "Słaba (rzędu minut)",
+          "Rzędu godzin",
+          "Brak rozdzielczości czasowej"
+        ],
+        correct: 0
+      },
+      {
+        question: "Rozdzielczość przestrzenna MEG w porównaniu z EEG jest zazwyczaj:",
+        answers: [
+          "Gorsza",
+          "Podobna",
+          "Lepsza, szczególnie dla źródeł korowych prostopadłych do czaszki",
+          "Nieistniejąca"
+        ],
+        correct: 2
+      },
+      {
+        question: "MEG jest szczególnie przydatne w:",
+        answers: [
+          "Lokalizacji ognisk padaczkowych i badaniu dynamiki przetwarzania sensorycznego",
+          "Oceny struktury kości czaszki",
+          "Badaniu wyłącznie układu krążenia",
+          "Diagnostyce złamań"
+        ],
+        correct: 0
+      },
+      {
+        question: "Przezczaszkowa stymulacja magnetyczna (TMS) polega na:",
+        answers: [
+          "Podaniu radioaktywnego znacznika",
+          "Zastosowaniu szybko zmieniającego się pola magnetycznego, które indukuje prąd w tkance mózgowej",
+          "Bezpośrednim podłączeniu elektrody do neuronu",
+          "Podgrzewaniu tkanki"
+        ],
+        correct: 1
+      },
+      {
+        question: "Cewka TMS umieszczona nad czaszką generuje:",
+        answers: [
+          "Stałe pole magnetyczne bez efektów biologicznych",
+          "Krótkie impulsy pola magnetycznego, które mogą depolaryzować neurony korowe",
+          "Promieniowanie jonizujące",
+          "Tylko pole elektryczne"
+        ],
+        correct: 1
+      },
+      {
+        question: "Efekty TMS zależą m.in. od:",
+        answers: [
+          "Częstotliwości, intensywności i wzorca stymulacji",
+          "Wyłącznie koloru cewki",
+          "Tylko wieku pacjenta",
+          "Tylko pory dnia"
+        ],
+        correct: 0
+      },
+      {
+        question: "Pojedynczy impuls TMS (single-pulse TMS) jest często używany do:",
+        answers: [
+          "Długotrwałej modulacji pobudliwości kory",
+          "Badania czasu przewodzenia i pobudliwości danej okolicy (np. kory ruchowej)",
+          "Wywoływania napadów padaczkowych",
+          "Stałej inaktywacji kory"
+        ],
+        correct: 1
+      },
+      {
+        question: "Powtarzalna TMS (rTMS) polega na:",
+        answers: [
+          "Jednorazowym impulsie",
+          "Serii impulsów o określonej częstotliwości, mogącej modulować pobudliwość kory",
+          "Tylko stymulacji nerwów obwodowych",
+          "Zastosowaniu prądu stałego"
+        ],
+        correct: 1
+      },
+      {
+        question: "W przybliżeniu wysokoczęstotliwościowa rTMS (>5 Hz) bywa kojarzona z:",
+        answers: [
+          "Obniżeniem pobudliwości kory",
+          "Zwiększeniem pobudliwości kory (efekt pobudzający)",
+          "Brakiem jakiegokolwiek wpływu",
+          "Trwałym uszkodzeniem tkanki"
+        ],
+        correct: 1
+      },
+      {
+        question: "TMS bywa nazywana \"wirtualną lezją\" ponieważ:",
+        answers: [
+          "Tworzy trwałe uszkodzenie tkanki",
+          "Przejściowo zakłóca funkcjonowanie określonego obszaru, co pozwala wnioskować o jego roli",
+          "Dotyczy tylko nerwów obwodowych",
+          "Nie wpływa na funkcjonowanie mózgu"
+        ],
+        correct: 1
+      },
+      {
+        question: "W neuropsychologii TMS może służyć do:",
+        answers: [
+          "Oceny roli konkretnych obszarów kory w wykonywaniu zadań poznawczych",
+          "Wyłącznie do badania kości czaszki",
+          "Zmiany koloru włosów",
+          "Diagnostyki złamań"
+        ],
+        correct: 0
+      },
+      {
+        question: "Klinicznie rTMS jest stosowana m.in. w leczeniu:",
+        answers: [
+          "Nadciśnienia tętniczego",
+          "Depresji lekoopornej, przy odpowiednich parametrach stymulacji",
+          "Złamań kości",
+          "Zaćmy"
+        ],
+        correct: 1
+      },
+      {
+        question: "W badaniach naukowych MEG bywa łączone z TMS w celu:",
+        answers: [
+          "Zwiększenia dawki promieniowania",
+          "Badania, jak stymulacja TMS wpływa na sieci funkcjonalne mózgu i rozchodzenie się aktywności",
+          "Zastąpienia EEG",
+          "Badania struktury kości"
+        ],
+        correct: 1
+      },
+      {
+        question: "W porównaniu z fMRI, MEG:",
+        answers: [
+          "Ma gorszą rozdzielczość czasową, ale lepszą przestrzenną",
+          "Ma znacznie lepszą rozdzielczość czasową, ale zwykle słabszą przestrzenną",
+          "Nie mierzy aktywności mózgu",
+          "Jest metodą strukturalną"
+        ],
+        correct: 1
+      },
+      {
+        question: "W porównaniu z EEG, MEG:",
+        answers: [
+          "Jest tańsze i prostsze w użyciu",
+          "Wymaga specjalnie ekranowanego pomieszczenia i kosztownego sprzętu",
+          "Ma gorszą rozdzielczość czasową",
+          "Nie wymaga żadnej ochrony przed zakłóceniami"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń dot. bezpieczeństwa TMS jest PRAWIDŁOWE?",
+        answers: [
+          "TMS nie stwarza żadnego ryzyka",
+          "Przy niewłaściwych parametrach istnieje niewielkie ryzyko wywołania napadu drgawkowego, dlatego stosuje się ścisłe wytyczne bezpieczeństwa",
+          "TMS wykorzystuje promieniowanie jonizujące",
+          "TMS zawsze powoduje utratę przytomności"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń o MEG jest PRAWIDŁOWE?",
+        answers: [
+          "MEG jest metodą inwazyjną",
+          "MEG jest metodą nieinwazyjną i bezpieczną, ale bardzo kosztowną",
+          "MEG wymaga wprowadzania elektrod do mózgu",
+          "MEG wykorzystuje promieniowanie jonizujące"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest PRAWIDŁOWE?",
+        answers: [
+          "MEG i EEG mają bardzo dobrą rozdzielczość czasową",
+          "MEG i EEG mają bardzo dobrą rozdzielczość przestrzenną, a słabą czasową",
+          "TMS mierzy wyłącznie przepływ krwi",
+          "fMRI ma lepszą rozdzielczość czasową niż MEG"
+        ],
+        correct: 0
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
