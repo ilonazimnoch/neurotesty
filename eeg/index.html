@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 27 — Elektroencefalografia (EEG): rytmy EEG i potencjały wywołane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 27 — Elektroencefalografia (EEG): rytmy EEG i potencjały wywołane</h1>
+      <p>Test jednokrotnego wyboru. Na końcu zobaczysz liczbę poprawnych odpowiedzi i wynik procentowy.</p>
+      <p>Odpowiedzi są pomieszane względem kolejności w pliku źródłowym.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "EEG (elektroencefalografia) rejestruje:",
+        answers: [
+          "Bezpośrednio potencjały czynnościowe pojedynczych neuronów",
+          "Zsumowaną aktywność postsynaptyczną dużych populacji neuronów kory mózgowej",
+          "Aktywność mięśni szkieletowych",
+          "Tylko przepływ krwi w mózgu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Sygnał EEG rejestrowany z powierzchni skóry głowy ma przede wszystkim charakter:",
+        answers: [
+          "Wysokoczęstotliwościowych szumów termicznych",
+          "Potencjałów polowych generowanych głównie przez synchronizowaną aktywność komórek piramidowych",
+          "Odpowiedzi receptorów siatkówki",
+          "Impulsów nerwów obwodowych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Fale delta w EEG zwykle definiuje się w przybliżeniu jako zakres częstotliwości:",
+        answers: [
+          "0,5–4 Hz",
+          "4–8 Hz",
+          "8–13 Hz",
+          "13–30 Hz"
+        ],
+        correct: 0
+      },
+      {
+        question: "Fale theta w EEG to zakres częstotliwości około:",
+        answers: [
+          "0,5–4 Hz",
+          "4–8 Hz",
+          "8–13 Hz",
+          "30–80 Hz"
+        ],
+        correct: 1
+      },
+      {
+        question: "Fale alfa w EEG to zwykle zakres częstotliwości:",
+        answers: [
+          "1–3 Hz",
+          "4–7 Hz",
+          "8–13 Hz",
+          "20–40 Hz"
+        ],
+        correct: 2
+      },
+      {
+        question: "Fale beta w EEG to zakres częstotliwości około:",
+        answers: [
+          "8–13 Hz",
+          "13–30 Hz",
+          "0,5–4 Hz",
+          "40–100 Hz"
+        ],
+        correct: 1
+      },
+      {
+        question: "Fale gamma w EEG zwykle definiuje się jako aktywność w przybliżonym zakresie:",
+        answers: [
+          "1–4 Hz",
+          "4–8 Hz",
+          "13–30 Hz",
+          "30–80 Hz (lub wyżej)"
+        ],
+        correct: 3
+      },
+      {
+        question: "Rytm alfa jest typowo obserwowany:",
+        answers: [
+          "Podczas głębokiego snu N3",
+          "Gdy osoba jest w stanie czuwania, zrelaksowana, z zamkniętymi oczami",
+          "Wyłącznie podczas napadów padaczkowych",
+          "Tylko u dzieci"
+        ],
+        correct: 1
+      },
+      {
+        question: "W stanie czuwania z otwartymi oczami i aktywną uwagą na EEG częściej dominuje aktywność:",
+        answers: [
+          "Delta",
+          "Alfa o bardzo dużej amplitudzie",
+          "Szybsza aktywność beta i nieregularna aktywność o wyższych częstotliwościach",
+          "Brak sygnału"
+        ],
+        correct: 2
+      },
+      {
+        question: "Fale delta o wysokiej amplitudzie są charakterystyczne dla:",
+        answers: [
+          "Głębokich stadiów snu wolnofalowego (N3)",
+          "Lekkiego snu N1",
+          "Stanu pełnej czujności",
+          "Wyłącznie REM"
+        ],
+        correct: 0
+      },
+      {
+        question: "Jednym z głównych ograniczeń EEG jest:",
+        answers: [
+          "Bardzo słaba rozdzielczość czasowa",
+          "Ograniczona rozdzielczość przestrzenna z powodu przewodnictwa czaszki i tkanek",
+          "Konieczność otwarcia czaszki",
+          "Wysokie dawki promieniowania"
+        ],
+        correct: 1
+      },
+      {
+        question: "Do częstych artefaktów w EEG należą:",
+        answers: [
+          "Tylko szumy termiczne",
+          "Ruchy oczu, napięcie mięśni czoła, mruganie",
+          "Wyłącznie szum serca",
+          "Tylko zmiany ciśnienia"
+        ],
+        correct: 1
+      },
+      {
+        question: "Potencjały wywołane (ERP/EP) otrzymuje się zwykle poprzez:",
+        answers: [
+          "Jednorazowy zapis EEG po pojedynczym bodźcu",
+          "Uśrednianie wielu powtórzeń EEG zsynchronizowanych z bodźcem",
+          "Analizę fMRI",
+          "Podanie środka cieniującego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Uśrednianie wielu prób w badaniach ERP ma na celu głównie:",
+        answers: [
+          "Zwiększenie szumu",
+          "Wydobycie składowej czasowo zbieżnej z bodźcem i redukcję szumu niezwiązanego z bodźcem",
+          "Zwiększenie artefaktów mięśniowych",
+          "Zmniejszenie amplitudy odpowiedzi"
+        ],
+        correct: 1
+      },
+      {
+        question: "Nazwy komponentów ERP, takich jak P1, N1, P3, odnoszą się do:",
+        answers: [
+          "Polaryzacji (P – dodatnia, N – ujemna) i przybliżonej latencji w milisekundach",
+          "Tylko lokalizacji anatomicznej",
+          "Numeru elektrody",
+          "Częstotliwości pasma"
+        ],
+        correct: 0
+      },
+      {
+        question: "Komponent P300 (P3) jest klasycznie opisywany jako potencjał:",
+        answers: [
+          "Wczesny sensoryczny, 50 ms po bodźcu",
+          "Późny potencjał o dodatniej polaryzacji (ok. 300 ms), związany z przetwarzaniem rzadkich lub istotnych bodźców",
+          "Potencjał mięśniowy",
+          "Bez związku z uwagą"
+        ],
+        correct: 1
+      },
+      {
+        question: "P300 najczęściej bada się w paradygmacie:",
+        answers: [
+          "Odpoczynkowym bez bodźców",
+          "Oddball – rzadkie bodźce docelowe wśród częstych standardowych",
+          "Wyłącznie podczas snu",
+          "Tylko w ciemności"
+        ],
+        correct: 1
+      },
+      {
+        question: "EEG klasycznie wykorzystuje się m.in. w:",
+        answers: [
+          "Diagnostyce padaczki i monitorowaniu napadów",
+          "Oceny struktury kości czaszki",
+          "Pomiarze objętości mózgu",
+          "Diagnostyce złamań"
+        ],
+        correct: 0
+      },
+      {
+        question: "Potencjały wywołane są szczególnie przydatne do badania:",
+        answers: [
+          "Czystej struktury mózgu",
+          "Czasowego przebiegu przetwarzania bodźców sensorycznych i poznawczych",
+          "Ilości płynu mózgowo-rdzeniowego",
+          "Jedynie metabolizmu glukozy"
+        ],
+        correct: 1
+      },
+      {
+        question: "W badaniach neuropsychologicznych ERP mogą dostarczać informacji o:",
+        answers: [
+          "Wyłącznie poziomie glukozy we krwi",
+          "Dynamice uwagi, rozpoznawania bodźców, pamięci i decyzji",
+          "Budowie chromosomów",
+          "Wyłącznie strukturze kości"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest PRAWIDŁOWE?",
+        answers: [
+          "EEG ma bardzo dobrą rozdzielczość czasową i stosunkowo słabą przestrzenną",
+          "EEG ma bardzo dobrą rozdzielczość przestrzenną i słabą czasową",
+          "ERP nie wymagają uśredniania",
+          "EEG wymaga otwarcia czaszki"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które z poniższych stwierdzeń jest FAŁSZYWE?",
+        answers: [
+          "Fale alfa obserwuje się często przy zamkniętych oczach",
+          "Fale delta dominują w śnie głębokim",
+          "P300 zwykle pojawia się około 300 ms po bodźcu docelowym",
+          "EEG jest metodą opartą na promieniowaniu jonizującym"
+        ],
+        correct: 3
+      },
+      {
+        question: "Które zdanie najlepiej opisuje różnicę między zapisem spoczynkowym EEG a ERP?",
+        answers: [
+          "Zapis spoczynkowy zawsze wymaga uśredniania, ERP nie",
+          "Zapis spoczynkowy opisuje spontaniczną aktywność, ERP to odpowiedzi związane czasowo z konkretnym bodźcem",
+          "ERP nie są oparte na EEG",
+          "Zapis spoczynkowy zawsze wymaga stymulacji bodźcami wzrokowymi"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
