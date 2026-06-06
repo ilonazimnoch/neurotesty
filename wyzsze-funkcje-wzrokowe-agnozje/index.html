@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zagadnienie 39 — Wyższe funkcje wzrokowe i agnozje</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 32px;
+    }
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+    }
+    .question {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+    label:hover {
+      background-color: #e5f3ef;
+    }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    .submit-btn:hover {
+      background-color: #115e59;
+      box-shadow: 0 12px 28px rgba(17, 94, 89, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Zagadnienie 39 — Wyższe funkcje wzrokowe i agnozje</h1>
+      <p>Test jednokrotnego wyboru ABCD. Po zaznaczeniu wszystkich odpowiedzi kliknij przycisk, aby zobaczyć wynik.</p>
+      <p>Liczba pytań: 30.</p>
+    </div>
+
+    <form id="quizForm" class="card">
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Zakończ test</button>
+      <div id="result" class="result"></div>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Agnozja wzrokowa to:",
+        answers: [
+          "Utrata ostrości wzroku spowodowana uszkodzeniem siatkówki",
+          "Trudności z rozpoznawaniem bodźców wzrokowych przy zachowanej podstawowej percepcji (ostrość, pole widzenia)",
+          "Każde zaburzenie pola widzenia",
+          "Tylko całkowita ślepota korowa"
+        ],
+        correct: 1
+      },
+      {
+        question: "Agnozje wzrokowe wynikają przede wszystkim z uszkodzeń:",
+        answers: [
+          "Pierwotnej kory wzrokowej V1",
+          "Wyższych (asocjacyjnych) obszarów kory wzrokowej w płatach potylicznych i skroniowych",
+          "Rdzenia kręgowego",
+          "Móżdżku"
+        ],
+        correct: 1
+      },
+      {
+        question: "Klasyczne rozróżnienie dwóch głównych strumieni przetwarzania informacji wzrokowej dotyczy:",
+        answers: [
+          "Strumienia czołowego i ciemieniowego",
+          "Strumienia brzusznego (ventral) i grzbietowego (dorsal)",
+          "Strumienia limbicznego i motorycznego",
+          "Strumienia somatosensorycznego i wzrokowego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Strumień brzuszny (ventral stream) jest najczęściej określany jako:",
+        answers: [
+          "Strumień 'gdzie' (where)",
+          "Strumień 'co' (what)",
+          "Strumień 'jak szybko'",
+          "Strumień 'równowagi'"
+        ],
+        correct: 1
+      },
+      {
+        question: "Strumień grzbietowy (dorsal stream) jest najczęściej określany jako:",
+        answers: [
+          "Strumień 'co' (what)",
+          "Strumień 'gdzie/jak' (where/how)",
+          "Strumień emocjonalny",
+          "Strumień słuchowy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Strumień brzuszny przebiega głównie do:",
+        answers: [
+          "Płata czołowego",
+          "Dolnych części płata skroniowego (kora skroniowo-potyliczna)",
+          "Płata ciemieniowego górnego",
+          "Zakrętu obręczy"
+        ],
+        correct: 1
+      },
+      {
+        question: "Strumień grzbietowy przebiega głównie do:",
+        answers: [
+          "Dolnej kory skroniowej",
+          "Płata ciemieniowego (górne okolice ciemieniowe)",
+          "Hipokampa",
+          "Ciała migdałowatego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Agnozja apercepcyjna charakteryzuje się przede wszystkim:",
+        answers: [
+          "Prawidłowym kopiowaniem rysunków, ale brakiem rozpoznania",
+          "Trudnościami w tworzeniu poprawnej reprezentacji percepcyjnej obiektu (problem już na etapie kształtu)",
+          "Izolowanym zaburzeniem pamięci semantycznej",
+          "Całkowitą ślepotą"
+        ],
+        correct: 1
+      },
+      {
+        question: "Agnozja asocjacyjna charakteryzuje się przede wszystkim:",
+        answers: [
+          "Niemożnością kopiowania prostych rysunków",
+          "Prawidłowym odwzorowaniem kształtu (kopiowanie), ale brakiem rozpoznania znaczenia obiektu",
+          "Zaburzeniem ostrości wzroku",
+          "Zaburzeniem ruchów oczu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych najlepiej opisuje zjawisko prozopagnozji (prosopagnosia)?",
+        answers: [
+          "Niezdolność rozpoznawania przedmiotów codziennego użytku przy zachowanym rozpoznawaniu twarzy",
+          "Niezdolność rozpoznawania znanych twarzy przy stosunkowo zachowanym rozpoznawaniu innych obiektów",
+          "Całkowity brak widzenia kolorów",
+          "Podwójne widzenie"
+        ],
+        correct: 1
+      },
+      {
+        question: "Prozopagnozja jest uważana za:",
+        answers: [
+          "Specyficzny rodzaj agnozji wzrokowej",
+          "Zaburzenie ruchowe",
+          "Zaburzenie słuchowe",
+          "Zaburzenie pamięci proceduralnej"
+        ],
+        correct: 0
+      },
+      {
+        question: "W prozopagnozji pacjenci najczęściej:",
+        answers: [
+          "Nie rozpoznają twarzy, ale potrafią wykorzystać inne wskazówki (głos, sylwetkę) do identyfikacji osób",
+          "Nie widzą żadnych kształtów",
+          "Nie rozumieją mowy",
+          "Mają całkowicie zachowane rozpoznawanie twarzy"
+        ],
+        correct: 0
+      },
+      {
+        question: "Klasycznie z prozopagnozją wiąże się uszkodzenia:",
+        answers: [
+          "Zakrętu wrzecionowatego w płacie skroniowym (fusiform gyrus)",
+          "Pierwotnej kory słuchowej",
+          "Kory ruchowej w płacie czołowym",
+          "Rdzenia przedłużonego"
+        ],
+        correct: 0
+      },
+      {
+        question: "Obszar FFA (fusiform face area) to:",
+        answers: [
+          "Rejon w pniu mózgu odpowiedzialny za odruchy twarzowe",
+          "Rejon w zakręcie wrzecionowatym odpowiedzialny za przetwarzanie twarzy",
+          "Rejon w korze ciemieniowej odpowiedzialny za uwagową selekcję przestrzenną",
+          "Rejon w korze przedczołowej związany z pamięcią roboczą"
+        ],
+        correct: 1
+      },
+      {
+        question: "Klasyczna triada objawów zespołu Bálinta obejmuje:",
+        answers: [
+          "Apraksję ideacyjną, agrafię, aleksję",
+          "Ataksję optyczną, apraksję spojrzenia (gaze apraxia) i simultanagnozję",
+          "Apraksję mowy, agnozję słuchową i prozopagnozję",
+          "Ślepotę połowiczą, hemiagnozję wzrokową i anosognozję"
+        ],
+        correct: 1
+      },
+      {
+        question: "Simultanagnozja oznacza przede wszystkim:",
+        answers: [
+          "Niemożność odróżnienia kolorów",
+          "Niemożność dostrzeżenia więcej niż jednego elementu sceny jednocześnie, trudność w uchwyceniu całości złożonej sceny",
+          "Brak ruchów gałek ocznych",
+          "Utrwalone omamy wzrokowe"
+        ],
+        correct: 1
+      },
+      {
+        question: "Ataksja optyczna w zespole Bálinta to:",
+        answers: [
+          "Niezdolność do wykonania ruchów dowolnych",
+          "Trudność w sięganiu do obiektów pod kontrolą wzroku (błędne ruchy ręką mimo prawidłowej siły mięśniowej)",
+          "Niemożność utrzymania równowagi",
+          "Drżenie zamiarowe"
+        ],
+        correct: 1
+      },
+      {
+        question: "Zespół Bálinta najczęściej wiąże się z uszkodzeniem:",
+        answers: [
+          "Jednostronnym płata skroniowego",
+          "Obustronnych tylnych obszarów ciemieniowych (okolice przyśrodkowe, np. precuneus)",
+          "Móżdżku",
+          "Pnia mózgu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Uszkodzenia strumienia brzusznego najczęściej prowadzą do:",
+        answers: [
+          "Zaburzeń rozpoznawania 'co' widzimy (agnozje przedmiotów, prozopagnozja)",
+          "Zaburzeń planowania ruchu",
+          "Zaburzeń świadomości własnego ciała",
+          "Zaburzeń słyszenia mowy"
+        ],
+        correct: 0
+      },
+      {
+        question: "Uszkodzenia strumienia grzbietowego najczęściej prowadzą do:",
+        answers: [
+          "Selektywnych zaburzeń rozpoznawania twarzy",
+          "Zaburzeń przetwarzania przestrzennego i kontroli działań skierowanych wzrokowo (np. ataksja optyczna, zespół Bálinta)",
+          "Zaburzeń pamięci semantycznej",
+          "Zaburzeń słuchu muzycznego"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które z poniższych sparowań jest NAJBARDZIEJ trafne?",
+        answers: [
+          "Prozopagnozja – uszkodzenia zakrętu wrzecionowatego (FFA)",
+          "Prozopagnozja – uszkodzenia móżdżku",
+          "Zespół Bálinta – uszkodzenia hipokampa",
+          "Agnozja apercepcyjna – uszkodzenia pierwotnej kory słuchowej"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które stwierdzenie jest FAŁSZYWE?",
+        answers: [
+          "Agnozje wzrokowe mogą występować przy zachowanej ostrości wzroku",
+          "Prozopagnozja może mieć postać nabytą (po uszkodzeniu mózgu) lub rozwojową",
+          "Zespół Bálinta wiąże się jedynie z zaburzeniami rozpoznawania twarzy",
+          "Strumień brzuszny jest związany z rozpoznawaniem obiektów"
+        ],
+        correct: 2
+      },
+      {
+        question: "Które zdanie najlepiej opisuje rolę strumienia grzbietowego?",
+        answers: [
+          "Odpowiada za rozpoznawanie tożsamości twarzy",
+          "Uczestniczy w lokalizacji bodźców i kontroli działań skierowanych wzrokowo",
+          "Koduje wyłącznie barwy",
+          "Służy jedynie do rozpoznawania słów pisanych"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które zdanie najlepiej opisuje różnicę między agnozją apercepcyjną a asocjacyjną?",
+        answers: [
+          "W apercepcyjnej – problem dotyczy już etapu percepcji kształtu, w asocjacyjnej – etapu łączenia poprawnej reprezentacji wzrokowej z wiedzą semantyczną",
+          "W apercepcyjnej – problem dotyczy tylko pamięci, w asocjacyjnej – tylko ruchu",
+          "W apercepcyjnej – występuje ślepota, w asocjacyjnej – heminieglect",
+          "Oba pojęcia oznaczają to samo"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które zdanie najlepiej oddaje znaczenie badań nad agnozjami wzrokowymi dla neuropsychologii?",
+        answers: [
+          "Mają znaczenie wyłącznie teoretyczne",
+          "Pozwalają na wnioskowanie o specjalizacji funkcjonalnej strumieni wzrokowych i organizacji reprezentacji obiektów (w tym twarzy)",
+          "Dotyczą wyłącznie psychiatrii dziecięcej",
+          "Nie mają związku z anatomią mózgu"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które stwierdzenie jest PRAWIDŁOWE?",
+        answers: [
+          "W prozopagnozji pacjenci zwykle nie rozpoznają nawet własnej twarzy na zdjęciu",
+          "W prozopagnozji zawsze występuje ślepota połowicza",
+          "W zespole Bálinta nie występują zaburzenia przetwarzania przestrzennego",
+          "Agnozje wzrokowe wynikają zawsze z uszkodzeń siatkówki"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które sparowanie jest NAJBARDZIEJ trafne?",
+        answers: [
+          "Strumień brzuszny – 'co', rozpoznawanie obiektów",
+          "Strumień brzuszny – 'gdzie', lokalizacja bodźców",
+          "Strumień grzbietowy – 'co', rozpoznawanie barw",
+          "Strumień grzbietowy – przetwarzanie dźwięków"
+        ],
+        correct: 0
+      },
+      {
+        question: "Które stwierdzenie dotyczące prozopagnozji jest PRAWIDŁOWE?",
+        answers: [
+          "Pacjenci z prozopagnozją zwykle nie mają żadnych trudności społecznych",
+          "Prozopagnozja może prowadzić do znacznego dystresu, unikania sytuacji społecznych i zaburzeń nastroju",
+          "Prozopagnozja nie wpływa na funkcjonowanie zawodowe",
+          "Prozopagnozja zawsze współwystępuje z afazją"
+        ],
+        correct: 1
+      },
+      {
+        question: "Które zdanie najlepiej opisuje związek między strumieniem brzusznym a rozpoznawaniem twarzy?",
+        answers: [
+          "Rozpoznawanie twarzy odbywa się wyłącznie w pniu mózgu",
+          "Rozpoznawanie twarzy jest częścią bardziej ogólnego systemu rozpoznawania złożonych obiektów w strumieniu brzusznym, z ważną rolą FFA",
+          "Strumień brzuszny nie ma związku z twarzami",
+          "Rozpoznawanie twarzy zależy wyłącznie od kory przedczołowej"
+        ],
+        correct: 1
+      },
+      {
+        question: "Najlepsze ogólne podsumowanie zagadnienia brzmi:",
+        answers: [
+          "Agnozje wzrokowe i zaburzenia wyższych funkcji wzrokowych są marginalne klinicznie",
+          "Zaburzenia te pokazują, że przetwarzanie wzrokowe jest zorganizowane w wyspecjalizowane strumienie i moduły (np. dla twarzy, przedmiotów, przestrzeni), a ich uszkodzenie prowadzi do specyficznych syndromów neuropsychologicznych",
+          "Agnozje zawsze wiążą się z uszkodzeniem siatkówki",
+          "Strumienie wzrokowe nie mają znaczenia dla zachowania"
+        ],
+        correct: 1
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    const questionsForRender = questions.map(q => {
+      const indices = [0, 1, 2, 3];
+      shuffle(indices);
+      const shuffledAnswers = indices.map(i => q.answers[i]);
+      const newCorrectIndex = indices.indexOf(q.correct);
+      return {
+        question: q.question,
+        answers: shuffledAnswers,
+        correct: newCorrectIndex
+      };
+    });
+
+    const container = document.getElementById("questionsContainer");
+
+    questionsForRender.forEach((q, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+
+      const title = document.createElement("div");
+      title.className = "question-title";
+      title.textContent = (idx + 1) + ". " + q.question;
+      qDiv.appendChild(title);
+
+      const answersDiv = document.createElement("div");
+      answersDiv.className = "answers";
+
+      q.answers.forEach((answerText, aIdx) => {
+        const label = document.createElement("label");
+
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = `q${idx}`;
+        radio.value = aIdx;
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = answerText;
+
+        label.appendChild(radio);
+        label.appendChild(textSpan);
+        answersDiv.appendChild(label);
+      });
+
+      qDiv.appendChild(answersDiv);
+      container.appendChild(qDiv);
+    });
+
+    const form = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let correctCount = 0;
+
+      questionsForRender.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) return;
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = questionsForRender.length;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      resultDiv.textContent = `Masz ${correctCount} / ${total} poprawnych odpowiedzi (${percent}%).`;
+    });
+  </script>
+</body>
+</html>
